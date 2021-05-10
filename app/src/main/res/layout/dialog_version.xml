@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:background="@mipmap/update_dialog_top_bg2"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:background="@mipmap/update_dialog_top_bg1">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="检测到新版本"
+                android:layout_marginTop="@dimen/dp_35"
+                style="@style/text_bold_font_family"
+                android:textSize="@dimen/sp_23"
+                />
+
+            <TextView
+                android:id="@+id/tv_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="新版本大小"
+                android:layout_marginTop="@dimen/dp_8"
+                android:textSize="@dimen/sp_14"
+                android:visibility="gone"/>
+
+             <TextView
+                 android:id="@+id/tv_version"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:textColor="@color/white"
+                 android:text="v2.1.1"
+                 android:layout_marginTop="@dimen/dp_8"
+                 android:textSize="@dimen/sp_14"/>
+
+        </LinearLayout>
+
+
+      <!--  <TextView
+            android:id="@+id/tv_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="v2.1.1"
+            android:layout_marginTop="84dp"
+            android:layout_marginStart="@dimen/dp_8"
+            android:textSize="@dimen/sp_14" />-->
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp_30"
+        android:paddingRight="@dimen/dp_30"
+        android:paddingBottom="@dimen/dp_15"
+        android:background="@drawable/dialog_bg_white_5dp_bottom">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/maas_text_primary"
+            style="@style/text_bold_font_family"
+            android:text="更新内容"
+            android:layout_marginTop="@dimen/dp_8"
+            android:textSize="@dimen/sp_14" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/dp_12"
+            android:layout_height="@dimen/dp_110">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/maas_text_primary"
+                    android:lineSpacingExtra="@dimen/dp_3"
+                    android:text="1.更新内容"
+                    android:textSize="@dimen/sp_14" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <TextView
+            android:id="@+id/tv_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:text="立即更新"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp_15"
+            android:background="@drawable/bg_5a89f9_round_22dp"
+            android:textSize="@dimen/sp_17"/>
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="稍后再说"
+            android:textSize="@dimen/sp_17"
+            android:layout_gravity="center"
+            android:paddingTop="@dimen/dp_10"
+            android:textColor="@color/c_5A89F9"/>
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

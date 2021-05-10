@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <!--
+     表示每一个选项都是单选的,且会自动显示选中效果。
+     <group android:checkableBehavior="single">
+    -->
+    <group>
+        <item
+            android:id="@+id/ll_my_vehicle"
+            android:icon="@mipmap/ic_my_vehicle"
+            android:title="@string/title_my_vehicle" />
+
+        <item
+            android:id="@+id/ll_money"
+            android:icon="@mipmap/ic_my_wallet"
+            android:title="@string/title_my_wallet"
+            android:visible="true" />
+
+        <item
+            android:id="@+id/ll_income_list"
+            android:icon="@mipmap/ic_income"
+            android:title="收益明细" />
+        <item
+            android:id="@+id/ll_history_order"
+            android:icon="@mipmap/ic_history_order"
+            android:title="历史订单" />
+        <item
+            android:id="@+id/ll_history_achieve"
+            android:icon="@mipmap/ic_history_achievement"
+            android:title="历史成就" />
+
+        <item
+            android:id="@+id/ll_notification_list"
+            android:icon="@mipmap/ic_system_message"
+            android:title="@string/title_notification_list" />
+
+        <item
+            android:id="@+id/ll_shift_ino"
+            android:icon="@mipmap/ic_shift_info"
+            android:title="@string/title_shift_info" />
+        <item
+            android:id="@+id/ll_setting"
+            android:icon="@mipmap/ic_setting"
+            android:title="设置" />
+
+    </group>
+
+</menu>

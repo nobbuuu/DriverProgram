@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0EFF2"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@drawable/shape_line_only_bottom"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:src="@mipmap/arrow_black" />
+
+        <TextView
+            style="@style/text_bold_font_family"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/title_shift_info"
+            android:textColor="@color/maas_text_primary"
+            android:textSize="@dimen/sp_18" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/mobile_phone_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_line_only_bottom"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:text="@string/label_mobile_phone"
+            android:textColor="@color/maas_text_primary"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/mobile_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableEnd="@mipmap/ic_edit_shift_info"
+            android:drawablePadding="8dp"
+            android:ellipsize="end"
+            android:gravity="end"
+            android:maxLines="1"
+            android:textColor="@color/maas_text_deep_gray"
+            android:textSize="@dimen/sp_15"
+            tools:text="13212345678" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mailing_address_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_line_only_bottom"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:text="@string/label_mailing_address"
+            android:textColor="@color/maas_text_primary"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/mailing_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableEnd="@mipmap/ic_select_shift_address"
+            android:drawablePadding="8dp"
+            android:ellipsize="start"
+            android:gravity="end"
+            android:singleLine="true"
+            android:textColor="@color/maas_text_deep_gray"
+            android:textSize="@dimen/sp_15"
+            tools:text="@string/label_select_shift_address" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/turnover_time_day_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_line_only_bottom"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:text="@string/label_shift_turnover_time_day"
+            android:textColor="@color/maas_text_primary"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/turnover_time_day"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableEnd="@mipmap/ic_edit_shift_info"
+            android:drawablePadding="8dp"
+            android:gravity="end"
+            android:maxLines="1"
+            android:textColor="@color/maas_text_deep_gray"
+            android:textSize="@dimen/sp_15"
+            tools:text="14:10-14:50" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/turnover_address_day_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_line_only_bottom"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:text="@string/label_shift_turnover_address_day"
+            android:textColor="@color/maas_text_primary"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/turnover_address_day"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableEnd="@mipmap/ic_select_shift_address"
+            android:drawablePadding="8dp"
+            android:ellipsize="start"
+            android:gravity="end"
+            android:singleLine="true"
+            android:textColor="@color/maas_text_deep_gray"
+            android:textSize="@dimen/sp_15"
+            tools:text="@string/label_select_shift_address" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/turnover_time_night_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_line_only_bottom"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:text="@string/label_shift_turnover_time_night"
+            android:textColor="@color/maas_text_primary"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/turnover_time_night"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableEnd="@mipmap/ic_edit_shift_info"
+            android:drawablePadding="8dp"
+            android:gravity="end"
+            android:maxLines="1"
+            android:textColor="@color/maas_text_deep_gray"
+            android:textSize="@dimen/sp_15"
+            tools:text="14:10-14:50" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/turnover_address_night_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_line_only_bottom"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:text="@string/label_shift_turnover_address_night"
+            android:textColor="@color/maas_text_primary"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/turnover_address_night"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableEnd="@mipmap/ic_select_shift_address"
+            android:drawablePadding="8dp"
+            android:ellipsize="start"
+            android:gravity="end"
+            android:singleLine="true"
+            android:textColor="@color/maas_text_deep_gray"
+            android:textSize="@dimen/sp_15"
+            tools:text="@string/label_select_shift_address" />
+
+    </LinearLayout>
+
+</LinearLayout>

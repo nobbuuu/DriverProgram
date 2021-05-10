@@ -1,0 +1,392 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fr_order_info"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/trip_detail_order_info_bg"
+    android:visibility="gone">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/dp_15"
+        android:clickable="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_order_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/maas_text_primary"
+                android:text="今日 "
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/tv_order_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_16"
+                android:textColor="@color/maas_text_blue"
+                android:text="--"
+                style="@style/text_bold_font_family"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_order_total_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/dp_10"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/maas_text_primary"
+                android:text="行程总耗时"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/tv_order_total_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/maas_text_primary"
+                android:text="35分钟"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0_5"
+            android:background="@color/line_color_dfe5f2"
+            android:layout_marginTop="@dimen/dp_10"/>
+
+        <!--花费信息-->
+        <LinearLayout
+            android:id="@+id/ll_order_cost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_cost"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/maas_text_primary"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/tv_total_cost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00.00"
+                    android:textColor="@color/maas_text_primary"
+                    android:textSize="@dimen/sp_14"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:text="@string/rmb"
+                    android:textColor="@color/maas_text_primary"
+                    android:textSize="@dimen/sp_14"
+                    style="@style/text_bold_font_family"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_base_cost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fare"
+                    android:textColor="@color/maas_text_gray"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/tv_base_cost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00.00"
+                    android:textColor="@color/maas_text_primary"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:text="@string/rmb"
+                    android:textColor="@color/maas_text_primary"
+                    android:textSize="@dimen/sp_14"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_other_cost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/other"
+                    android:textColor="@color/maas_text_gray"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/tv_other_cost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00.00"
+                    android:textColor="@color/maas_text_primary"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:text="@string/rmb"
+                    android:textColor="@color/maas_text_primary"
+                    android:textSize="@dimen/sp_14"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_service_cost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/service_charge"
+                    android:textColor="@color/maas_text_gray"
+                    android:textSize="@dimen/sp_14"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/tv_service_cost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00.00"
+                    android:textColor="@color/maas_text_primary"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:text="@string/rmb"
+                    android:textColor="@color/maas_text_primary"
+                    android:textSize="@dimen/sp_14"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_0_5"
+                android:background="@color/line_color_dfe5f2"
+                android:layout_marginTop="@dimen/dp_10"/>
+
+        </LinearLayout>
+
+        <!--取消原因-->
+        <RelativeLayout
+            android:id="@+id/rl_order_cancel_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/dp_10"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_order_cancel_reason_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/maas_text_gray"
+                android:text="@string/cancel_reason"/>
+
+            <TextView
+                android:id="@+id/tv_order_cancel_reason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_14"
+                android:layout_toRightOf="@id/tv_order_cancel_reason_temp"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:textColor="@color/maas_text_primary"
+                android:lines="1"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:text="乘客取消（临时有事）"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/dp_10">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/maas_text_gray"
+                android:text="@string/order_type"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/tv_order_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/maas_text_primary"
+                android:text="--"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/dp_10">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/maas_text_gray"
+                android:text="@string/order_number"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/tv_order_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_14"
+                android:layout_marginStart="@dimen/dp_15"
+                android:textColor="@color/maas_text_primary"
+                android:text="--"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_contact_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/dp_10"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_contact_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/maas_text_gray"
+                android:text="@string/order_contact_passenger"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/tv_contact_passenger"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/kuang_blue_round_2dp"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/maas_bg_blue"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_2"
+                android:paddingBottom="@dimen/dp_2"
+                android:drawableStart="@mipmap/ic_phone_blue"
+                android:drawablePadding="@dimen/dp_4"
+                android:text="@string/order_contact_passenger"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tv_contact_customer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/kuang_blue_round_2dp"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/maas_bg_blue"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_2"
+                android:paddingBottom="@dimen/dp_2"
+                android:drawableStart="@mipmap/ic_customer_service_blue"
+                android:drawablePadding="@dimen/dp_4"
+                android:text="@string/contact_customer_service"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tv_contact_child"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/kuang_blue_round_2dp"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/maas_bg_blue"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_2"
+                android:paddingBottom="@dimen/dp_2"
+                android:drawableStart="@mipmap/ic_phone_blue"
+                android:drawablePadding="@dimen/dp_4"
+                android:text="@string/contact_children"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tv_contact_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/kuang_blue_round_2dp"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/maas_bg_blue"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_2"
+                android:paddingBottom="@dimen/dp_2"
+                android:drawableStart="@mipmap/ic_phone_blue"
+                android:drawablePadding="@dimen/dp_4"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:text="@string/contact_parent"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
+
+
+
+
+

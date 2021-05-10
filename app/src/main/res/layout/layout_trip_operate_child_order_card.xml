@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_child_info"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/dp_14"
+    android:paddingRight="@dimen/dp_14"
+    android:paddingTop="@dimen/dp_10"
+    android:paddingBottom="@dimen/dp_15"
+    android:orientation="vertical"
+    android:background="@drawable/bg_order_info_narrow"
+    android:visibility="gone">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_18"
+        android:textColor="@color/maas_text_primary"
+        android:text="@string/passenger_info"
+        android:textStyle="bold"
+        style="@style/text_bold_font_family"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0_5"
+        android:background="@color/c_DFE5F2"
+        android:layout_marginTop="@dimen/dp_10"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dp_12">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rider"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/maas_text_gray"/>
+
+        <TextView
+            android:id="@+id/tv_child_names"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_marginStart="@dimen/dp_15"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/maas_text_primary"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_child_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dp_12"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/leaving_message"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/maas_text_gray"/>
+
+        <TextView
+            android:id="@+id/tv_child_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_marginStart="@dimen/dp_15"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/maas_text_primary"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dp_12">
+
+        <TextView
+            android:id="@+id/tv_child_header"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_25"
+            android:text="@string/passenger_avatar"
+            android:textSize="@dimen/sp_14"
+            android:paddingLeft="@dimen/dp_11"
+            android:paddingRight="@dimen/dp_11"
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:background="@drawable/kuang_mass_blue_round_12dp"
+            android:textColor="@color/maas_text_blue"/>
+
+        <TextView
+            android:id="@+id/tv_child_get_on_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_25"
+            android:text="@string/get_on_photo"
+            android:textSize="@dimen/sp_14"
+            android:paddingLeft="@dimen/dp_11"
+            android:paddingRight="@dimen/dp_11"
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:visibility="gone"
+            android:background="@drawable/kuang_mass_blue_round_12dp"
+            android:textColor="@color/maas_text_blue"/>
+
+        <TextView
+            android:id="@+id/tv_child_get_off_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_25"
+            android:text="@string/get_off_photo"
+            android:textSize="@dimen/sp_14"
+            android:paddingLeft="@dimen/dp_11"
+            android:paddingRight="@dimen/dp_11"
+            android:gravity="center"
+            android:visibility="gone"
+            android:background="@drawable/kuang_mass_blue_round_12dp"
+            android:textColor="@color/maas_text_blue"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,8 @@
+# 可使用的最旧的版本
+oldest_version=200
+# 更新说明
+update_message=修正了一些问题，提升了应用性能
+# 强制更新说明
+force_message=
+
+

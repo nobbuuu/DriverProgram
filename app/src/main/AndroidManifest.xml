@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.haylion.android"> <!-- 解决编译时的冲突，autobahn中最低为SDK 24 -->
+    <uses-sdk tools:overrideLibrary="io.crossbar.autobahn" />
+    <!-- 高德导航 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- 用于申请调用A-GPS模块 -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /> <!-- 获取手机录音机使用权限，听写、识别、语义理解需要用到此权限 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 相机权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_ADDED"/>
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_CHANGED"/>
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_INSTALL"/>
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_REPLACED"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:resizeableActivity="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning">
+
+        <activity
+            android:name=".push.MipushTestActivity"
+            android:exported="true"
+            android:launchMode="singleTask" />
+
+        <!-- 适配华为（huawei）刘海屏 -->
+        <meta-data
+            android:name="android.notch_support"
+            android:value="true" /> <!-- 适配小米（xiaomi）刘海屏 -->
+        <meta-data
+            android:name="notch.config"
+            android:value="portrait|landscape" />
+        <meta-data
+            android:name="com.huawei.hms.client.appid"
+            android:value="appid=101461925" />
+
+        <!-- vivo push参数声明 -->
+        <!-- vivo start -->
+        <meta-data
+            android:name="com.vivo.push.api_key"
+            android:value="a1840d6c-a205-4f1f-a0d1-4e5e1fcb76bb" />
+        <meta-data
+            android:name="com.vivo.push.app_id"
+            android:value="17860" /> <!-- VIVO end -->
+        <service
+            android:name=".service.AmapTrackUploadService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".service.WebsocketService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".service.FloatDialogService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <meta-data
+            android:name="BaiduMobAd_STAT_ID"
+            android:value="${BAIDU_APPKEY_VALUE}" /> <!-- 百度渠道商编号 -->
+        <meta-data
+            android:name="BaiduMobAd_CHANNEL"
+            android:value="${BAIDU_CHANNEL_VALUE}" />
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="${GAODE_API_KEY}" />
+        <!--
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="843314eaf3ff2736e86399812db826f0" />
+        -->
+        <!-- 配置APP ID -->
+        <!--
+        <meta-data
+                    android:name="BUGLY_APPID"
+                    android:value="775910c6b1" />
+        -->
+        <!-- 配置Bugly调试模式（true或者false） -->
+        <meta-data
+            android:name="BUGLY_ENABLE_DEBUG"
+            android:value="true" />
+
+
+        <activity
+            android:name="com.tencent.bugly.beta.ui.BetaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            android:theme="@android:style/Theme.Translucent" />
+
+        <service android:name="com.amap.api.location.APSService" />
+        <service android:name="com.amap.api.track.AMapTrackService" />
+        <!--
+        <service android:name="com.amap.api.track.AMapTrackService" />
+        <service android:name="com.amap.api.location.APSService" />
+        -->
+        <activity
+            android:name=".user.account.LoginActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize"></activity>
+        <activity
+            android:name=".main.MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".orderdetail.OrderDetailActivity"
+            android:exported="true"
+            android:launchMode="singleTask" />
+        <activity
+            android:name="com.amap.api.navi.AmapRouteActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name=".welcome.WelcomeActivity"
+            android:exported="true"
+            android:theme="@style/LauncherTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- 百度统计按如下格式添加整个intent-filter块，其中data字段只能有一个，其内容是mtj拼接上您的appkey -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="${BAIDU_SCHEME_VALUE}" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".orderlist.OrderListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".address.SearchAddrActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan|stateVisible" />
+        <activity android:name=".user.account.MineActivity" />
+        <activity android:name=".ordersetting.OrderSettingActivity" />
+        <activity android:name=".user.setting.SettingActivity" />
+        <activity android:name=".user.order.HistoryOrderListActivity" />
+        <activity android:name=".user.order.AchieveOrderListActivity" />
+        <activity
+            android:name=".pay.PayMainActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".cancelorder.CancelOrderActivity"
+            android:exported="true" />
+        <activity
+            android:name=".user.account.ChangePasswordActivity"
+            android:windowSoftInputMode="adjustPan|stateVisible" />
+        <activity android:name=".orderlist.achievement.AchievementListActivity" />
+        <activity android:name=".user.money.WalletHomeActivity" />
+        <activity android:name=".user.money.AddBankCardActivity" />
+        <activity android:name=".user.money.IncomeActivity" />
+        <activity
+            android:name=".orderdetail.map.ShowInMapNewActivity"
+            android:exported="true" />
+        <activity android:name=".uploadPhoto.UploadChildImgActivity" />
+        <activity
+            android:name=".orderdetail.trip.TripDetailActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".orderdetail.trip.TripEndActivity"
+            android:launchMode="singleTop" />
+        <activity android:name=".uploadPhoto.UploadImgActivity" />
+        <activity android:name=".orderdetail.amapNavi.AMapNaviViewActivity" />
+        <activity android:name=".orderdetail.trip.TripOperateActivity" />
+        <activity
+            android:name=".orderdetail.multiday.MultiDayDetailActivity"
+            android:exported="true" />
+        <activity android:name=".common.map.offlinemap.OfflineMapActivity" />
+        <activity android:name=".common.map.offlinemap.OfflineMapTestActivity" />
+        <activity android:name=".notification.NotificationListActivity" />
+        <activity
+            android:name=".orderlist.BookOrderListActivity"
+            android:launchMode="singleTask" />
+
+        <!--预约订单列表页面-->
+        <activity
+            android:name=".orderlist.AppointmentListActivity"
+            android:launchMode="singleTask" />
+        <!--预约订单详情页面-->
+        <activity android:name=".orderlist.AppointmentDetailsActivity" />
+        <!--我的车辆页面-->
+        <activity android:name=".user.vehicle.MyVehicleActivity" />
+        <!--个人信息（排班信息）页面-->
+        <activity android:name=".user.shift.ShiftInfoActivity" />
+        <!--交接班地址、在深居住地址页面-->
+        <activity android:name=".user.shift.ShiftAddressActivity" />
+        <!--地址选择页面-->
+        <activity
+            android:name=".user.shift.PickAddressActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <!--我的钱包页面-->
+        <activity android:name=".user.wallet.MyWalletActivity" />
+        <!--绑定微信-->
+        <activity android:name=".user.wallet.BindWechatActivity" />
+        <!--提现到微信-->
+        <activity android:name=".user.wallet.WithdrawActivity" />
+        <!--主页面的菜单-->
+        <activity android:name=".main.MainMenuActivity"/>
+
+        <!--送你上学拼车单提交账单后页面-->
+        <activity android:name=".orderdetail.trip.CarpoolTripEndActivity"/>
+
+        <!-- +++++++++++++++++ 微信sdk +++++++++++++++++++ -->
+        <activity
+            android:name="com.haylion.maastaxi.wxapi.WXEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <!-- 以下为基本配置信息，需要自行添加至您的AndroidManifest文件中 start-->
+        <service
+            android:name="com.taobao.accs.ChannelService"
+            android:exported="true"
+            android:process=":channel">
+            <intent-filter>
+                <action android:name="com.taobao.accs.intent.action.SERVICE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.taobao.accs.intent.action.ELECTION" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.taobao.accs.data.MsgDistributeService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.taobao.accs.intent.action.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="com.taobao.accs.EventReceiver"
+            android:process=":channel">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.taobao.accs.ServiceReceiver"
+            android:process=":channel">
+            <intent-filter>
+                <action android:name="com.taobao.accs.intent.action.COMMAND" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.taobao.accs.intent.action.START_FROM_AGOO" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.taobao.accs.internal.AccsJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:process=":channel" />
+
+        <service
+            android:name="com.taobao.accs.ChannelService$KernelService"
+            android:process=":channel" />
+
+        <service
+            android:name="org.android.agoo.accs.AgooService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.taobao.accs.intent.action.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.umeng.message.UmengIntentService"
+            android:exported="true"
+            android:process=":channel">
+            <intent-filter>
+                <action android:name="org.agoo.android.intent.action.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.umeng.message.XiaomiIntentService"
+            android:exported="true"
+            android:process=":channel">
+            <intent-filter>
+                <action android:name="org.agoo.android.intent.action.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="com.taobao.agoo.AgooCommondReceiver"
+            android:exported="true"
+            android:process=":channel">
+            <intent-filter>
+                <action android:name="${applicationId}.intent.action.COMMAND" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.umeng.message.UmengMessageIntentReceiverService"
+            android:exported="true"
+            android:process=":channel">
+            <intent-filter>
+                <action android:name="org.android.agoo.client.MessageReceiverService" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="com.umeng.message.NotificationProxyBroadcastReceiver"
+            android:exported="false" />
+
+        <service
+            android:name="com.umeng.message.UmengMessageCallbackHandlerService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE">
+            <intent-filter>
+                <action android:name="com.umeng.messge.registercallback.action" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.enablecallback.action" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.disablecallback.action" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.message.handler.action" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.message.sendmessage.action" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.umeng.message.UmengDownloadResourceService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <provider
+            android:name="com.umeng.message.provider.MessageProvider"
+            android:authorities="${applicationId}.umeng.message"
+            android:exported="false">
+            <grant-uri-permission android:pathPattern=".*" />
+        </provider>
+        <!-- 以下为基本配置信息，需要自行添加至您的AndroidManifest文件中 end-->
+    </application>
+
+</manifest>

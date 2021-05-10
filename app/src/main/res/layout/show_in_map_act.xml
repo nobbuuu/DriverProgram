@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".orderdetail.OrderDetailActivity">
+
+    <include
+        layout="@layout/layout_title_view"/>
+
+    <!--地图-->
+    <com.amap.api.maps.MapView
+        android:id="@+id/route_map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_title"/>
+
+    <!--抢单按钮-->
+    <LinearLayout
+        android:id="@+id/ll_grab_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_title"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_27"
+        android:background="@mipmap/ic_bg_grab_order_disable"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rob"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_21"
+            android:textStyle="bold"
+            android:includeFontPadding="false"
+            style="@style/text_bold_font_family" />
+
+        <TextView
+            android:id="@+id/tv_grab_order_reset_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15s"
+            android:layout_marginTop="-4dp"
+            android:includeFontPadding="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

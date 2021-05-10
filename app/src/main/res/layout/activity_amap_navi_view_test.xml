@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--导航图-->
+    <com.amap.api.navi.AMapNaviView
+        android:id="@+id/navi_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+
+    <!--顶部的指示-->
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:background="@color/black">
+
+        <!--自定义转向图标-->
+        <com.amap.api.navi.view.NextTurnTipView
+            android:id="@+id/myNextTurnTipView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_road_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/tv_trip_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_below="@id/tv_road_name"
+            android:layout_centerHorizontal="true"/>
+
+
+        <!--导航按钮-->
+        <TextView
+            android:id="@+id/tv_navi"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/white"
+            android:text="暂停导航"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_15"/>
+
+    </RelativeLayout>
+
+    <!--路口放大图-->
+    <com.amap.api.navi.view.ZoomInIntersectionView
+        android:id="@+id/myZoomInIntersectionView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:visibility="gone"
+        android:layout_below="@id/rl_top"/>
+
+    <TextView
+        android:id="@+id/tv_test"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_40"
+        android:text="重新规划"
+        android:layout_below="@id/rl_top"
+        android:gravity="center"
+        android:layout_toRightOf="@id/myDirectionView"/>
+
+    <!--自定义指南针-->
+    <com.amap.api.navi.view.DirectionView
+        android:id="@+id/myDirectionView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_below="@id/rl_top"/>
+
+
+    <!--自定义车道View -->
+    <com.amap.api.navi.view.DriveWayView
+        android:id="@+id/myDriveWayView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_below="@id/rl_top"/>
+
+
+    <!--自定义路况按钮-->
+    <com.amap.api.navi.view.TrafficButtonView
+        android:id="@+id/myTrafficButtonView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_below="@id/rl_top"/>
+
+
+    <!--自定义导航光柱-->
+    <com.amap.api.navi.view.TrafficProgressBar
+        android:id="@+id/myTrafficBar"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_200"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        />
+
+    <!-- 自定义全览按钮 -->
+    <com.amap.api.navi.view.OverviewButtonView
+        android:id="@+id/myOverviewButtonView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_15"
+        android:layout_marginBottom="@dimen/dp_15"/>
+
+    <!--自定义放大缩小按钮-->
+    <com.amap.api.navi.view.ZoomButtonView
+        android:id="@+id/myZoomButtonView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_15"
+        android:layout_marginBottom="@dimen/dp_15"
+        android:layout_above="@id/myOverviewButtonView"/>
+
+
+
+</RelativeLayout>

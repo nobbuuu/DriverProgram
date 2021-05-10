@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="@dimen/dp_136"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_4"
+        android:gravity="center"
+        android:background="@mipmap/bg_amap_navi_contact_popwindow">
+
+        <TextView
+            android:id="@+id/tv_contact_child"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:text="联系小孩"
+            android:gravity="center"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold"
+            style="@style/text_bold_font_family"
+            android:textColor="@color/maas_text_deep_gray"/>
+
+        <View
+            android:id="@+id/lineView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0_5"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:layout_marginRight="@dimen/dp_4"
+            android:background="@color/line_e5e5e5"/>
+
+        <TextView
+            android:id="@+id/tv_contact_parent"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:text="联系下单家长"
+            android:gravity="center"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold"
+            style="@style/text_bold_font_family"
+            android:textColor="@color/maas_text_deep_gray"/>
+    </LinearLayout>
+
+</RelativeLayout>

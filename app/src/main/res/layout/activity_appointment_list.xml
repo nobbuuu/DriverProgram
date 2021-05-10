@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c_e8eefa"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:src="@mipmap/arrow_black" />
+
+        <TextView
+            style="@style/text_bold_font_family"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/title_order_pool"
+            android:textColor="@color/maas_text_primary"
+            android:textSize="@dimen/sp_18" />
+
+    </FrameLayout>
+
+    <RadioGroup
+        android:id="@+id/tab_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/tab_children"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:button="@null"
+            android:checked="true"
+            android:drawableBottom="@drawable/tab_indicator"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:text="@string/tab_children_order"
+            android:textColor="@color/tab_text"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="@dimen/dp_0_5"
+            android:layout_height="@dimen/dp_14"
+            android:layout_gravity="center"
+            android:background="@color/c_cccccc" />
+
+        <RadioButton
+            android:id="@+id/tab_hall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:button="@null"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:text="@string/tab_appointment_hall"
+            android:textColor="@color/tab_text"
+            android:textSize="@dimen/sp_16" />
+
+        <View
+            android:layout_width="@dimen/dp_0_5"
+            android:layout_height="@dimen/dp_14"
+            android:layout_gravity="center"
+            android:background="@color/c_cccccc" />
+
+        <RadioButton
+            android:id="@+id/tab_unfinished"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:button="@null"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:text="@string/tab_appointment_unfinished"
+            android:textColor="@color/tab_text"
+            android:textSize="@dimen/sp_16"
+            android:visibility="gone" />
+
+        <View
+            android:layout_width="@dimen/dp_0_5"
+            android:layout_height="@dimen/dp_14"
+            android:layout_gravity="center"
+            android:background="@color/c_cccccc" />
+
+        <RadioButton
+            android:id="@+id/tab_accessibility"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:button="@null"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:text="@string/tab_accessibility"
+            android:textColor="@color/tab_text"
+            android:textSize="@dimen/sp_16" />
+
+        <View
+            android:layout_width="@dimen/dp_0_5"
+            android:layout_height="@dimen/dp_14"
+            android:layout_gravity="center"
+            android:background="@color/c_cccccc"
+            android:visibility="gone" />
+
+        <RadioButton
+            android:id="@+id/tab_finished"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:button="@null"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:text="@string/tab_appointment_finished"
+            android:textColor="@color/tab_text"
+            android:textSize="@dimen/sp_16"
+            android:visibility="gone" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/tab_tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:drawableStart="@mipmap/ic_hall_tips"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:text="@string/tips_appointment_hall"
+        android:textColor="@color/maas_text_primary"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.jcodecraeer.xrecyclerview.XRecyclerView
+            android:id="@+id/appointment_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"
+            android:visibility="visible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/book_order_list_item" />
+
+        <TextView
+            android:id="@+id/no_orders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableTop="@mipmap/order_list_empty"
+            android:drawablePadding="@dimen/dp_17"
+            android:gravity="center_horizontal"
+            android:textColor="@color/maas_text_deep_gray"
+            android:textSize="16sp"
+            tools:text="没有预约订单"
+            tools:visibility="gone" />
+
+    </FrameLayout>
+
+</LinearLayout>

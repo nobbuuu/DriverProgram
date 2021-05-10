@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".ordersetting.OrderSettingActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/dp_7">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="left|center"
+                android:padding="8dp"
+                android:src="@mipmap/arrow_black" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="@string/listen_setting"
+            android:textSize="@dimen/sp_18"
+            android:textColor="@color/maas_text_primary"
+            style="@style/text_bold_font_family"/>
+
+        <TextView
+            android:id="@+id/tv_save_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            android:paddingEnd="@dimen/dp_15"
+            android:text="@string/save"
+            android:textColor="@color/maas_text_blue"
+            android:textSize="@dimen/sp_18"
+            style="@style/text_bold_font_family"/>
+
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!--听单喜好-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_48"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@color/maas_bg_lighter_blue">
+
+                <View
+                    android:layout_width="@dimen/dp_2"
+                    android:layout_height="@dimen/dp_15"
+                    android:background="@color/maas_bg_blue"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="听单喜好"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:textColor="@color/maas_text_blue"
+                    android:textSize="@dimen/sp_16" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_15">
+
+                <LinearLayout
+                    android:id="@+id/ll_audio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/dp_16">
+
+                    <TextView
+                        android:id="@+id/tv_voice_open"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="听单播报"
+                        android:textColor="@color/maas_text_deep_gray"
+                        android:textSize="@dimen/sp_16"
+                        style="@style/text_bold_font_family"/>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
+                    <Switch
+                        android:id="@+id/sw_audio_setting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textOff="off"
+                        android:textOn="on"
+                        android:thumb="@drawable/switch_thumb"
+                        android:track="@drawable/switch_track" />
+                </LinearLayout>
+
+                <!--<View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0_5"
+                    android:background="@color/line_e5e5e5"/>
+-->
+            <!--    <LinearLayout
+                    android:id="@+id/ll_only_get_car_out_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/dp_16"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="只听出车预约单"
+                        android:textStyle="bold"
+                        style="@style/text_bold_font_family"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="" />
+
+                    <Switch
+                        android:id="@+id/sw_only_get_car_out_order"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textOff="off"
+                        android:textOn="on"
+                        android:thumb="@drawable/switch_thumb"
+                        android:track="@drawable/switch_track" />
+
+                </LinearLayout>-->
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0_5"
+                    android:background="@color/line_e5e5e5"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_only_car_get_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/dp_16">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/text_bold_font_family"
+                        android:text="只听收车单"
+                        android:textColor="@color/maas_text_deep_gray"
+                        android:textSize="@dimen/sp_16"/>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
+                    <Switch
+                        android:id="@+id/sw_only_get_car_home_order"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textOff="off"
+                        android:textOn="on"
+                        android:thumb="@drawable/switch_thumb"
+                        android:track="@drawable/switch_track" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/line_get_cargo_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0_5"
+                    android:background="@color/line_e5e5e5"
+                    android:visibility="gone"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_get_cargo_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/dp_16"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="收听货拼客单"
+                        android:textStyle="bold"
+                        style="@style/text_bold_font_family"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="" />
+
+                    <Switch
+                        android:id="@+id/sw_get_cargo_order"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textOff="off"
+                        android:textOn="on"
+                        android:thumb="@drawable/switch_thumb"
+                        android:track="@drawable/switch_track" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--听单类型-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_48"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@color/maas_bg_lighter_blue">
+
+                <View
+                    android:layout_width="@dimen/dp_2"
+                    android:layout_height="@dimen/dp_15"
+                    android:background="@color/maas_bg_blue"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="听单类型"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:textColor="@color/maas_text_blue"
+                    android:textSize="@dimen/sp_16" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_15">
+
+                <LinearLayout
+                    android:id="@+id/ll_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/dp_16"
+                    android:paddingLeft="@dimen/dp_8"
+                    android:paddingRight="@dimen/dp_8"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="听单时间"
+                        android:textStyle="bold"
+                        style="@style/text_bold_font_family"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/order_type_time_realtime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_ring_gray"
+                            android:paddingHorizontal="@dimen/dp_14"
+                            android:paddingVertical="@dimen/dp_6"
+                            android:text="实时"
+                            android:textColor="@color/text_black"
+                            android:textSize="@dimen/sp_14"
+                            android:textStyle="bold"
+                            style="@style/text_bold_font_family"/>
+
+                        <TextView
+                            android:id="@+id/order_type_time_book"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="@dimen/dp_14"
+                            android:paddingVertical="@dimen/dp_6"
+                            android:text="预约"
+                            android:textColor="@color/text_black"
+                            android:textSize="@dimen/sp_14"
+                            android:textStyle="bold"
+                            style="@style/text_bold_font_family"/>
+
+                        <TextView
+                            android:id="@+id/order_type_time_all"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="@dimen/dp_14"
+                            android:paddingVertical="@dimen/dp_6"
+                            android:text="全部"
+                            android:textColor="@color/text_black"
+                            android:textSize="@dimen/sp_14"
+                            android:textStyle="bold"
+                            style="@style/text_bold_font_family"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0_5"
+                    android:background="@color/maas_divider"
+                    android:visibility="invisible" />
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/ll_carpool"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/dp_14">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="是否拼车"
+                        android:textSize="@dimen/sp_16"
+                        android:textStyle="bold"
+                        android:textColor="@color/maas_text_deep_gray"
+                        style="@style/text_bold_font_family"/>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_ring_gray"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/dp_1">
+
+                        <TextView
+                            android:id="@+id/order_type_carpool"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="@dimen/dp_14"
+                            android:paddingVertical="@dimen/dp_6"
+                            android:text="拼车"
+                            android:textColor="@color/maas_text_deep_gray"
+                            android:textSize="@dimen/sp_14"
+                            android:textStyle="bold"
+                            style="@style/text_bold_font_family"/>
+
+                        <TextView
+                            android:id="@+id/order_type_no_carpool"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/text_bold_font_family"
+                            android:paddingVertical="@dimen/dp_6"
+                            android:paddingLeft="@dimen/dp_8"
+                            android:paddingRight="@dimen/dp_6"
+                            android:text="不拼车"
+                            android:textColor="@color/maas_text_deep_gray"
+                            android:textSize="@dimen/sp_14"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/order_type_all"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/text_bold_font_family"
+                            android:paddingHorizontal="@dimen/dp_14"
+                            android:paddingVertical="@dimen/dp_6"
+                            android:text="全部"
+                            android:textColor="@color/maas_text_deep_gray"
+                            android:textSize="@dimen/sp_14"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0_5"
+                    android:background="@color/line_e5e5e5" />
+
+                <LinearLayout
+                    android:id="@+id/ll_radius"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/dp_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/text_bold_font_family"
+                        android:text="实时听单范围（公里）"
+                        android:textSize="@dimen/sp_16"
+                        android:textColor="@color/maas_text_deep_gray"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_ring_gray"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/dp_18"
+                    android:paddingVertical="@dimen/dp_1">
+
+                    <TextView
+                        android:id="@+id/order_distance_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:layout_weight="1"
+                        style="@style/text_bold_font_family"
+                        android:gravity="center"
+                        android:paddingHorizontal="@dimen/dp_18"
+                        android:paddingVertical="@dimen/dp_6"
+                        android:text="2"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/sp_14"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/order_distance_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        style="@style/text_bold_font_family"
+                        android:gravity="center"
+                        android:paddingHorizontal="@dimen/dp_18"
+                        android:paddingVertical="@dimen/dp_6"
+                        android:text="3"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/sp_14"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/order_distance_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        style="@style/text_bold_font_family"
+                        android:gravity="center"
+                        android:paddingHorizontal="@dimen/dp_18"
+                        android:paddingVertical="@dimen/dp_6"
+                        android:text="4"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/sp_14"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/order_distance_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        style="@style/text_bold_font_family"
+                        android:gravity="center"
+                        android:paddingHorizontal="@dimen/dp_18"
+                        android:paddingVertical="@dimen/dp_6"
+                        android:text="5"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/sp_14"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/order_distance_3_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="1dp"
+                        android:layout_weight="1"
+                        style="@style/text_bold_font_family"
+                        android:gravity="center"
+                        android:paddingHorizontal="@dimen/dp_14"
+                        android:paddingVertical="@dimen/dp_6"
+                        android:text="默认3.5"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/sp_14"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--收车地址-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_48"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@color/maas_bg_lighter_blue">
+
+                <View
+                    android:layout_width="@dimen/dp_2"
+                    android:layout_height="@dimen/dp_15"
+                    android:background="@color/maas_bg_blue"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="收车地址"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:textColor="@color/maas_text_blue"
+                    android:textSize="@dimen/sp_16" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15"
+                android:paddingBottom="@dimen/dp_15">
+
+                <RelativeLayout
+                    android:id="@+id/rl_have_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_20">
+
+                    <TextView
+                        android:id="@+id/tv_address_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/tv_change_address"
+                        style="@style/text_bold_font_family"
+                        android:text="地址名字"
+                        android:textColor="@color/maas_text_primary"
+                        android:textSize="@dimen/sp_16" />
+
+                    <TextView
+                        android:id="@+id/tv_address_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_address_name"
+                        android:layout_marginTop="@dimen/dp_3"
+                        android:layout_toLeftOf="@+id/tv_change_address"
+                        android:text="地址描述"
+                        android:textColor="@color/maas_text_deep_gray"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/tv_change_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:paddingTop="@dimen/dp_5"
+                        android:paddingBottom="@dimen/dp_5"
+                        android:drawablePadding="@dimen/dp_5"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:drawableStart="@mipmap/order_setting_ic_edit_address"
+                        android:gravity="center"
+                        android:text="修改"
+                        android:textSize="@dimen/sp_16"
+                        android:textColor="@color/maas_text_blue" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_add_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="添加收车地址"
+                    android:textSize="@dimen/sp_16"
+                    android:padding="@dimen/dp_10"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:textColor="@color/maas_text_blue"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="gone"
+                    android:drawableLeft="@mipmap/ic_order_setting_add_address"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

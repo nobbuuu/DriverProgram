@@ -1,0 +1,407 @@
+<resources>
+    <!--<string name="app_name">鹏电叫车</string>-->
+
+    <!--订单类型-->
+    <string name="order_type_realtime">实时订单</string>
+    <string name="order_type_realtime_capool">实时拼车</string>
+    <string name="order_type_book">预约订单</string>
+    <string name="order_type_cargo_passenger">货拼客单</string>
+    <string name="order_type_cargo">货单</string>
+    <string name="order_type_send_student">送你上学</string>
+
+    <!--订单状态-->
+    <string name="order_status_unpaid">未支付</string>
+    <string name="order_status_rejected">未匹配到车辆</string>
+    <string name="order_status_to_be_paid">待支付</string>
+    <string name="order_status_paid">待出行</string>
+    <string name="order_status_get_on">已乘车</string>
+    <string name="order_status_get_off">已下车</string>
+    <string name="order_status_reviewed">已完成</string>
+    <string name="order_status_canceled">已取消</string>
+    <string name="order_status_unknown">状态异常</string>
+
+    <!--订单取消-->
+    <string name="cancel_reason">取消原因</string>
+    <string name="confirm_cancel">确认取消</string>
+    <string name="please_select_the_reason_for_cancellation">请选择取消原因</string>
+    <string name="add_cancellation_voucher">添加取消凭证</string>
+    <string name="order_cancelled_by_passengers">乘客取消</string>
+    <string name="order_cancelled_by_driver">司机取消</string>
+    <string name="order_cancelled_by_platform">平台公司</string>
+
+    <!--订单操作流程相关-->
+    <string name="order_detail">订单详情</string>
+    <string name="order_detail_get_on_address_decorate">去&#160; %s &#160;接乘客</string>
+    <string name="order_detail_get_off_address_decorate">送乘客到&#160;</string>
+    <string name="order_detail_cargo_get_off_address_decorate">送货到&#160;</string>
+    <string name="order_detail_rest_time_prefix">，预计需要</string>
+    <string name="order_detail_confirmed_get_on_photos_by_parent">家长已确认上车照片</string>
+    <string name="order_detail_confirmed_get_off_photos_by_parent">家长已确认下车照片</string>
+    <string name="order_detail_confirmed_get_off_photos_by_customer_service">客服已确认照片</string>
+    <string name="order_detail_total_time_prefix">全程耗时&#160;</string>
+    <string name="order_detail_total_time_prefix_2">行程总耗时&#160;</string>
+    <string name="order_detail_tips_arrive_at_get_on_before_time">请在&#160;%s&#160;前到达上车地点</string>
+    <string name="order_detail_tips_waiting_for_passengers_time">等待乘客上车，已等待</string>
+    <string name="order_detail_to_pick_up_passengers">去接乘客</string>
+    <string name="format_order_detail_to_pick_up_passengers_carpool_order">去%s接乘客(%s)</string>
+    <string name="arrive_at_get_on_address">到达上车地点</string>
+    <string name="format_arrive_at_get_on_address_carpool_order">确认到达上车地点-%s</string>
+    <string name="arrive_at_get_on_address_not_yet">提前2小时可开启</string>
+    <string name="waiting_for_passengers_to_get_on">等待乘客上车</string>
+    <string name="receiving_passengers">接到乘客</string>
+    <string name="to_deliver_passengers">去送乘客</string>
+    <string name="arrive_at_get_off_address">到达目的地</string>
+    <string name="order_completed">订单已完成</string>
+    <string name="order_cancelled">订单已取消</string>
+    <string name="delivering">送货中</string>
+    <string name="goods">货物</string>
+    <string name="receiving_user_last_number">收货用户尾号</string>
+    <string name="goods_need_to_be_delivered">需将货物送达</string>
+    <string name="goods_need_to_be_delivered_2">内需将货物送达</string>
+    <string name="arrival_at_receiving_place">到达收货地点</string>
+    <string name="take_a_picture_of_passengers_get_on">拍摄乘客上车照片</string>
+    <string name="format_take_a_picture_of_passengers_get_on_carpool_order">拍摄乘客(%s)上车照片</string>
+    <string name="take_a_picture_of_passengers_get_off">拍摄乘客下车照片</string>
+    <string name="format_take_a_picture_of_passengers_get_off_carpool_order">拍摄乘客(%s)下车照片</string>
+    <string name="to_pay">去支付</string>
+    <string name="parents_not_pay">家长未支付</string>
+    <string name="waiting_for_parents_to_confirm">等待家长确认</string>
+    <string name="waiting_for_parents_to_confirm_the_get_on_photo">等待家长确认上车照片</string>
+    <string name="waiting_for_parents_to_confirm_the_get_off_photo">等待家长确认下车照片</string>
+    <string name="get_on_location_more_than_limit_tips">当前位置距离乘客下单地点较远，请确认已到达上车点。</string>
+    <string name="get_on_location_confirm_tips">请确认已到达上车地点，提前点击将面临乘客投诉，并承担违规处罚。</string>
+    <string name="get_off_location_more_than_limit_tips">当前位置距离乘客下单目的地较远，请确认已到达目的地。</string>
+    <string name="get_on_location_waiting_tips">已到达上车地点，等待乘客上车</string>
+    <string name="voice_prompt_arrive_at_destination">已到达目的地，请乘客带好随身物品后下车</string>
+    <string name="voice_prompt_waiting_passenger_get_on">您已到达上车地点，请等待乘客上车</string>
+    <string name="voice_prompt_passenger_get_on">乘客已上车，请安全驾驶并前往目的地</string>
+    <string name="voice_prompt_driver_read_tips">请阅读注意事项后开始听单</string>
+
+    <!--    //小孩单-->
+    <!--    public final static int VOICE_PROMPT_WAITING_DRIVER_TAKE_PHOTO_FOR_GET_ON = 113; //语音播报 - 您已到达上车地点，请等待乘客上车并拍摄照片
+        public final static int VOICE_PROMPT_GO_TO_DESTINATION = 114; //语音播报 - 家长已确认照片，请安全驾驶并前往目的地
+        public final static int VOICE_PROMPT_WATTING_PASSENGER_CONFIRM_GET_ON_PHOTO= 115; //语音播报 - 您已完成拍照，请等待家长确认上车照片
+        public final static int VOICE_PROMPT_WATTING_PASSENGER_CONFIRM_GET_OFF_PHOTO= 116; //语音播报 - 您已完成拍照，请等待家长确认下车照片-->
+
+    <string name="voice_prompt_take_get_on_photo">您已到达上车地点，请等待乘客上车并拍摄照片</string>
+    <string name="voice_prompt_go_to_destination">家长已确认上车照片，请安全驾驶并前往目的地</string>
+    <string name="voice_prompt_waiting_confirm_get_on_photo">您已完成拍照，请等待家长确认上车照片</string>
+    <string name="voice_prompt_waiting_confirm_get_off_photo">您已完成拍照，请等待家长确认下车照片</string>
+
+    <!--确认账单-->
+    <string name="header_pay_main">确认账单</string>
+    <string name="payment_amount">支付金额</string>
+    <string name="tips_payment_amount">请确保乘客完成支付后再下车</string>
+    <string name="hint_fare">计价器金额</string>
+    <string name="hint_other_fee">停车费等</string>
+    <string name="submit_bill">提交账单</string>
+    <string name="passengers_have_paid_offline">乘客已线下支付</string>
+
+    <!--行程详情页-->
+    <string name="trip_detail">行程详情</string>
+    <string name="passenger_info">乘客信息</string>
+    <string name="rider">乘车人</string>
+    <string name="leaving_message">留言</string>
+    <string name="passenger_avatar">乘客头像</string>
+    <string name="get_on_photo">上车照片</string>
+    <string name="get_off_photo">下车照片</string>
+    <string name="transfer_order">转单</string>
+    <string name="cancel_order">取消订单</string>
+    <string name="order_type">订单类型</string>
+    <string name="trip_end">行程结束</string>
+    <string name="trip_end_status_passenger_not_paid">乘客未支付&#160;(元)</string>
+    <string name="trip_end_status_parent_not_paid">家长未支付&#160;(元)</string>
+    <string name="trip_end_status_paid">已完成支付&#160;(元)</string>
+    <string name="complete_to_listen">完成，继续听单</string>
+    <string name="payment_dispute_with_brackets">(支付争议)</string>
+    <string name="person_number_with_brackets">(%s人)</string>
+    <string name="to_deliver_goods">去送货</string>
+    <string name="passenger_not_paid">乘客未支付</string>
+    <string name="goods_delivered">货物已送达</string>
+    <string name="goods_canceled">货单已取消</string>
+
+    <!--登陆页-->
+    <string name="login_welcome_tips1">师傅你好，</string>
+    <string name="login_welcome_tips2">欢迎来到</string>
+    <string name="login_welcome_tips3">麦诗鹏电司机</string>
+    <string name="login_username_edit_text_hint">请输入从业资格证准许证号</string>
+    <string name="login_pwd_edit_text_hint">请输入密码</string>
+    <string name="forget_pwd">忘记密码</string>
+    <string name="login">登录</string>
+    <string name="relogin">去登录</string>
+    <string name="relogin_hint">您的信息已发生变更，请重新登录</string>
+
+    <!--听单页-->
+    <string name="main_title">麦诗鹏电</string>
+    <string name="main_no_bind_car">未绑定车辆</string>
+    <string name="main_no_bind_car_tips">您暂时未绑定车辆，请联系车队长绑定车辆</string>
+    <string name="main_today_time_unit">听单时长(小时)</string>
+    <string name="main_today_order_number_unit">客单(单)</string>
+    <string name="main_today_order_income_unit">客单收入(元)</string>
+    <string name="main_order_list_empty">暂无待服务订单</string>
+    <string name="listen_setting">听单设置</string>
+    <string name="main_listening">听单中</string>
+    <string name="main_rest">休息</string>
+
+    <!--设置页-->
+    <string name="modify_pwd">修改密码</string>
+    <string name="modify_pwd_tips">密码为6-16位字符，可包括大写字母、小写字母、数字</string>
+    <string name="modify_pwd_old_pwd_hint">输入旧密码</string>
+    <string name="modify_pwd_new_pwd_hint">输入新密码</string>
+    <string name="modify_pwd_new_pwd_again_hint">再次输入新密码</string>
+    <string name="confirm_modify">确认修改</string>
+
+
+    <!--dialog-->
+    <string name="dialog_msg_calculate_fee_1">已经到用车时间，您可以开始打表计价了</string>
+    <string name="dialog_msg_calculate_fee_2">乘客已上车，您可以开始打表计价了</string>
+    <string name="dialog_virtual_call_title">手机号码保护中</string>
+    <string name="dialog_virtual_call_content">麦诗鹏电为您提供号码保护，呼叫过程中您和对方的手机号码都是虚拟号码</string>
+    <string name="dialog_forget_pwd_content">请联系客服重置密码</string>
+    <string name="dialog_msg_waiting_for_passenger_less_than_limit_minutes_to_cancel">等待乘客超过5分钟后您可以无责取消订单，请继续等待乘客</string>
+    <string name="dialog_msg_gps_not_open">定位服务不可用，请打开系统定位服务</string>
+    <string name="dialog_msg_order_overtime">您有一个订单长时间未完成,请尽快完成避免影响听单</string>
+
+
+    <!--弹窗消息的语音播报-->
+    <string name="dialog_voice_msg_cancel_order">乘客已取消订单，请尽快查看订单详情</string>
+    <string name="dialog_voice_msg_change_addr">乘客已修改下车点，请尽快查看订单详情</string>
+    <string name="dialog_voice_msg_system_cancel_order">系统自动取消订单，请尽快查看订单详情</string>
+    <string name="dialog_voice_msg_adnormal_cancel_order">系统异常结束订单，请尽快查看订单详情</string>
+    <string name="dialog_voice_msg_cancel_cargo_order">货单已取消，请尽快查看订单详情</string>
+    <string name="dialog_voice_msg_cancel_appointment">订单已取消，请尽快查看订单详情</string>
+    <string name="dialog_voice_msg_controversy_order">订单已更新成支付争议状态，请尽快查看订单详情</string>
+
+    <!--toast-->
+    <string name="toast_system_maintenance">系统维护中</string>
+    <string name="toast_net_error">当前网络不可用</string>
+    <string name="toast_phone_number_is_empty">电话号码获取失败，请稍后重试</string>
+    <string name="toast_get_order_info_fail">订单信息获取失败</string>
+    <string name="toast_avatar_is_empty">乘客未上传头像</string>
+    <string name="toast_order_not_exist">订单不存在</string>
+    <string name="toast_login_status_has_expired">登录状态已失效，请重新登录</string>
+    <string name="toast_not_action_call_permission">没有拨打电话的权限</string>
+    <string name="toast_get_customer_service_phone_error">还没有接通客服，联系车队长试试吧</string>
+    <string name="toast_modify_pwd_success_to_login">密码修改成功，请重新登录</string>
+    <string name="toast_please_stop_listening_and_switch_vehicles">请暂停听单后再切换车辆</string>
+    <string name="toast_please_complete_order_and_switch_vehicles">请完成订单后再切换车辆</string>
+    <string name="toast_not_bind_vehicle">未绑定车辆</string>
+    <string name="toast_please_select_vehicle">请选择车辆</string>
+    <string name="toast_please_add_car_address">请先添加收车地址</string>
+    <string name="toast_vehicle_disabled">车辆已停用</string>
+    <string name="toast_vehicle_and_driver_account_not_match">车辆和司机账号不匹配</string>
+    <string name="toast_failed_to_read_listening_order_settings">听单设置读取失败</string>
+    <!--取消订单-->
+    <string name="toast_please_select_cancel_reason">请选择取消原因</string>
+    <string name="toast_please_add_cancellation_voucher">请添加取消凭证</string>
+    <string name="toast_please_enter_valid_fare">请输入有效车费</string>
+    <string name="toast_cancel_order_success">取消订单成功</string>
+
+    <!--异常结束订单-->
+    <string name="toast_exception_finish_order_success">异常结束订单成功</string>
+    <string name="toast_exception_finish_order_fail">异常结束订单失败</string>
+
+    <!--拍照-->
+    <string name="toast_need_camera_permission">请授予相机权限</string>
+    <string name="toast_picture_crop_fail">图片裁剪失败，请重新提交</string>
+    <string name="toast_picture_compress_fail">图片压缩失败，请重新提交</string>
+    <string name="toast_parents_have_authorized_automatic_photo_confirmation">家长已授权自动确认照片</string>
+    <string name="toast_picture_upload_success">照片上传成功</string>
+    <string name="toast_picture_upload_fail">照片上传失败</string>
+    <string name="toast_picture_recommit_success">照片重新提交成功</string>
+    <!--地图-->
+    <string name="toast_navi_init_fail">导航初始化失败</string>
+    <string name="toast_navi_calculate_route_fail">导航路线规划失败</string>
+    <string name="toast_map_drive_route_search_fail">路线规划失败</string>
+
+    <!--其他（通用）-->
+    <string name="digits">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="order_info">订单信息</string>
+    <string name="i_got_it">我知道了</string>
+    <string name="call">呼叫</string>
+    <string name="km">公里</string>
+    <string name="m">米</string>
+    <string name="contact_customer_service">联系客服</string>
+    <string name="confirm_arrival">确认到达</string>
+    <string name="cancel">取消</string>
+    <string name="surplus">剩余</string>
+    <string name="hour">小时</string>
+    <string name="minute">分钟</string>
+    <string name="second">秒</string>
+    <string name="contact_children">联系小孩</string>
+    <string name="contact_parent">联系下单家长</string>
+    <string name="passenger_tail_number">乘客尾号</string>
+    <string name="slide_view_default_text">滑动确认</string>
+    <string name="slide_view_default_complete_text">松开即可确认</string>
+    <string name="estimate">预计</string>
+    <string name="total">总计</string>
+    <string name="total_cost">费用总计</string>
+    <string name="fare">车费</string>
+    <string name="other">其他</string>
+    <string name="service_charge">服务费</string>
+    <string name="order_number">订单编号</string>
+    <string name="rmb">元</string>
+    <string name="enter">进入</string>
+    <string name="exit">退出</string>
+    <string name="navi_continue">继续导航</string>
+    <string name="overview">全览</string>
+    <string name="exit_overview">退出全览</string>
+    <string name="setting">设置</string>
+    <string name="ok">确定</string>
+    <string name="save">保存</string>
+    <string name="close">关闭</string>
+    <string name="select_vehicle">选择车辆</string>
+    <string name="amap_navi_voice_tips_on_background">高德地图持续为您导航</string>
+    <string name="edit_success">修改成功</string>
+    <string name="go_open">去开启</string>
+    <string name="main_order_header_name_cargo">速运速行</string>
+    <string name="check_map">查看地图</string>
+    <string name="rob">抢</string>
+    <string name="order_overtime">订单超时</string>
+    <string name="view_details">查看详情</string>
+
+    <string name="order_empty">~没有订单，点击刷新~</string>
+    <string name="order_empty_no_refresh">没有订单</string>
+    <string name="data_is_empty">~没有数据，点击刷新~</string>
+    <string name="data_is_empty_no_refresh">~没有数据~</string>
+    <string name="order_contact_passenger">联系乘客</string>
+    <string name="order_contact_parent">联系家长</string>
+    <string name="order_phone_call">呼叫</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+
+    <string name="data_empty">~没有数据，点击刷新~</string>
+    <string name="data_empty_no_refresh">没有数据</string>
+
+    <string name="dialog_start_listen_order_msg1">尊敬的师傅们:
+        \n\t\t\t\t为了您和他人的安全，请确认手机摆放位置是在方向盘右侧即仪表台中间区域。并严格遵守《深圳经济特区道路交通安全违法行为处罚条例》的相关规定，在车辆行驶过程中：</string>
+    <string name="dialog_start_listen_order_msg2">1、不手动操作移动电话、电子设备或其他妨碍安全驾驶行为；
+        \n2、不持续操作电子设备超过一定时间；
+        \n3、不多次频繁操作电子设备；
+        \n4、不使用电子设备观看与驾驶无关的内容；
+        \n5、在保证安全驾驶的情况下迅速点击导航、用耳机接听拨打电话、秒接营运业务单。
+    </string>
+
+    <string name="tips_before_listen_order">尊敬的师傅们:
+        \n\t\t\t\t为了您和他人的安全，请确认手机摆放位置是在方向盘右侧即仪表台中间区域。并严格遵守《深圳经济特区道路交通安全违法行为处罚条例》的相关规定，在车辆行驶过程中：
+        \n1、不手动操作移动电话、电子设备或其他妨碍安全驾驶行为；
+        \n2、不持续操作电子设备超过一定时间；
+        \n3、不多次频繁操作电子设备；
+        \n4、不使用电子设备观看与驾驶无关的内容。
+        \n5、在保证安全驾驶的情况下迅速点击导航、用耳机接听拨打电话、秒接营运业务单。</string>
+
+    <!--调试弹窗-->
+    <string name="developer_dialog_send_log_file">发送日志</string>
+    <string name="developer_dialog_view_log">查看日志内容</string>
+    <string name="developer_dialog_open_developer_options">开发者选项</string>
+    <string name="developer_dialog_open_app_settings">打开应用设置</string>
+    <string name="developer_dialog_restart_app">重启应用</string>
+    <string name="developer_dialog_dismiss">关闭对话框</string>
+    <string name="message_expired">消息已过期</string>
+
+    <!--apk更新下载-->
+    <string name="title_new_version_available">发现新版本</string>
+    <string name="action_install_now">现在安装</string>
+    <string name="title_new_version_downloaded">新版本已准备就绪</string>
+    <string name="action_download">下载</string>
+    <string name="title_download_update">下载新版本</string>
+    <string name="tips_new_version_is_downloading">正在下载新版本安装包，您可以关闭此对话框，下载完成后将通知您安装。</string>
+    <string name="action_stop_download">停止</string>
+    <string name="action_dismiss_download">关闭</string>
+    <string name="format_download_update_failed">更新出错 (%d)</string>
+    <string name="downloading_installation_package">正在下载安装包</string>
+    <string name="have_wait_pay_order">乘客仍未支付订单，请提醒乘客支付</string>
+
+    <string name="exclude">广东省深圳市</string>
+
+    <string name="title_appointment_list">预约订单</string>
+    <string name="tab_appointment_hall">预约订单</string>
+    <string name="tab_children_order">送你上学订单</string>
+    <string name="tips_appointment_hall">所有的预约单都会显示在预约单大厅，需要您自行抢单</string>
+    <string name="tab_appointment_unfinished">已抢预约单</string>
+    <string name="tab_accessibility">无障碍订单</string>
+    <string name="tips_appointment_unfinished">已完成的预约单请到历史订单中查看，当日的预约单会显示在听单页</string>
+    <string name="tab_appointment_finished">已完成</string>
+
+    <string name="action_grab_order">抢单</string>
+    <string name="tips_grabbing_order">抢单中</string>
+
+    <string name="action_start_order">开始订单</string>
+    <string name="remark_start_order">提前2小时可开启</string>
+    <string name="action_arrive_destination">到达目的地</string>
+
+    <string name="tips_confirm_arrival_destination">请到达目的地后点击，确认到达?</string>
+
+    <string name="title_my_vehicle">我的车辆</string>
+    <string name="action_add_vehicle">添加车辆</string>
+    <string name="action_modify_vehicle_number">修改车牌号</string>
+    <string name="action_delete_vehicle">删除车辆</string>
+    <string name="tips_confirm_delete_vehicle">删除车辆将不能再使用车辆执行订单，确定删除？</string>
+
+    <string name="vehicle_list_empty">您暂时没有车辆，请添加车辆</string>
+
+    <string name="title_shift_info">个人信息</string>
+    <string name="label_mobile_phone">手机号码</string>
+    <string name="label_shift_turnover_time_day">早交接班时间</string>
+    <string name="label_shift_turnover_time_night">晚交接班时间</string>
+    <string name="label_shift_turnover_address_day">早交接班地址</string>
+    <string name="label_shift_turnover_address_night">晚交接班地址</string>
+    <string name="label_mailing_address">在深居住地址</string>
+    <string name="label_select_shift_address">请添加地址</string>
+    <string name="label_select_shift_time">请添加时间</string>
+    <string name="action_modify_turnover_address_day">修改早交接班地址</string>
+    <string name="action_modify_turnover_address_night">修改晚交接班地址</string>
+    <string name="action_modify_mailing_address">修改在深居住地址</string>
+
+    <string name="title_edit_phone_number">修改手机号</string>
+    <string name="hint_input_new_phone_number">请输入新的手机号</string>
+    <string name="title_turnover_time">交接班时间</string>
+
+    <string name="action_bound_vehicle">去绑定</string>
+    <string name="tips_no_vehicle_bound_now">您还没有绑定车辆，请先绑定车辆，否则您将无法抢单。</string>
+
+    <string name="hint_input_address_keyword">请输入要搜索的地址</string>
+
+    <string name="title_my_wallet">我的钱包</string>
+    <string name="action_withdraw_to_wechat">提现到微信</string>
+    <string name="tab_wallet_all">全部</string>
+    <string name="tab_wallet_income">收入</string>
+    <string name="tab_wallet_expense">支出</string>
+
+    <string name="title_bind_wechat">绑定微信</string>
+    <string name="tips_bind_wechat_to_withdraw">您还未绑定微信，需要绑定微信后方可进行提现。</string>
+    <string name="action_bind_wechat">确认绑定</string>
+
+    <string name="title_withdraw">提现到微信</string>
+    <string name="tips_change_wechat">如需更换微信，请联系公司客服。</string>
+    <string name="label_withdraw_amount">提现金额</string>
+    <string name="hint_please_input_withdraw_amount">请输入提现金额</string>
+    <string name="format_withdraw_amount_at_most">可提余额：%s元</string>
+    <string name="action_withdraw">确认提现</string>
+
+    <string name="title_notification_list">系统消息</string>
+    <string name="title_order_pool">抢单池</string>
+
+    <string name="tips_guide_page_1">1.预约单更名为抢单池\n2.可以抢预约订单和送你上学订单\n3.请来这里查看哟~~</string>
+    <string name="tips_guide_page_2">消息到了个人中心哟~~</string>
+    <string name="action_guide_page_next">下一步</string>
+    <string name="action_guide_page_done">我知道了</string>
+
+    <string name="label_carpooling_order">拼车</string>
+    <string name="label_carpooling_address">拼车行程</string>
+
+    <string name="title_carpool_order_info">拼单信息</string>
+
+</resources>

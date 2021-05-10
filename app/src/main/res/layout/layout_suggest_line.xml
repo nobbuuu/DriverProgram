@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.haylion.android.percentextended.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_suggest_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_7"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/bg_light_blue"
+        android:paddingLeft="@dimen/dp_8"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_suggest_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_8"
+            android:background="@mipmap/ic_suggest_line"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:text="建议行驶顺序"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:id="@+id/tv_suggest_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_suggest_header"
+            android:padding="@dimen/dp_12"
+            android:text="—>"
+            android:textSize="@dimen/sp_13" />
+    </RelativeLayout>
+
+
+</com.haylion.android.percentextended.PercentLinearLayout>

@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_112"
+        android:paddingTop="@dimen/dp_11"
+        android:paddingBottom="@dimen/dp_11"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_congestion"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="@dimen/dp_4"
+            android:layout_weight="1"
+            android:background="@drawable/bg_blue_round_3dp">
+
+            <ImageView
+                android:id="@+id/iv_congestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_amap_navi_setting_congestion_selected"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_19"/>
+
+            <TextView
+                android:id="@+id/tv_congestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="躲避拥堵"
+                android:textSize="@dimen/sp_14"
+                android:textStyle="bold"
+                style="@style/text_bold_font_family"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/iv_congestion"
+                android:layout_marginTop="@dimen/dp_4"
+                android:textColor="@color/white"/>
+
+            <ImageView
+                android:id="@+id/iv_congestion_select_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_amap_navi_setting_select_sign"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_cost"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="@dimen/dp_4"
+            android:layout_weight="1"
+            android:background="@drawable/bg_grey_round_3dp">
+
+            <ImageView
+                android:id="@+id/iv_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_amap_navi_setting_cost"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_19"/>
+
+            <TextView
+                android:id="@+id/tv_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="避免收费"
+                android:textSize="@dimen/sp_14"
+                android:textStyle="bold"
+                style="@style/text_bold_font_family"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/iv_cost"
+                android:layout_marginTop="@dimen/dp_4"
+                android:textColor="@color/text_black"/>
+
+            <ImageView
+                android:id="@+id/iv_cost_select_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_amap_navi_setting_select_sign"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_avoid_high_speed"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="@dimen/dp_4"
+            android:layout_weight="1"
+            android:background="@drawable/bg_grey_round_3dp">
+
+            <ImageView
+                android:id="@+id/iv_avoid_high_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_amap_navi_setting_avoid_high_speed"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_19"/>
+
+            <TextView
+                android:id="@+id/tv_avoid_high_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="不走高速"
+                android:textSize="@dimen/sp_14"
+                android:textStyle="bold"
+                style="@style/text_bold_font_family"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/iv_avoid_high_speed"
+                android:layout_marginTop="@dimen/dp_4"
+                android:textColor="@color/text_black"/>
+
+            <ImageView
+                android:id="@+id/iv_avoid_high_speed_select_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_amap_navi_setting_select_sign"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_high_speed"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="@dimen/dp_4"
+            android:layout_weight="1"
+            android:background="@drawable/bg_grey_round_3dp">
+
+            <ImageView
+                android:id="@+id/iv_high_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_amap_navi_setting_high_speed"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_19"/>
+
+            <TextView
+                android:id="@+id/tv_high_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="高速优先"
+                android:textSize="@dimen/sp_14"
+                android:textStyle="bold"
+                style="@style/text_bold_font_family"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/iv_high_speed"
+                android:layout_marginTop="@dimen/dp_4"
+                android:textColor="@color/text_black"/>
+
+            <ImageView
+                android:id="@+id/iv_high_speed_select_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_amap_navi_setting_select_sign"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_10"
+        android:background="@color/c_F0F0F0"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="语音播报"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_15"
+        android:textSize="@dimen/sp_17"
+        android:textColor="@color/text_black"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_17"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_broadcast_detail"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginRight="@dimen/dp_5"
+            android:background="@drawable/kuang_mass_blue_round_2dp_width_1dp">
+
+            <TextView
+                android:id="@+id/tv_broadcast_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/maas_text_blue"
+                android:text="详细播报"
+                android:layout_centerInParent="true"
+                android:textSize="@dimen/sp_16"/>
+
+            <ImageView
+                android:id="@+id/iv_broadcast_detail_select_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_amap_navi_setting_select_sign2"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_broadcast_concise"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginRight="@dimen/dp_5"
+            android:background="@drawable/kuang_cccccc_round_2dp_width_1dp">
+
+            <TextView
+                android:id="@+id/tv_broadcast_concise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_black"
+                android:text="简洁播报"
+                android:layout_centerInParent="true"
+                android:textSize="@dimen/sp_16"/>
+
+            <ImageView
+                android:id="@+id/iv_broadcast_concise_select_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_amap_navi_setting_select_sign2"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_broadcast_none"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginRight="@dimen/dp_5"
+            android:background="@drawable/kuang_cccccc_round_2dp_width_1dp">
+
+            <TextView
+                android:id="@+id/tv_broadcast_none"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_black"
+                android:text="静音"
+                android:layout_centerInParent="true"
+                android:textSize="@dimen/sp_16"/>
+
+            <ImageView
+                android:id="@+id/iv_broadcast_none_select_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_amap_navi_setting_select_sign2"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/c_F0F0F0"/>
+
+    <TextView
+        android:id="@+id/tv_confirm"
+        android:layout_width="@dimen/dp_145"
+        android:layout_height="@dimen/dp_45"
+        android:text="完成"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dp_7"
+        android:layout_marginBottom="@dimen/dp_7"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_blue_round_22dp"
+        android:textSize="@dimen/sp_20"/>
+
+</LinearLayout>

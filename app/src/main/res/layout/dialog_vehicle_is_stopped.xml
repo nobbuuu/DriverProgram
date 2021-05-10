@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_bg_blue"
+    android:gravity="center"
+    android:orientation="vertical">
+
+<TextView
+    android:id="@+id/header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp_12"
+    android:textColor="@color/white"
+    android:gravity="center"
+    android:textStyle="bold"
+    style="@style/text_bold_font_family"
+    android:text="提示"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:padding="@dimen/dp_12"
+        android:background="@drawable/dialog_bg_white">
+        <ImageView
+            android:id="@+id/iv_tips_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_4"
+            android:src="@mipmap/icon_taxi"/>
+        <TextView
+            android:id="@+id/tv_tips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_tips_image"
+            android:layout_margin="@dimen/dp_14"
+            android:gravity="center"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/maas_text_primary"
+            android:text="您绑定的车辆 已停用，请选择其他车辆"/>
+        <Button
+            android:id="@+id/btn_i_know"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_4"
+            android:paddingVertical="@dimen/dp_10"
+            android:paddingHorizontal="@dimen/dp_40"
+            android:background="@drawable/dialog_bg_blue"
+            style="@style/text_bold_font_family"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_below="@+id/tv_tips"
+            android:layout_centerHorizontal="true"
+            android:text="我知道了"/>
+    </RelativeLayout>
+
+</RelativeLayout>

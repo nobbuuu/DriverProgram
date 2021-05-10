@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.haylion.android.percentextended.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_order_type_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_8"
+        android:layout_marginRight="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_4"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/tv_order_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单类型"
+            android:textSize="@dimen/sp_20"
+            android:textColor="@color/maas_text_primary"
+            style="@style/text_bold_font_family"/>
+
+        <ImageView
+            android:id="@+id/iv_header_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/ic_more_black"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/layout_suggest_line"
+        layout="@layout/layout_suggest_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible" />
+
+    <RelativeLayout
+        android:id="@+id/rl_order_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_suggest_line"
+        android:background="@mipmap/bg_order_item"
+        android:layout_marginTop="@dimen/dp_4"
+        android:paddingHorizontal="@dimen/dp_20"
+        android:paddingTop="@dimen/dp_16"
+        android:paddingBottom="@dimen/dp_16">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_multi_order_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="下次行程"
+                    android:textColor="@color/maas_text_deep_gray"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/tv_next_order_day"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/text_bold_font_family"
+                    android:gravity="center"
+                    android:text="-月-日"
+                    android:textColor="@color/maas_text_blue"
+                    android:textSize="@dimen/sp_24"
+                    android:textStyle="bold"/>
+
+                <View
+                    android:id="@+id/line2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0_5"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@color/maas_divider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/dp_8"
+                        android:src="@mipmap/ic_calendar" />
+
+                    <TextView
+                        android:id="@+id/tv_order_days"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        style="@style/text_bold_font_family"
+                        android:text="x月x日 - x月x日"
+                        android:textSize="@dimen/sp_16"
+                        android:textStyle="bold"
+                        android:visibility="visible" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.haylion.android.main.ImaginaryLineView
+                    android:id="@+id/ilv_time"
+                    android:layout_width="@dimen/dp_2"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/ll_time"
+                    android:paddingLeft="@dimen/dp_8"
+                    android:layout_marginHorizontal="@dimen/dp_7"
+                    android:layout_alignBottom="@+id/ll_time"
+                    android:layout_marginRight="@dimen/dp_6"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/ll_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/ilv_time"
+                    android:paddingBottom="@dimen/dp_10">
+
+                    <ImageView
+                        android:id="@+id/iv_time"
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/dp_6"
+                        android:src="@mipmap/ic_time_black" />
+
+                    <TextView
+                        android:id="@+id/tv_time_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        style="@style/text_bold_font_family"
+                        android:text="x月x日"
+                        android:textSize="@dimen/sp_18"
+                        android:textStyle="bold"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/tv_time_hour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/tv_time_date"
+                        style="@style/text_bold_font_family"
+                        android:gravity="end"
+                        android:text="00:00"
+                        android:textSize="@dimen/sp_18"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="￥ 30.5"
+                    android:textColor="@color/maas_text_gray"
+                    android:textSize="@dimen/sp_16" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/rl_address_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/iv_start_address"
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/ic_main_get_on" />
+
+                    <TextView
+                        android:id="@+id/tv_start_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/iv_start_address"
+                        android:drawablePadding="@dimen/dp_8"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:paddingLeft="@dimen/dp_6"
+                        android:text="上车地址"
+                        android:textSize="@dimen/sp_16" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.haylion.android.main.ImaginaryLineView
+                        android:id="@+id/iv_start_address_detail"
+                        android:layout_width="@dimen/dp_6"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/tv_start_address_detail"
+                        android:layout_alignBottom="@+id/tv_start_address_detail"
+                        android:layout_marginHorizontal="@dimen/dp_5" />
+
+                    <TextView
+                        android:id="@+id/tv_start_address_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/iv_start_address_detail"
+                        android:drawablePadding="@dimen/dp_8"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:paddingLeft="@dimen/dp_6"
+                        android:paddingTop="@dimen/dp_4"
+                        android:paddingBottom="@dimen/dp_10"
+                        android:text="地址描述"
+                        android:textColor="@color/maas_text_gray"
+                        android:textSize="@dimen/sp_14"
+                        android:visibility="visible" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/iv_end_address"
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/ic_main_get_off" />
+
+                    <TextView
+                        android:id="@+id/tv_end_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/iv_end_address"
+                        android:drawablePadding="@dimen/dp_8"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:paddingLeft="@dimen/dp_6"
+                        android:text="下车地址"
+                        android:textSize="@dimen/sp_16" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.haylion.android.main.ImaginaryLineView
+                        android:id="@+id/iv_end_addess_detail"
+                        android:layout_width="@dimen/dp_2"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/tv_end_address_detail"
+                        android:layout_alignBottom="@+id/tv_end_address_detail"
+                        android:layout_marginHorizontal="@dimen/dp_7" />
+
+                    <TextView
+                        android:id="@+id/tv_end_address_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/iv_end_addess_detail"
+                        android:maxLines="2"
+                        android:paddingLeft="@dimen/dp_6"
+                        android:paddingTop="@dimen/dp_4"
+                        android:text="地址描述"
+                        android:textColor="@color/maas_text_gray"
+                        android:textSize="@dimen/sp_14"
+                        android:visibility="visible" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_passenger_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_address_info"
+                android:layout_alignParentStart="true"
+                android:layout_marginVertical="@dimen/dp_4"
+                android:drawableLeft="@mipmap/ic_passenger_num"
+                android:drawablePadding="@dimen/dp_10"
+                android:text="人数"
+                android:textSize="@dimen/sp_14"
+                android:visibility="gone" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.haylion.android.main.ImaginaryLineView
+                    android:id="@+id/iv_other_info"
+                    android:layout_width="@dimen/dp_2"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/ll_other_info"
+                    android:layout_alignBottom="@+id/ll_other_info"
+                    android:layout_marginHorizontal="@dimen/dp_7" />
+
+                <LinearLayout
+                    android:id="@+id/ll_other_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/iv_other_info"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/divided_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_0_5"
+                        android:layout_below="@+id/rl_address_info"
+                        android:layout_marginTop="@dimen/dp_15"
+                        android:background="#D5DFF2" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_15"
+                        android:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/tv_message_fixed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:ellipsize="end"
+                            android:maxLength="20"
+                            android:maxLines="2"
+                            android:text="留言"
+                            android:textColor="@color/maas_text_gray"
+                            android:textSize="@dimen/sp_14" />
+
+                        <RelativeLayout
+                            android:id="@+id/rl_message_detail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/tv_message_fixed">
+
+                            <TextView
+                                android:id="@+id/tv_message"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:ellipsize="end"
+                                android:maxLength="20"
+                                android:maxLines="2"
+                                android:paddingLeft="@dimen/dp_10"
+                                android:text="留言信息"
+                                android:textSize="@dimen/sp_14" />
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_order_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/dp_12">
+
+                        <TextView
+                            android:id="@+id/tv_order_number_fixed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:ellipsize="end"
+                            android:maxLength="20"
+                            android:maxLines="2"
+                            android:text="订单编号"
+                            android:textColor="@color/maas_text_gray"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/tv_order_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_toRightOf="@+id/tv_order_number_fixed"
+                            android:ellipsize="end"
+                            android:gravity="right"
+                            android:maxLength="20"
+                            android:maxLines="2"
+                            android:text="0000 0000"
+                            android:textSize="@dimen/sp_14" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_child_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_12"
+                        android:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/tv_child_names"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginVertical="@dimen/dp_4"
+                            android:layout_toLeftOf="@+id/btn_transfor_order"
+                            android:drawableLeft="@mipmap/xiaohai"
+                            android:drawablePadding="@dimen/dp_6"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:paddingRight="@dimen/dp_10"
+                            android:text="小孩名字"
+                            android:textSize="@dimen/sp_16"
+                            android:textStyle="bold"
+                            style="@style/text_bold_font_family"
+                            android:visibility="gone" />
+
+                        <Button
+                            android:id="@+id/btn_transfor_order"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:background="@drawable/button_light_selector_2"
+                            android:minWidth="@dimen/dp_10"
+                            android:minHeight="@dimen/dp_10"
+                            android:paddingHorizontal="@dimen/dp_16"
+                            android:paddingVertical="@dimen/dp_6"
+                            android:text="转单"
+                            android:textSize="@dimen/dp_16"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</com.haylion.android.percentextended.PercentLinearLayout>

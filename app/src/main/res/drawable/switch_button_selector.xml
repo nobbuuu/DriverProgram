@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<!--    <item android:drawable="@drawable/btn_normal" android:state_pressed="false"/> &lt;!&ndash;按键按下时&ndash;&gt;
+
+    <item android:drawable="@drawable/btn_pressed" android:state_pressed="true"/> &lt;!&ndash;按键没有按下时&ndash;&gt;-->
+
+    <item android:drawable="@drawable/switch_btn_bg_disable" android:state_enabled="false"/> <!--按键无效-->
+
+    <item android:drawable="@drawable/switch_btn_bg_enable" android:state_enabled="true"/> <!--按键有效-->
+
+    <item android:drawable="@drawable/switch_btn_bg_disable" android:state_focused="false"/> <!--按键无效-->
+
+    <item android:drawable="@drawable/switch_btn_bg_enable" android:state_focused="true"/> <!--按键有效-->
+
+
+    <item android:drawable="@drawable/switch_btn_bg_disable" android:state_pressed="false"/> <!--按键无效-->
+
+    <item android:drawable="@drawable/switch_btn_bg_enable" android:state_pressed="true"/> <!--按键有效-->
+
+
+</selector>
+

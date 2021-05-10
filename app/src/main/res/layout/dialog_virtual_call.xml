@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_305"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_bg_white_5dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_25"
+        android:layout_marginLeft="@dimen/dp_27"
+        android:layout_marginRight="@dimen/dp_27"
+        android:textSize="@dimen/sp_18"
+        android:textColor="@color/maas_text_primary"
+        android:text="@string/dialog_virtual_call_content"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0_5"
+        android:layout_marginTop="@dimen/dp_13"
+        android:background="@color/line_color_AAAAAA" />
+
+    <TextView
+        android:id="@+id/tv_click_call"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:gravity="center"
+        android:text="@string/call"
+        android:textSize="@dimen/sp_18"
+        android:textColor="@color/maas_text_blue" />
+
+</LinearLayout>

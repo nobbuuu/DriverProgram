@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/text_black"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:id="@+id/tv_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_72"
+        android:textSize="@dimen/sp_16"
+        android:textStyle="bold"
+        style="@style/text_bold_font_family"
+        android:textColor="@color/white"/>
+
+    <ImageView
+        android:id="@+id/iv_show"
+        android:layout_width="@dimen/dp_315"
+        android:layout_height="@dimen/dp_315"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:scaleType="centerCrop"/>
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_dialog_close_white"
+        android:layout_marginTop="@dimen/dp_35"/>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/btn_reset_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="重拍小孩照片"
+        android:paddingLeft="@dimen/dp_35"
+        android:paddingRight="@dimen/dp_35"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:textSize="@dimen/sp_18"
+        android:textColor="@color/white"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:background="@drawable/bg_blue_round_2dp"
+        android:visibility="invisible"/>
+
+
+
+</LinearLayout>

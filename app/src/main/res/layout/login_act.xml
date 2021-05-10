@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/slView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    tools:context=".user.account.LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_14"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="测试"
+                android:visibility="gone" />
+
+            <com.haylion.android.mvp.widget.TitleBar
+                android:id="@+id/title_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:tb_background="@color/colorPrimary"
+                app:tb_left_icon_visible="false"
+                app:tb_title="@string/app_name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_60"
+                android:text="@string/login_welcome_tips1"
+                android:textColor="@color/maas_text_primary"
+                android:textSize="@dimen/sp_32" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_welcome_tips2"
+                    android:textSize="@dimen/sp_20" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_welcome_tips3"
+                    android:textColor="@color/text_blue"
+                    android:textSize="@dimen/sp_20" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginTop="@dimen/dp_50"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_id" />
+
+                <EditText
+                    android:id="@+id/et_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/dp_9"
+                    android:background="@null"
+                    android:hint="@string/login_username_edit_text_hint"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:textColor="@color/maas_text_primary"
+                    android:textColorHint="@color/maas_text_gray"
+                    android:textSize="@dimen/sp_18" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_tel_line"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@drawable/input_edittext_selector" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginTop="@dimen/dp_10">
+
+                <ImageView
+                    android:id="@+id/iv_pwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/ic_pwd" />
+
+                <EditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/dp_9"
+                    android:layout_toEndOf="@id/iv_pwd"
+                    android:background="@null"
+                    android:digits="@string/digits"
+                    android:hint="@string/login_pwd_edit_text_hint"
+                    android:inputType="textPassword"
+                    android:maxLength="16"
+                    android:textColor="@color/maas_text_primary"
+                    android:textColorHint="@color/maas_text_gray"
+                    android:textSize="@dimen/sp_18" />
+
+                <ToggleButton
+                    android:id="@+id/togglePwd"
+                    android:layout_width="@dimen/dp_18"
+                    android:layout_height="@dimen/dp_12"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@mipmap/bukejian"
+                    android:checked="false"
+                    android:textOff=""
+                    android:textOn="" />
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/view_pwd_line"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@drawable/input_edittext_selector" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8">
+
+                <TextView
+                    android:id="@+id/tv_tips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="错误提示"
+                    android:textColor="@color/text_red"
+                    android:textSize="@dimen/sp_14"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_forget_pwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:paddingStart="@dimen/dp_12"
+                    android:paddingEnd="@dimen/dp_5"
+                    android:text="@string/forget_pwd"
+                    android:textColor="@color/maas_text_primary"
+                    android:textSize="@dimen/sp_15" />
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/bt_login"
+                style="@style/text_bold_font_family"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/button_selector"
+                android:enabled="false"
+                android:text="@string/login"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/sp_18" />
+
+            <Button
+                android:id="@+id/updater"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginRight="32dp"
+                android:text="检查更新"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/version_name"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="24dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|bottom"
+            android:textColor="@color/maas_text_primary"
+            android:textSize="18sp"
+            tools:text="v 1.0.0" />
+
+    </LinearLayout>
+
+</ScrollView>

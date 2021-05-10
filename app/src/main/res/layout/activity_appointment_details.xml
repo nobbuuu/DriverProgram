@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c_e8eefa"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:src="@mipmap/arrow_black" />
+
+        <TextView
+            style="@style/text_bold_font_family"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/order_detail"
+            android:textColor="@color/maas_text_primary"
+            android:textSize="@dimen/sp_18" />
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_order_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="12dp">
+
+        <RelativeLayout
+            android:id="@+id/rl_info_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/bg_shang">
+
+            <TextView
+                android:id="@+id/tv_order_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="@dimen/dp_12"
+                android:drawableStart="@mipmap/ic_time"
+                android:drawablePadding="@dimen/dp_6"
+                android:textColor="@color/maas_text_primary"
+                android:textSize="@dimen/sp_14"
+                tools:text="今天 00:00" />
+
+            <TextView
+                android:id="@+id/order_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_order_time"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="18dp"
+                android:gravity="center"
+                android:textColor="@color/maas_text_deep_gray"
+                android:textSize="@dimen/sp_14"
+                android:visibility="visible"
+                tools:text="订单状态" />
+
+            <TextView
+                android:id="@+id/tv_child_names"
+                style="@style/text_bold_font_family"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_order_time"
+                android:drawableRight="@mipmap/xiaohai"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_10"
+                android:text="小孩名字"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <RelativeLayout
+                android:id="@+id/rl_address_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_child_names"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="@dimen/dp_15">
+
+                <TextView
+                    android:id="@+id/tv_get_on_addr"
+                    style="@style/text_bold_font_family"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_toLeftOf="@id/show_map"
+                    android:drawableLeft="@mipmap/ic_get_on"
+                    android:drawablePadding="@dimen/dp_6"
+                    android:textColor="@color/maas_text_primary"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold"
+                    tools:text="出发地址" />
+
+                <TextView
+                    android:id="@+id/tv_get_on_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_get_on_addr"
+                    android:layout_alignStart="@+id/tv_get_on_addr"
+                    android:layout_marginLeft="@dimen/dp_4"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:layout_toLeftOf="@id/show_map"
+                    android:maxLines="2"
+                    android:paddingHorizontal="@dimen/dp_8"
+                    android:textColor="@color/maas_text_gray"
+                    android:textSize="@dimen/sp_14"
+                    android:visibility="visible"
+                    tools:text="地址描述" />
+
+                <TextView
+                    android:id="@+id/tv_get_off_addr"
+                    style="@style/text_bold_font_family"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_get_on_desc"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_toLeftOf="@id/show_map"
+                    android:drawableLeft="@mipmap/ic_get_off"
+                    android:drawablePadding="@dimen/dp_6"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold"
+                    tools:text="到达地址" />
+
+                <TextView
+                    android:id="@+id/tv_get_off_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_get_off_addr"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="@dimen/dp_4"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:layout_toLeftOf="@id/show_map"
+                    android:maxLines="2"
+                    android:paddingHorizontal="@dimen/dp_8"
+                    android:paddingLeft="@dimen/dp_14"
+                    android:textColor="@color/maas_text_gray"
+                    android:textSize="@dimen/sp_14"
+                    android:visibility="visible"
+                    tools:text="地址描述" />
+
+                <TextView
+                    android:id="@+id/show_map"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="#F2F6FF"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_8"
+                    android:paddingTop="@dimen/dp_12"
+                    android:paddingRight="@dimen/dp_8"
+                    android:paddingBottom="@dimen/dp_12"
+                    android:text="查\n看\n地\n图"
+                    android:textColor="@color/maas_text_blue"
+                    android:textSize="@dimen/sp_14" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_middle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_info_top"
+            android:background="@mipmap/bg_middle"
+            android:visibility="visible">
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_middle"
+            android:background="@mipmap/bg_bottom"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dp_18"
+            android:paddingRight="@dimen/dp_18"
+            android:paddingBottom="@dimen/dp_15">
+
+            <RelativeLayout
+                android:id="@+id/rl_order_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/order_type_fixed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="订单类型"
+                    android:textColor="@color/maas_text_gray"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/order_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/order_type_fixed"
+                    android:layout_alignParentEnd="true"
+                    android:textSize="@dimen/sp_14"
+                    tools:text="订单类型" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_order_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_order_number_fixed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="@dimen/dp_4"
+                    android:ellipsize="end"
+                    android:maxLength="20"
+                    android:maxLines="2"
+                    android:textColor="@color/maas_text_gray"
+                    android:textSize="@dimen/sp_14"
+                    tools:text="订单编号" />
+
+                <TextView
+                    android:id="@+id/tv_order_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginBottom="@dimen/dp_4"
+                    android:layout_toRightOf="@+id/tv_order_number_fixed"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:maxLength="20"
+                    android:maxLines="2"
+                    android:textSize="@dimen/sp_14"
+                    tools:text="0000 0000" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_contact_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLength="20"
+                    android:maxLines="2"
+                    android:text="行程预估"
+                    android:textColor="@color/maas_text_primary"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/tv_total_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_toRightOf="@+id/tv_total_distance_fixed"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:maxLength="20"
+                    android:maxLines="2"
+                    android:textColor="@color/maas_text_primary"
+                    android:textSize="@dimen/sp_14"
+                    tools:text="0.0公里" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_contact_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/order_contact_passenger"
+                    android:textColor="@color/maas_text_gray"
+                    android:textSize="@dimen/sp_14"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_contact_passenger"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/kuang_blue_round_2dp"
+                    android:drawableStart="@mipmap/ic_phone_blue"
+                    android:drawablePadding="@dimen/dp_4"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_2"
+                    android:paddingRight="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_2"
+                    android:text="@string/order_contact_passenger"
+                    android:textColor="@color/maas_bg_blue"
+                    android:textSize="@dimen/sp_14"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_contact_customer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/kuang_blue_round_2dp"
+                    android:drawableStart="@mipmap/ic_customer_service_blue"
+                    android:drawablePadding="@dimen/dp_4"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_2"
+                    android:paddingRight="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_2"
+                    android:text="@string/contact_customer_service"
+                    android:textColor="@color/maas_bg_blue"
+                    android:textSize="@dimen/sp_14"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_contact_child"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/kuang_blue_round_2dp"
+                    android:drawableStart="@mipmap/ic_phone_blue"
+                    android:drawablePadding="@dimen/dp_4"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_2"
+                    android:paddingRight="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_2"
+                    android:text="@string/contact_children"
+                    android:textColor="@color/maas_bg_blue"
+                    android:textSize="@dimen/sp_14"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_contact_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:background="@drawable/kuang_blue_round_2dp"
+                    android:drawableStart="@mipmap/ic_phone_blue"
+                    android:drawablePadding="@dimen/dp_4"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_2"
+                    android:paddingRight="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_2"
+                    android:text="@string/contact_parent"
+                    android:textColor="@color/maas_bg_blue"
+                    android:textSize="@dimen/sp_14"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/dash_line"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/shape_order_dash_line"
+                android:layerType="software"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/cancel_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:drawableStart="@mipmap/ic_cancel_order"
+                android:drawablePadding="4dp"
+                android:paddingBottom="8dp"
+                android:text="@string/cancel_order"
+                android:textColor="@color/maas_text_gray"
+                android:textSize="@dimen/sp_14"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/cancel_reason_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@mipmap/bg_order_detail_info_card_small"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp_18"
+        android:paddingTop="@dimen/dp_18"
+        android:paddingRight="@dimen/dp_18"
+        android:paddingBottom="@dimen/dp_18">
+
+        <TextView
+            style="@style/text_bold_font_family"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/dp_6"
+            android:text="@string/cancel_reason"
+            android:textColor="@color/maas_text_primary"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/cancel_reason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_6"
+            android:textColor="@color/maas_text_gray"
+            android:textSize="@dimen/sp_14"
+            android:visibility="visible"
+            tools:text="取消原因" />
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/action_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_selector"
+        android:gravity="center"
+        android:minHeight="60dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/action_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_start_order"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/action_remark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/remark_start_order"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

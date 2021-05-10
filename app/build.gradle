@@ -1,0 +1,245 @@
+apply plugin: 'com.android.application'
+
+android {
+
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java']
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.haylion.maastaxi"
+
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+
+        archivesBaseName = "maas-taxi-driver"
+
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "AMAP_WEB_SERVICE", '"https://restapi.amap.com/v3/"'
+        buildConfigField "String", "AMAP_WEB_SERVICE_KEY", '"c8f664ccfbc54699a76e032e95bb75e1"'
+
+        buildConfigField "String", "WX_APPID", '"wx6e50deaf9ca0704c"'
+
+        ndk {
+            //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+//            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","arm64-v8a","x86_64" }
+            //apk分析，armeabi-v7a so库满足条件
+            abiFilters "armeabi-v7a"
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    signingConfigs {
+/*        debug {
+            storeFile file('../haylion.jks')
+            storePassword rootProject.ext.signing.storePassword
+            keyAlias rootProject.ext.signing.keyAlias
+            keyPassword rootProject.ext.signing.keyPassword
+        }*/
+
+        release {
+            storeFile file('../haylion.jks')
+            storePassword rootProject.ext.signing.storePassword
+            keyAlias rootProject.ext.signing.keyAlias
+            keyPassword rootProject.ext.signing.keyPassword
+        }
+    }
+
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            pseudoLocalesEnabled true
+            buildConfigField "String", "API_URL", '"https://mt-dev.haylion.cn/"'
+            buildConfigField "String", "API_WEBSOCKET_URL", '"wss://mt-dev.haylion.cn/ws/"'
+            buildConfigField "String", "BUGLY_APP_ID", '"21c2f9d4b8"'
+            //高德key
+            manifestPlaceholders = [BAIDU_APPKEY_VALUE : '66b6cb4c82',
+                                    BAIDU_SCHEME_VALUE : 'mtj66b6cb4c82',
+                                    BAIDU_CHANNEL_VALUE: 'guanfang',
+                                    GAODE_API_KEY      : '843314eaf3ff2736e86399812db826f0']
+            //友盟推送
+            buildConfigField "String", "UMENG_PUSH_APP_KEY", '"5df7348f0cafb2b770000eeb"'
+            buildConfigField "String", "UMENG_PUSH_MESSAGE_SECRET", '"16706e342ce1eccceeb2725b52e59ce9"'
+            buildConfigField "String", "TYPE", '"开发"'
+            resValue "string", "app_name", "麦诗鹏电司机-开发"
+        }
+
+        /*产品环境*/
+        release {
+            signingConfig signingConfigs.release
+            debuggable true
+            shrinkResources true
+            minifyEnabled true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //外网地址
+            buildConfigField "String", "API_URL", '"https://mt.haylion.cn/"'
+            buildConfigField "String", "API_WEBSOCKET_URL", '"wss://mt.haylion.cn/ws/"'
+            buildConfigField "String", "BUGLY_APP_ID", '"63d85b1dfe"'
+            //友盟推送
+            buildConfigField "String", "UMENG_PUSH_APP_KEY", '"5de77025570df3004e00044a"'
+            buildConfigField "String", "UMENG_PUSH_MESSAGE_SECRET", '"17337a9e858dc62ba4a90f7f0c00de4d"'
+            buildConfigField "String", "TYPE", '"V"'
+            manifestPlaceholders = [BAIDU_APPKEY_VALUE : 'a51ac71422',
+                                    BAIDU_SCHEME_VALUE : 'mtja51ac71422',
+                                    BAIDU_CHANNEL_VALUE: 'guanfang',
+                                    GAODE_API_KEY      : '843314eaf3ff2736e86399812db826f0']
+            resValue "string", "app_name", "麦诗鹏电司机"
+        }
+
+        beta {
+            initWith release
+            debuggable true
+            matchingFallbacks = ['release']
+            buildConfigField "String", "API_URL", '"https://mt-test.haylion.cn/"'
+            buildConfigField "String", "API_WEBSOCKET_URL", '"wss://mt-test.haylion.cn/ws/"'
+            buildConfigField "String", "BUGLY_APP_ID", '"62f3df101e"'
+            buildConfigField "String", "UMENG_PUSH_APP_KEY", '"5df6facf3fc195f39b000060"'
+            buildConfigField "String", "UMENG_PUSH_MESSAGE_SECRET", '"1b6111fe7f8d748aef947131202203f2"'
+            buildConfigField "String", "TYPE", '"测试"'
+            manifestPlaceholders = [BAIDU_APPKEY_VALUE : '5ca42149cf',
+                                    BAIDU_SCHEME_VALUE : 'mtj5ca42149cf',
+                                    BAIDU_CHANNEL_VALUE: 'guanfang',
+                                    GAODE_API_KEY      : '843314eaf3ff2736e86399812db826f0']
+            resValue "string", "app_name", "麦诗鹏电司机-测试"
+        }
+    }
+
+
+//    android.applicationVariants.all { variant ->
+//        variant.outputs.all {
+//            def date = new Date().format("yyyyMMddHHmm", TimeZone.getTimeZone("GMT+08"));
+//            def apkName = "maas_taxi_v${defaultConfig.versionName}_${date}_${buildType.name}"
+//            outputFileName = apkName + ".apk"
+//        }
+//    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // Dependencies for local unit tests
+    testImplementation deps.junit
+    // Dependencies for Android unit tests
+    androidTestImplementation deps.espresso
+    androidTestImplementation deps.runner
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    //其他模块
+    implementation project(':mvp')
+    implementation project(':updater')
+    implementation project(':prefser')
+
+    //implementation files('libs/Msc.jar')
+
+    //Butter Knife
+    implementation deps.butterknife
+    annotationProcessor deps.butterknifeCompiler
+    //地图
+    implementation deps.amapNavi
+    implementation deps.amapSearch
+    //bugly
+    implementation 'com.tencent.bugly:crashreport_upgrade:1.4.0'
+    implementation 'com.tencent.bugly:nativecrashreport:3.7.471'
+    //websocket
+    implementation 'io.crossbar.autobahn:autobahn-android:18.5.1'
+    //eventbus
+    implementation deps.smartadapters
+    implementation deps.xrecyclerview
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    //圆形图片
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+    //图片裁剪
+    implementation 'com.isseiaoki:simplecropview:1.1.8'
+    //图片压缩
+    implementation 'top.zibin:Luban:1.1.8'
+
+    //百度统计
+    implementation 'com.baidu.mobstat:mtj-sdk-circle:4.0.2.2'
+
+    //美团日志上报系统
+    implementation 'com.dianping.android.sdk:logan:1.2.2'
+
+    // implementation 'com.rm:rmswitch:1.2.2'
+    implementation 'com.github.deano2390:MaterialShowcaseView:1.3.4'
+
+    implementation 'com.isanwenyu.highlight:highlight:1.8.0'
+
+    //下拉刷新，上拉加载
+    implementation 'com.jwenfeng.pulltorefresh:library:1.2.7'
+    //权限封装
+    implementation 'pub.devrel:easypermissions:3.0.0'
+    //加载GIF动图
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
+
+    // 基础依赖包，必须要依赖
+    implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
+
+
+    //友盟基础库相关依赖（必须）
+    api 'com.umeng.umsdk:common:9.3.8'
+    implementation 'com.umeng.umsdk:asms:1.2.2'
+    implementation 'com.umeng.umsdk:utdid:1.5.2.1'
+
+    //友盟Push相关依赖（必须）
+    api 'com.umeng.umsdk:push:6.3.3'
+    implementation 'com.umeng.umsdk:alicloud-httpdns:1.3.2.3'
+    implementation 'com.umeng.umsdk:alicloud-utils:2.0.0'
+    implementation 'com.umeng.umsdk:alicloud_beacon:1.0.5'
+    api 'com.umeng.umsdk:agoo-accs:3.4.2.7'
+    implementation 'com.umeng.umsdk:agoo_aranger:1.0.6'
+    implementation 'com.umeng.umsdk:agoo_networksdk:3.5.8'
+    implementation 'com.umeng.umsdk:agoo_tnet4android:3.1.14.10'
+
+    //集成U-APM（可选）
+    implementation 'com.umeng.umsdk:apm:1.2.0'
+
+    //华为Push通道
+    implementation 'com.huawei.hms:push:5.0.4.302'
+    implementation 'com.umeng.umsdk:huawei-umengaccs:1.3.1'
+
+    //Oppo Push通道
+    implementation 'com.umeng.umsdk:oppo-push:2.1.0'
+    implementation 'com.umeng.umsdk:oppo-umengaccs:1.0.7-fix'
+
+    //vivo Push通道
+    implementation 'com.umeng.umsdk:vivo-push:2.9.0'
+    implementation 'com.umeng.umsdk:vivo-umengaccs:1.1.2'
+
+    //小米Push通道
+    implementation 'com.umeng.umsdk:xiaomi-push:3.8.5'
+    implementation 'com.umeng.umsdk:xiaomi-umengaccs:1.2.1'
+
+    implementation deps.smarttablayout
+
+    implementation 'com.github.huburt-Hu:NewbieGuide:v2.4.0'
+
+    // 用于司机绑定微信提现
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.3.1'
+
+}

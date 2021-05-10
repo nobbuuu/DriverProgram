@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_light_blue_2">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/bg_payment_top_view"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_10"
+                android:src="@mipmap/arrow_white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/trip_end"
+                android:textSize="@dimen/sp_18"
+                style="@style/text_bold_font_family"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                android:id="@+id/tv_trip_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/trip_detail"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold"
+                style="@style/text_bold_font_family"
+                android:paddingEnd="@dimen/dp_15"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/bg_trip_end_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dp_30"
+            android:paddingBottom="@dimen/dp_30"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_trip_paid"/>
+
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_18"
+                android:text="@string/trip_end_status_passenger_not_paid"
+                android:textStyle="bold"
+                style="@style/text_bold_font_family"
+                android:textColor="@color/maas_text_blue"
+                android:layout_marginTop="@dimen/dp_10"/>
+
+            <TextView
+                android:id="@+id/tv_amt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_34"
+                android:layout_marginTop="@dimen/dp_14"
+                android:textColor="@color/maas_text_primary"
+                android:text=""
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_14"
+            android:layout_marginLeft="@dimen/dp_14"
+            android:layout_marginRight="@dimen/dp_14"
+            android:layout_marginBottom="@dimen/dp_40"
+            android:text="@string/passengers_have_paid_offline"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/sp_18"
+            android:textStyle="bold"
+            android:background="@drawable/button_selector"
+            android:gravity="center"
+            style="@style/text_bold_font_family"
+            android:visibility="visible"/>
+
+
+        <!--货单 收货时间提醒-->
+        <com.haylion.android.common.view.CargoRestTimeView2
+            android:id="@+id/cargo_rest_time_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/rl_order_info"
+            android:layout_marginLeft="@dimen/dp_14"
+            android:layout_marginRight="@dimen/dp_14"
+            android:layout_marginTop="@dimen/dp_3"
+            android:clickable="true"
+            android:visibility="gone"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <!--货单按钮-->
+        <LinearLayout
+            android:id="@+id/ll_cargo_btn_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_14"
+            android:layout_marginLeft="@dimen/dp_14"
+            android:layout_marginRight="@dimen/dp_14"
+            android:layout_marginBottom="@dimen/dp_22"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_cargo_paid"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/passengers_have_paid_offline"
+                android:layout_weight="1"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/sp_18"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:layout_marginRight="@dimen/dp_11"
+                android:background="@drawable/bg_59616e_round_2dp"
+                style="@style/text_bold_font_family"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tv_send_cargo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/to_deliver_goods"
+                android:layout_weight="1"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/sp_18"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:background="@drawable/button_selector"
+                style="@style/text_bold_font_family"/>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

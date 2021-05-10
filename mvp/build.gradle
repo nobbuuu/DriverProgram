@@ -1,0 +1,114 @@
+apply plugin: 'com.android.library'
+
+android {
+
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java']
+            jniLibs.srcDirs = ['libs']
+        }
+        debug {
+            java.srcDirs = ['src/debug/java']
+        }
+
+        release {
+            java.srcDirs = ['src/release/java']
+        }
+    }
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            //todo
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // Dependencies for local unit tests
+    testImplementation deps.junit
+    // Dependencies for Android unit tests
+    androidTestImplementation deps.espresso
+
+    // LeakCanary
+    debugImplementation deps.leakcanary
+
+    //其他模块
+    api project(':percentextended')
+    api project(':util')
+
+    //基础使用库
+    api deps.rxjava
+    api deps.rxandroid
+    api deps.appcompat
+    api deps.constraintlayout
+    api deps.material
+    api deps.eventbus
+    api deps.rxpermissions
+    api deps.statusbarutil
+
+    // Retrofit
+    api deps.retrofit
+    implementation deps.adapterRxJava
+    implementation deps.converterGson
+    api deps.gson
+
+    //butterknife
+    implementation deps.butterknife
+
+    // Stetho
+    implementation deps.stetho
+    implementation deps.stethoOkHttp3
+
+    //xlog
+    implementation deps.xlog
+
+    //immersionbar
+    implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
+
+    //toast工具 支持不开启通知权限弹窗
+    implementation 'com.hjq:toast:8.0'
+
+    implementation('com.github.ihsanbal:LoggingInterceptor:3.0.0') {
+        exclude group: 'org.json', module: 'json'
+    }
+
+//    api deps.rxbus
+
+/*
+    debugImplementation deps.xlog
+
+    // Stetho
+    debugImplementation deps.stetho
+    debugImplementation deps.stethoOkHttp3
+*/
+
+
+
+//    implementation 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+
+
+}

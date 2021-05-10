@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_order_tips"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0_5"
+        android:background="@color/line_color_e6e6e6" />
+
+    <TextView
+        android:id="@+id/countdown_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@mipmap/order_detail_ic_ring"
+        android:drawablePadding="@dimen/dp_8"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingTop="8dp"
+        android:paddingRight="@dimen/dp_15"
+        android:paddingBottom="8dp"
+        android:textColor="@color/maas_text_primary"
+        android:textSize="@dimen/sp_16" />
+
+</LinearLayout>

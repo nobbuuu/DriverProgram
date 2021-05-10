@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/dialog_bg_white_5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/order_overtime"
+            android:textSize="@dimen/sp_18"
+            android:layout_marginTop="@dimen/dp_22"
+            style="@style/text_bold_font_family"
+            android:textColor="@color/maas_text_primary"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_11"
+            android:layout_marginStart="@dimen/dp_30"
+            android:layout_marginEnd="@dimen/dp_30"
+            android:textSize="@dimen/sp_16"
+            android:lineSpacingExtra="@dimen/dp_3"
+            android:textColor="@color/maas_text_gray"
+            android:text="@string/dialog_msg_order_overtime"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0_5"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@color/line_color_AAAAAA"/>
+
+        <TextView
+            android:id="@+id/btn_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:gravity="center"
+            android:text="@string/view_details"
+            android:textColor="@color/c_5A89F9"
+            android:textSize="@dimen/sp_18"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

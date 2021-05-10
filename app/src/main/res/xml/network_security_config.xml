@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+
+    <!--项目的build.gradle中配置的编译版本、运行版本、是不是高于27的版本
+      高版本不支持http这种不加密的协议，需要使用https加密。
+      在AndroidManifest application中引用-->
+    <base-config cleartextTrafficPermitted="true" />
+
+</network-security-config>

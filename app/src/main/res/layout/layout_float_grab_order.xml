@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/part_one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_blue">
+
+        <TextView
+            android:id="@+id/header_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/dp_10"
+            android:text="抢单中"
+            android:textColor="@color/text_white"
+            android:textStyle="bold"
+            style="@style/text_bold_font_family"
+            android:textSize="@dimen/sp_16" />
+        <ImageView
+            android:id="@+id/iv_close_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:padding="@dimen/dp_10"
+            android:src="@mipmap/ic_close_white"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/header_text"
+            android:paddingBottom="@dimen/dp_20"
+            android:background="@drawable/bg_white">
+            <RelativeLayout
+                android:id="@+id/rl_tips_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:visibility="visible"
+                    android:id="@+id/tv_grabing_rest_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginVertical="@dimen/dp_16"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp_16"
+                    android:textColor="@color/text_white"
+                    android:background="@mipmap/bg_time_second"
+                    android:text="1s" />
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/iv_tips_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginVertical="@dimen/dp_16"
+                    android:gravity="center"
+                    android:src="@mipmap/bg_time_second"
+                    android:text="5s" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_tips_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_tips_image"
+                android:layout_marginVertical="6dp"
+                android:layout_centerHorizontal="true"
+                android:text="正在计算抢单结果" />
+
+            <Button
+                android:visibility="gone"
+                android:id="@+id/btn_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_tips_text"
+                android:layout_marginVertical="@dimen/dp_10"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/maas_text_gray"
+                android:minHeight="@dimen/dp_16"
+                android:padding="@dimen/dp_5"
+                android:background="@drawable/button_light_selector_2"
+                android:text="取消抢单" />
+            <TextView
+                android:visibility="visible"
+                android:id="@+id/dialog_close_rest_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_tips_text"
+                android:layout_marginVertical="6dp"
+                android:layout_centerHorizontal="true"
+                android:text="3 S" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+</RelativeLayout>
