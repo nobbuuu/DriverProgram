@@ -1,5 +1,8 @@
 package com.haylion.android.data.repo;
 
+import android.util.Log;
+
+import com.google.gson.Gson;
 import com.haylion.android.data.api.AccountApi;
 import com.haylion.android.data.api.OrderApi;
 import com.haylion.android.data.dto.AccountDto;
@@ -33,8 +36,11 @@ public class AccountRepository extends BaseRepository {
     public static final AccountRepository INSTANCE = new AccountRepository();
 
     public void login(String username, int vehicleId, String password, ApiSubscriber<LoginData> callback) {
+        AccountDto.LoginRequest loginRequest = new AccountDto.LoginRequest(username, password, vehicleId);
+        String param = new Gson().toJson(loginRequest, AccountDto.LoginRequest.class);
+        Log.d("aaa","param = " + param);
         addDisposable(RetrofitHelper.getApi(AccountApi.class)
-                .login(new AccountDto.LoginRequest(username, password, vehicleId))
+                .login(loginRequest)
                 .compose(new ApiTransformer<>())
                 .subscribeWith(callback)
         );

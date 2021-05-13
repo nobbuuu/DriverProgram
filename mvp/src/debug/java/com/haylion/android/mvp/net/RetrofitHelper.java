@@ -45,6 +45,7 @@ public final class RetrofitHelper {
                 .retryOnConnectionFailure(true);
 
         okClientBuilder.addInterceptor(new ConnectivityInterceptor(context));
+        okClientBuilder.addInterceptor(new ConnectivityInterceptor(context).loggingInterceptor);
         if (param.interceptors != null) {
             for (Interceptor interceptor : param.interceptors) {
                 okClientBuilder.addInterceptor(interceptor);
