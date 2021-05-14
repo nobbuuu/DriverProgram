@@ -16,6 +16,7 @@ import okhttp3.ConnectionPool;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.internal.platform.Platform;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -45,7 +46,8 @@ public final class RetrofitHelper {
                 .retryOnConnectionFailure(true);
 
         okClientBuilder.addInterceptor(new ConnectivityInterceptor(context));
-        okClientBuilder.addInterceptor(new ConnectivityInterceptor(context).loggingInterceptor);
+        HttpLoggingInterceptor level = new ConnectivityInterceptor(context).loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        okClientBuilder.addInterceptor(level);
         if (param.interceptors != null) {
             for (Interceptor interceptor : param.interceptors) {
                 okClientBuilder.addInterceptor(interceptor);

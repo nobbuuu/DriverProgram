@@ -1656,7 +1656,7 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
                         @Override
                         public void onError(int code, String msg) {
                             LogUtils.d(TAG, "上报位置失败,code = " + code + ",msg = " + msg);
-                            toast("上报位置失败");
+//                            toast("上报位置失败");
                         }
                     });
                 }
