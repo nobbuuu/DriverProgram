@@ -255,5 +255,6 @@
 
     <!--popwindow 半透明背景-->
     <color name="pop_window_translucence">#33000000</color>
+    <color name="color333">#333333</color>
 </resources>
 

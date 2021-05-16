@@ -19,8 +19,6 @@ import com.haylion.android.mvp.rx.ApiSubscriber;
 import com.haylion.android.mvp.rx.ApiTransformer;
 import com.haylion.android.user.vehicle.VehicleOperation;
 
-import org.libsodium.jni.crypto.Hash;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

@@ -251,8 +251,8 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
     private void initView() {
         ImmersionBar.with(this)
                 .fitsSystemWindows(false) //设置为true，图片无法置顶状态栏
-                .transparentStatusBar()
-                .statusBarDarkFont(false, 0.2f)
+//                .transparentStatusBar()
+                .statusBarDarkFont(true, 1f)
                 .titleBarMarginTop(needOffsetView)
                 .init();
 

@@ -90,8 +90,8 @@ android {
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //外网地址
-            buildConfigField "String", "API_URL", '"https://mt.haylion.cn/"'
-            buildConfigField "String", "API_WEBSOCKET_URL", '"wss://mt.haylion.cn/ws/"'
+            buildConfigField "String", "API_URL", '"https://47.112.172.118:6663/"'
+            buildConfigField "String", "API_WEBSOCKET_URL", '"wss://47.112.172.118:6663/ws/"'
             buildConfigField "String", "BUGLY_APP_ID", '"63d85b1dfe"'
             //友盟推送
             buildConfigField "String", "UMENG_PUSH_APP_KEY", '"5de77025570df3004e00044a"'
@@ -103,13 +103,13 @@ android {
                                     GAODE_API_KEY      : '843314eaf3ff2736e86399812db826f0']
             resValue "string", "app_name", "麦诗鹏电司机"
         }
-
+/*
         beta {
             initWith release
             debuggable true
             matchingFallbacks = ['release']
-            buildConfigField "String", "API_URL", '"https://mt-test.haylion.cn/"'
-            buildConfigField "String", "API_WEBSOCKET_URL", '"wss://mt-test.haylion.cn/ws/"'
+            buildConfigField "String", "API_URL", '"https://47.112.172.118:6663/"'
+            buildConfigField "String", "API_WEBSOCKET_URL", '"wss://47.112.172.118:6663/ws/"'
             buildConfigField "String", "BUGLY_APP_ID", '"62f3df101e"'
             buildConfigField "String", "UMENG_PUSH_APP_KEY", '"5df6facf3fc195f39b000060"'
             buildConfigField "String", "UMENG_PUSH_MESSAGE_SECRET", '"1b6111fe7f8d748aef947131202203f2"'
@@ -119,7 +119,7 @@ android {
                                     BAIDU_CHANNEL_VALUE: 'guanfang',
                                     GAODE_API_KEY      : '843314eaf3ff2736e86399812db826f0']
             resValue "string", "app_name", "麦诗鹏电司机-测试"
-        }
+        }*/
     }
 
 
