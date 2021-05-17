@@ -6,6 +6,7 @@ import com.haylion.android.data.model.AppointmentList;
 import com.haylion.android.data.model.Order;
 import com.haylion.android.data.model.OrderForCargoAndPassenger;
 import com.haylion.android.data.model.OrderForMainActivity;
+import com.haylion.android.data.model.ShunfengBean;
 import com.haylion.android.data.repo.OrderRepository;
 import com.haylion.android.data.util.OrderConvert;
 import com.haylion.android.mvp.base.BasePresenter;
@@ -155,6 +156,18 @@ public class AppointmentListPresenter extends BasePresenter<AppointmentListContr
         return orders;
     }
 
+    private List<Order> convertShunfengOrders(List<ShunfengBean> shunfengBeanList) {
+        List<Order> orders = null;
+        if (shunfengBeanList != null && !shunfengBeanList.isEmpty()) {
+            orders = new ArrayList<>();
+            for (int i = 0; i < shunfengBeanList.size(); i++) {
+                Order order = OrderConvert.orderShunfengToOrder(shunfengBeanList.get(i));
+                orders.add(order);
+            }
+        }
+        return orders;
+    }
+
     @Override
     public void refreshAppointmentHall() {
         appointmentHallInternal();
@@ -259,6 +272,24 @@ public class AppointmentListPresenter extends BasePresenter<AppointmentListContr
         } else {
             view.showAccessibilityOrders(mAccessibilityOrders);
         }
+    }
+
+    @Override
+    public void getShunfengOrder() {
+        repo.shunfengOrder(new ApiSubscriber<List<ShunfengBean>>() {
+            @Override
+            public void onSuccess(List<ShunfengBean> data) {
+                mAccessibilityOrders = convertShunfengOrders(data);
+                view.showAccessibilityOrders(mAccessibilityOrders);
+            }
+
+            @Override
+            public void onError(int code, String msg) {
+                toast("获取顺丰订单失败");
+                LogUtils.e("获取顺丰订单出错：" + code + ", " + msg);
+                view.showShunfengOrders(mAccessibilityOrders);
+            }
+        });
     }
 
     private void getAccessibilityOrderInternal() {

@@ -102,6 +102,7 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
             public void onLoadMore() {
             }
         });
+        //订单tab切换
         mTabIndicator.setOnCheckedChangeListener((radioGroup, checkedId) -> {
             for (int i = 0; i < radioGroup.getChildCount(); i++) {
                 View childView = radioGroup.getChildAt(i);
@@ -111,7 +112,9 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
                 }
             }
             mAppointmentList.refreshComplete();
-            if (checkedId == R.id.tab_hall) {
+            if (checkedId == R.id.tab_shunfeng){
+                presenter.getShunfengOrder();
+            }else if (checkedId == R.id.tab_hall) {
                 presenter.appointmentHall();
                 mTabTips.setText(R.string.tips_appointment_hall);
             } else if (checkedId == R.id.tab_children) {
@@ -125,7 +128,7 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
                 mTabTips.setText(R.string.tips_appointment_unfinished);
             }
         });
-        presenter.childrenOrderCenter(); // 初始显示预约大厅
+        presenter.getShunfengOrder(); // 初始显示预约大厅
     }
 
     private void changeTabStyle(int checkedTabId, RadioButton tab) {
@@ -169,7 +172,9 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
         boolean noOrders = false;
         if (orders == null || orders.isEmpty()) {
             if (orderTab == mTabIndicator.getCheckedRadioButtonId()) {
-                if (orderTab == R.id.tab_hall) {
+                if (orderTab == R.id.tab_shunfeng){
+                    mNoOrders.setText("没有顺丰订单");
+                }else if (orderTab == R.id.tab_hall) {
                     mNoOrders.setText("没有预约订单");
                 } else if (orderTab == R.id.tab_unfinished) {
                     mNoOrders.setText("没有未完成订单");
@@ -221,6 +226,11 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
         checkOrdersEmpty(accessibilityOrders, R.id.tab_accessibility);
         mAppointmentList.refreshComplete();
         scrollListToTop();
+    }
+
+    @Override
+    public void showShunfengOrders(List<Order> shunfengOrders) {
+
     }
 
     private void scrollListToTop() {

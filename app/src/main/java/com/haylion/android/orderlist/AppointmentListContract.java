@@ -20,6 +20,8 @@ public class AppointmentListContract {
 
         void showAccessibilityOrders(List<Order> accessibilityOrders);
 
+        void showShunfengOrders(List<Order> shunfengOrders);
+
     }
 
     public interface Presenter extends AbstractPresenter {
@@ -39,6 +41,8 @@ public class AppointmentListContract {
         void refreshChildrenOrderCenter();
 
         void getAccessibilityOrder();
+
+        void getShunfengOrder();
 
         void refreshAccessibilityOrder();
 

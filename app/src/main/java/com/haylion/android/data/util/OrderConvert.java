@@ -21,6 +21,7 @@ import com.haylion.android.data.model.OrderDetailExt;
 import com.haylion.android.data.model.OrderExt;
 import com.haylion.android.data.model.OrderForMainActivity;
 import com.haylion.android.data.model.OrderHistory;
+import com.haylion.android.data.model.ShunfengBean;
 import com.haylion.android.data.model.UserInfo;
 
 import java.util.ArrayList;
@@ -107,6 +108,86 @@ public class OrderConvert {
 
         // 订单日期
         order.setOrderDates(orderForMainActivity.getOrderDates());
+
+        return order;
+    }
+
+    /**
+     * 顺丰订单数据转换成order
+     *
+     * @param shunfengOrder
+     * @return
+     */
+    public static Order orderShunfengToOrder(ShunfengBean shunfengOrder) {
+        Order order = new Order();
+
+        order.setOrderId(shunfengOrder.getId());
+//        order.setOrderCode(shunfengOrder.getOrderNo());
+        //起点和终点
+        AddressInfo start = new AddressInfo();
+        start.setLatLng(new LatLng(shunfengOrder.getDepotStartLatitude(), shunfengOrder.getDepotStartLongitude()));
+        start.setName(shunfengOrder.getDepotStartAddress());
+        start.setAddressDetail(shunfengOrder.getDepotStartAddress());
+
+        AddressInfo end = new AddressInfo();
+        end.setLatLng(new LatLng(shunfengOrder.getDepotEndLatitude(), shunfengOrder.getDepotEndLongitude()));
+        end.setName(shunfengOrder.getDepotEndAddress());
+        end.setAddressDetail(shunfengOrder.getDepotEndAddress());
+        end.setLatLng(new LatLng(shunfengOrder.getDepotEndLatitude(),
+                shunfengOrder.getDepotEndLongitude()));
+
+        order.setStartAddr(start);
+        order.setEndAddr(end);
+
+        //用户信息
+        UserInfo userInfo = new UserInfo();
+        userInfo.setPhoneNum(shunfengOrder.getDepotStartPhone1());
+        order.setUserInfo(userInfo);
+//        order.setPassengerNum(shunfengOrder.getCarpoolNum());
+
+        //订单类型和时间
+        /*order.setOrderType(shunfengOrder.getOrderType());
+        order.setOrderStatus(shunfengOrder.getOrderStatus());
+        order.setOrderSubStatus(shunfengOrder.getOrderSubStatus());
+        order.setOrderTime(shunfengOrder.getTime());
+        order.setEstimateArriveTime(shunfengOrder.getEstimateArriveTime());*/
+
+        //费用
+        order.setTotalMoney(shunfengOrder.getPrice());
+
+        //送小孩的信息
+        /*List<ChildInfo> childInfoList = new ArrayList<>();
+        if (shunfengOrder.getChildNameList() != null) {
+            for (int i = 0; i < shunfengOrder.getChildNameList().size(); i++) {
+                ChildInfo childInfo = new ChildInfo();
+                childInfo.setName(shunfengOrder.getChildNameList().get(i));
+                childInfoList.add(childInfo);
+            }
+        }*/
+//        order.setChildList(childInfoList);
+        // 2020.8.25，拼车单、拼车码（迭代29）
+//        order.setCarpoolOrder(CarpoolStatus.isCarpool(shunfengOrder.getCarpoolStatus()));
+//        order.setCarpoolCode(shunfengOrder.getCarpoolCode());
+
+        //附言
+//        order.setParentMessage(shunfengOrder.getParentMessage());
+
+        //多日订单
+        /*order.setParentOrder(shunfengOrder.isParentOrder());
+        Log.d(TAG, "orderForMainActivity.isParentOrder():" + shunfengOrder.isParentOrder()
+                + ",isParentOrder:" + order.isParentOrder());
+        order.setStartTime(shunfengOrder.getStartDate());*/
+        order.setEndTime(shunfengOrder.getEndDate());
+
+        //预估行程距离
+//        order.setDistance(shunfengOrder.getTotalDistance());
+
+        // 订单日期
+        List<String> dates = new ArrayList<>();
+        for (ShunfengBean.GrabDateListBean bean : shunfengOrder.getGrabDateList()){
+            dates.add(bean.getGrabDate());
+        }
+        order.setOrderDates(dates);
 
         return order;
     }

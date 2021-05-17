@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/c_e8eefa"
     android:orientation="vertical">
 
     <FrameLayout
@@ -40,7 +39,7 @@
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/tab_children"
+            android:id="@+id/tab_shunfeng"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -48,6 +47,27 @@
             android:button="@null"
             android:checked="true"
             android:drawableBottom="@drawable/tab_indicator"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:text="@string/tab_shunfeng_order"
+            android:textColor="@color/tab_text"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="@dimen/dp_0_5"
+            android:layout_height="@dimen/dp_14"
+            android:layout_gravity="center"
+            android:background="@color/c_cccccc" />
+
+        <RadioButton
+            android:id="@+id/tab_children"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:button="@null"
+            android:checked="false"
             android:drawablePadding="5dp"
             android:gravity="center"
             android:text="@string/tab_children_order"

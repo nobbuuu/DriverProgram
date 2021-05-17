@@ -29,6 +29,7 @@ import com.haylion.android.data.model.PayInfo;
 import com.haylion.android.data.model.PaymentResult;
 import com.haylion.android.data.model.ServiceFee;
 import com.haylion.android.data.model.ServiceNumber;
+import com.haylion.android.data.model.ShunfengBean;
 import com.haylion.android.data.model.SwitchVehicleJudgeBean;
 import com.haylion.android.mvp.base.BaseRepository;
 import com.haylion.android.mvp.base.ListData;
@@ -412,6 +413,19 @@ public class OrderRepository extends BaseRepository {
     public void accessibilityOrderCenter(ApiSubscriber<List<OrderForMainActivity>> callback) {
         addDisposable(RetrofitHelper.getApi(OrderApi.class)
                 .accessibilityOrderCenter()
+                .compose(new ApiTransformer<>())
+                .subscribeWith(callback)
+        );
+    }
+
+    /**
+     * 抢单池 - 顺丰订单
+     *
+     * @param callback 回调
+     */
+    public void shunfengOrder(ApiSubscriber<List<ShunfengBean>> callback) {
+        addDisposable(RetrofitHelper.getApi(OrderApi.class)
+                .getShunfengOrders()
                 .compose(new ApiTransformer<>())
                 .subscribeWith(callback)
         );

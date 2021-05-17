@@ -7,6 +7,7 @@ import com.haylion.android.data.model.OrderDetail;
 import com.haylion.android.data.model.OrderForMainActivity;
 import com.haylion.android.data.model.PayInfo;
 import com.haylion.android.data.model.PaymentResult;
+import com.haylion.android.data.model.ShunfengBean;
 import com.haylion.android.mvp.base.BaseRepository;
 import com.haylion.android.mvp.base.BaseResponse;
 
@@ -170,6 +171,12 @@ public interface OrderApi {
      */
     @GET("/driver/waitingOrders/BarrierFreeCenter")
     Observable<BaseResponse<List<OrderForMainActivity>>> accessibilityOrderCenter();
+
+    /**
+     * 抢单池 - 顺丰订单
+     */
+    @GET("/driver/freight-order/grabList")
+    Observable<BaseResponse<List<ShunfengBean>>> getShunfengOrders();
 
     /**
      * 抢无障碍订单
