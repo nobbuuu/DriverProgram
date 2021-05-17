@@ -861,7 +861,7 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
      * @param
      * @return
      * @method
-     * @description 展示客单（除去货单和货拼客单以外的单），展示顺序：实时单，实时拼车，货单，货拼客单，送小孩单
+     * @description 展示客单（除去货单和货拼客单以外的单），展示顺序：实时单，实时拼车，货单，货拼客单，送小孩单，顺丰单
      * @date: 2019/11/26 10:06
      * @author: tandongdong
      */

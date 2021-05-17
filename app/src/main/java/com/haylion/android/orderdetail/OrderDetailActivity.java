@@ -82,6 +82,7 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
