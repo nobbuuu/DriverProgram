@@ -1,6 +1,8 @@
 package com.haylion.android.mvp.rx;
 
 
+import android.util.Log;
+
 import com.google.gson.JsonSyntaxException;
 import com.haylion.android.mvp.BuildConfig;
 import com.haylion.android.mvp.exception.ApiException;
@@ -72,6 +74,7 @@ public abstract class ApiSubscriber<T> extends DisposableObserver<T> {
         }
         if (BuildConfig.DEBUG) {
             e.printStackTrace();
+            Log.d("aaa","e = " + e.getMessage());
         }
         onError(code, msg);
         dispose();

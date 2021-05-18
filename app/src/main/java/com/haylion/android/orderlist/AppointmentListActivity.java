@@ -230,7 +230,13 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
 
     @Override
     public void showShunfengOrders(List<Order> shunfengOrders) {
-
+        if (mTabIndicator.getCheckedRadioButtonId() != R.id.tab_shunfeng) {
+            return;
+        }
+        mAppointmentAdapter.setItems(shunfengOrders);
+        checkOrdersEmpty(shunfengOrders, R.id.tab_shunfeng);
+        mAppointmentList.refreshComplete();
+        scrollListToTop();
     }
 
     private void scrollListToTop() {

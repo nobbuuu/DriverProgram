@@ -134,18 +134,20 @@ public class BookOrderListItemView extends BaseItemView<Order> {
         //订单时间信息
         //时间展示日期和小时信息
         String timeFormat = order.getOrderTime();
-        if (order.isParentOrder()) {
-            timeFormat = formatParentOrderDate(order.getStartTime(), order.getEndTime());
-        } else {
-            try {
-                long milliSecond = BusinessUtils.stringToLong(order.getOrderTime(), "yyyy-MM-dd HH:mm");
-                timeFormat = BusinessUtils.getDateToStringIncludeYearWhenCrossYear(milliSecond, "");
-                Log.d(TAG, "" + "order time, timeFormat: " + timeFormat);
-            } catch (ParseException e) {
-                e.printStackTrace();
+        if (!TextUtils.isEmpty(timeFormat)){
+            if (order.isParentOrder()) {
+                timeFormat = formatParentOrderDate(order.getStartTime(), order.getEndTime());
+            } else {
+                try {
+                    long milliSecond = BusinessUtils.stringToLong(order.getOrderTime(), "yyyy-MM-dd HH:mm");
+                    timeFormat = BusinessUtils.getDateToStringIncludeYearWhenCrossYear(milliSecond, "");
+                    Log.d(TAG, "" + "order time, timeFormat: " + timeFormat);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
+            orderTime.setText(timeFormat);
         }
-        orderTime.setText(timeFormat);
 
         //订单状态
         if (order.getOrderStatus() == OrderStatus.ORDER_STATUS_INIT.getStatus()) {

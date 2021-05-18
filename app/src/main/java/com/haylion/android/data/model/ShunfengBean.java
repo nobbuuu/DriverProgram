@@ -34,8 +34,8 @@ public class ShunfengBean {
 
     private int id;
     private String depotStartAddress;
-    private long depotStartLongitude;
-    private long depotStartLatitude;
+    private double depotStartLongitude;
+    private double depotStartLatitude;
     private String depotStartConcat1;
     private String depotStartPhone1;
     private String depotStartConcat2;
@@ -44,8 +44,8 @@ public class ShunfengBean {
     private String depotStartPhone3;
     private String takeTime;
     private String depotEndAddress;
-    private long depotEndLongitude;
-    private long depotEndLatitude;
+    private double depotEndLongitude;
+    private double depotEndLatitude;
     private String depotEndConcat1;
     private String depotEndPhone1;
     private String depotEndConcat2;
@@ -83,19 +83,19 @@ public class ShunfengBean {
         this.depotStartAddress = depotStartAddress;
     }
 
-    public long getDepotStartLongitude() {
+    public double getDepotStartLongitude() {
         return depotStartLongitude;
     }
 
-    public void setDepotStartLongitude(long depotStartLongitude) {
+    public void setDepotStartLongitude(double depotStartLongitude) {
         this.depotStartLongitude = depotStartLongitude;
     }
 
-    public long getDepotStartLatitude() {
+    public double getDepotStartLatitude() {
         return depotStartLatitude;
     }
 
-    public void setDepotStartLatitude(long depotStartLatitude) {
+    public void setDepotStartLatitude(double depotStartLatitude) {
         this.depotStartLatitude = depotStartLatitude;
     }
 
@@ -163,19 +163,19 @@ public class ShunfengBean {
         this.depotEndAddress = depotEndAddress;
     }
 
-    public long getDepotEndLongitude() {
+    public double getDepotEndLongitude() {
         return depotEndLongitude;
     }
 
-    public void setDepotEndLongitude(long depotEndLongitude) {
+    public void setDepotEndLongitude(double depotEndLongitude) {
         this.depotEndLongitude = depotEndLongitude;
     }
 
-    public long getDepotEndLatitude() {
+    public double getDepotEndLatitude() {
         return depotEndLatitude;
     }
 
-    public void setDepotEndLatitude(long depotEndLatitude) {
+    public void setDepotEndLatitude(double depotEndLatitude) {
         this.depotEndLatitude = depotEndLatitude;
     }
 

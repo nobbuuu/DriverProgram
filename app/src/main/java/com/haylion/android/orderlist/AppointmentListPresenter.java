@@ -25,6 +25,7 @@ public class AppointmentListPresenter extends BasePresenter<AppointmentListContr
     private List<Order> mFinishedOrders = null;
 
     private List<Order> mHallOrders = null;
+    private List<Order> mShunfengOrders = null;
 
     /**
      * 送小孩单
@@ -279,15 +280,15 @@ public class AppointmentListPresenter extends BasePresenter<AppointmentListContr
         repo.shunfengOrder(new ApiSubscriber<List<ShunfengBean>>() {
             @Override
             public void onSuccess(List<ShunfengBean> data) {
-                mAccessibilityOrders = convertShunfengOrders(data);
-                view.showAccessibilityOrders(mAccessibilityOrders);
+                mShunfengOrders = convertShunfengOrders(data);
+                view.showShunfengOrders(mShunfengOrders);
             }
 
             @Override
             public void onError(int code, String msg) {
                 toast("获取顺丰订单失败");
                 LogUtils.e("获取顺丰订单出错：" + code + ", " + msg);
-                view.showShunfengOrders(mAccessibilityOrders);
+                view.showShunfengOrders(mShunfengOrders);
             }
         });
     }
