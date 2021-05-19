@@ -53,6 +53,8 @@ public class BookOrderListItemView extends BaseItemView<Order> {
     TextView tvOrderGetOff;
     @BindView(R.id.tv_get_off_desc)
     TextView tvGetOffDesc;
+    @BindView(R.id.order_money)
+    TextView order_money;
 
     //预约订单的，为预约时间； 实时订单的，为下单时间
     @BindView(R.id.tv_order_time)
@@ -73,7 +75,7 @@ public class BookOrderListItemView extends BaseItemView<Order> {
     @BindView(R.id.show_map)
     View tvShowMap;
     @BindView(R.id.grab_order)
-    View grabOrder;
+    TextView grabOrder;
 
     public BookOrderListItemView(Context context) {
         super(context);
@@ -96,7 +98,7 @@ public class BookOrderListItemView extends BaseItemView<Order> {
 //        rlOrderContent.setOnClickListener(v -> notifyItemAction(OrderClickArea.SHOW_IN_MAP));
         tvContactPassenger.setOnClickListener(v -> notifyItemAction(OrderClickArea.CONTACT_PASSENGER));
         if (order.getOrderType() == Order.ORDER_TYPE_SEND_CHILD) {
-            tvContactPassenger.setText(R.string.order_contact_parent);
+//            tvContactPassenger.setText(R.string.order_contact_parent);
 
             if (order.isCarpoolOrder()) { // 送你上学 - 拼车单
                 carpoolingOrder.setVisibility(VISIBLE);
@@ -104,7 +106,7 @@ public class BookOrderListItemView extends BaseItemView<Order> {
                 carpoolingOrder.setVisibility(GONE);
             }
         } else {
-            tvContactPassenger.setText(R.string.order_contact_passenger);
+//            tvContactPassenger.setText(R.string.order_contact_passenger);
             carpoolingOrder.setVisibility(GONE);
         }
 //        }
@@ -133,8 +135,8 @@ public class BookOrderListItemView extends BaseItemView<Order> {
 
         //订单时间信息
         //时间展示日期和小时信息
-        String timeFormat = order.getOrderTime();
-        if (!TextUtils.isEmpty(timeFormat)){
+        String timeFormat = order.getEstimateArriveTime();
+        if (!TextUtils.isEmpty(timeFormat)) {
             if (order.isParentOrder()) {
                 timeFormat = formatParentOrderDate(order.getStartTime(), order.getEndTime());
             } else {
@@ -146,37 +148,47 @@ public class BookOrderListItemView extends BaseItemView<Order> {
                     e.printStackTrace();
                 }
             }
-            orderTime.setText(timeFormat);
+            orderTime.setText("预约" + timeFormat + "送达");
         }
 
+        List<String> orderDates = order.getOrderDates();
+        if (orderDates != null && orderDates.size() > 0) {
+            String makeTime = orderDates.get(0);
+            if (makeTime.contains(" ")) {
+                String[] maketimeStr = makeTime.split(" ");
+                if (maketimeStr.length > 1) {
+                    orderStatus.setText("每日" + maketimeStr[1] + "取货");
+                }
+            }
+        } else {
+            orderStatus.setText("今日" + order.getOrderTime() + "取货");
+        }
+        orderStatus.setVisibility(VISIBLE);
+        orderStatus.setClickable(false);
+        grabOrder.setVisibility(VISIBLE);
+
         //订单状态
-        if (order.getOrderStatus() == OrderStatus.ORDER_STATUS_INIT.getStatus()) {
+       /* if (order.getOrderStatus() == OrderStatus.ORDER_STATUS_INIT.getStatus()) {
             if (order.isParentOrder()) { // 预约大厅订单，状态区域显示子订单数量
                 orderStatus.setVisibility(VISIBLE);
-                orderStatus.setText(String.format(Locale.getDefault(), "共%d单", order.getOrderDates().size()));
+                orderStatus.setText(String.format(Locale.getDefault(), "共%d单", orderDates.size()));
 
                 orderStatus.setClickable(true);
                 orderStatus.setOnClickListener(v -> {
                     notifyItemAction(ACTION_ORDER_DATES);
-                    showOrderDates(order.getOrderDates());
+                    showOrderDates(orderDates);
                 });
-            } else {
-                orderStatus.setVisibility(GONE);
             }
             grabOrder.setVisibility(VISIBLE);
             grabOrder.setOnClickListener(v -> notifyItemAction(ACTION_GRAB_ORDER));
         } else {
-            orderStatus.setVisibility(VISIBLE);
-            orderStatus.setClickable(false);
-
             if (order.getOrderStatus() == Order.ORDER_STATUS_CLOSED &&
                     order.getOrderSubStatus() == Order.ORDER_SUB_STATUS_CLOSED_COMPLAIN) {
                 orderStatus.setText(OrderStatus.getStatusText(order.getOrderStatus(), order.getOrderType()) + "(支付争议)");
             } else {
                 orderStatus.setText(OrderStatus.getStatusText(order.getOrderStatus(), order.getOrderType()));
             }
-            grabOrder.setVisibility(GONE);
-        }
+        }*/
 
         //只有取消的订单才显示状态
 //        if (order.getOrderStatus() == Order.ORDER_STATUS_CANCELED) {
@@ -200,7 +212,8 @@ public class BookOrderListItemView extends BaseItemView<Order> {
 
         //订单类型
         tvTotalDistance.setVisibility(VISIBLE);
-        tvTotalDistance.setText(BusinessUtils.formatDistance(order.getDistance()));
+        tvTotalDistance.setText("取送距离" + BusinessUtils.formatDistance(order.getDistance()));
+        order_money.setText(order.getTotalMoney() + "");
     }
 
     private void showOrderDates(List<String> orderDates) {

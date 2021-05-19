@@ -6,6 +6,7 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.LatLng;
 import com.haylion.android.Constants;
 import com.haylion.android.R;
@@ -23,6 +24,7 @@ import com.haylion.android.data.model.OrderForMainActivity;
 import com.haylion.android.data.model.OrderHistory;
 import com.haylion.android.data.model.ShunfengBean;
 import com.haylion.android.data.model.UserInfo;
+import com.haylion.android.utils.AmapUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,15 +148,19 @@ public class OrderConvert {
 //        order.setPassengerNum(shunfengOrder.getCarpoolNum());
 
         //订单类型和时间
-        /*order.setOrderType(shunfengOrder.getOrderType());
-        order.setOrderStatus(shunfengOrder.getOrderStatus());
-        order.setOrderSubStatus(shunfengOrder.getOrderSubStatus());
-        order.setOrderTime(shunfengOrder.getTime());
-        order.setEstimateArriveTime(shunfengOrder.getEstimateArriveTime());*/
+        order.setOrderType(shunfengOrder.getOrderType());
+//        order.setOrderStatus(shunfengOrder.getOrderStatus());
+//        order.setOrderSubStatus(shunfengOrder.getOrderSubStatus());
+//        order.setEstimateArriveTime(shunfengOrder.getEstimateArriveTime());
+        order.setOrderTime(shunfengOrder.getTakeTime());
+        order.setEstimateArriveTime(shunfengOrder.getDeliveryTime());//订单送达时间
 
         //费用
         order.setTotalMoney(shunfengOrder.getPrice());
-
+        double totalInstance = AmapUtils.getDistance(order.getStartAddr().getLatLng(), order.getEndAddr().getLatLng());
+        Log.d("aaa","totalInstance = " + totalInstance);
+        //预估行程距离
+        order.setDistance((long) totalInstance);
         //送小孩的信息
         /*List<ChildInfo> childInfoList = new ArrayList<>();
         if (shunfengOrder.getChildNameList() != null) {
@@ -178,9 +184,6 @@ public class OrderConvert {
                 + ",isParentOrder:" + order.isParentOrder());
         order.setStartTime(shunfengOrder.getStartDate());*/
         order.setEndTime(shunfengOrder.getEndDate());
-
-        //预估行程距离
-//        order.setDistance(shunfengOrder.getTotalDistance());
 
         // 订单日期
         List<String> dates = new ArrayList<>();

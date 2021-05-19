@@ -20,7 +20,8 @@
         android:textColor="@color/color333"
         android:layout_marginLeft="@dimen/dp_14"
         android:layout_marginTop="@dimen/dp_19"
-        android:textSize="@dimen/sp_16" />
+        android:textStyle="bold"
+        android:textSize="@dimen/sp_14" />
 
     <RelativeLayout
         android:id="@+id/rl_order_content"
@@ -225,7 +226,7 @@
             android:orientation="vertical"
             android:paddingLeft="@dimen/dp_18"
             android:paddingRight="@dimen/dp_18"
-            android:paddingBottom="@dimen/dp_15">
+            android:paddingBottom="@dimen/dp_14">
 
             <RelativeLayout
                 android:id="@+id/rl_order_type"
@@ -323,8 +324,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/dp_19"
-
-                android:layout_height="@dimen/dp_1"></View>
+                android:background="@color/color_divider"
+                android:layout_height="@dimen/dp_0_5"></View>
 
             <LinearLayout
                 android:id="@+id/ll_contact_info"
@@ -333,29 +334,17 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLength="20"
-                    android:maxLines="2"
-                    android:text="取送距离"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/maas_text_primary"
-                    android:textSize="@dimen/sp_14" />
-
-                <TextView
                     android:id="@+id/tv_total_distance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_toRightOf="@+id/tv_total_distance_fixed"
                     android:ellipsize="end"
-                    android:gravity="right"
                     android:maxLength="20"
                     android:maxLines="2"
-                    android:text="0.0km"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/maas_text_primary"
+                    android:text="取送距离0.0km"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:layout_marginBottom="@dimen/dp_15"
+                    android:textColor="@color/color333"
+                    android:textStyle="bold"
                     android:textSize="@dimen/sp_14" />
 
                 <Space
@@ -377,13 +366,13 @@
                     android:id="@+id/tv_contact_passenger"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/kuang_blue_round_2dp"
                     android:drawableStart="@mipmap/phone_ic"
                     android:drawablePadding="@dimen/dp_4"
                     android:paddingLeft="@dimen/dp_10"
                     android:paddingTop="@dimen/dp_2"
                     android:paddingRight="@dimen/dp_10"
                     android:paddingBottom="@dimen/dp_2"
+                    android:layout_gravity="center_vertical"
                     android:textColor="@color/maas_bg_blue"
                     android:textSize="@dimen/sp_14"
                     android:visibility="visible" />
@@ -438,16 +427,63 @@
                     android:visibility="gone" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/color_divider"
+                android:layout_height="@dimen/dp_0_5"></View>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/order_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="订单价格"
+                    android:textColor="@color/color333"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="@dimen/dp_18"
+                    android:textSize="@dimen/sp_14"
+                    />
+
+                <TextView
+                    android:id="@+id/price_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="元"
+                    android:textColor="@color/color333"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/order_price"
+                    app:layout_constraintBottom_toBottomOf="@+id/order_price"
+                    android:layout_alignParentRight="true"
+                    />
+
+                <TextView
+                    android:id="@+id/order_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="130.00"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintEnd_toStartOf="@+id/price_unit"
+                    app:layout_constraintTop_toTopOf="@+id/order_price"
+                    app:layout_constraintBottom_toBottomOf="@+id/order_price"
+                    android:layout_marginEnd="@dimen/dp_4"
+                    android:textStyle="bold"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
             <TextView
                 android:id="@+id/grab_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="8dp"
                 android:background="@drawable/button_selector"
                 android:gravity="center_horizontal"
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_14"
                 android:text="@string/action_grab_order"
                 android:textColor="@color/white"
                 android:textSize="18sp"
