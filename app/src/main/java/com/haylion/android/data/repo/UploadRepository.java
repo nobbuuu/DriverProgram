@@ -1,6 +1,8 @@
 package com.haylion.android.data.repo;
 
+import com.haylion.android.data.api.OrderApi;
 import com.haylion.android.data.api.UploadApi;
+import com.haylion.android.data.bean.ChangeOrderStatusBean;
 import com.haylion.android.data.dto.UploadDto;
 import com.haylion.android.data.model.InsertKidImageBean;
 import com.haylion.android.data.model.UploadImgBean;
@@ -71,5 +73,14 @@ public class UploadRepository extends BaseRepository {
                 .subscribeWith(callback));
     }
 
+
+     //改变订单状态
+     public void changeOrderStatus(ChangeOrderStatusBean paramBean, ApiSubscriber<Boolean> callback) {
+         addDisposable(RetrofitHelper.getApi(OrderApi.class)
+                 .updateOrderStatus(paramBean)
+                 .compose(new ApiTransformer<>())
+                 .subscribeWith(callback)
+         );
+     }
 
 }

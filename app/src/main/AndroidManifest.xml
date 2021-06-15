@@ -221,7 +221,20 @@
         <!--提现到微信-->
         <activity android:name=".user.wallet.WithdrawActivity" />
         <!--主页面的菜单-->
-        <activity android:name=".main.MainMenuActivity"/>
+        <activity android:name=".main.MainMenuActivity" />
+        <activity android:name=".activity.OrderPreSignActivity"
+            />
+        <activity android:name=".activity.OrderSignActivity"
+            android:screenOrientation="landscape"
+            />
+
+        <activity android:name=".activity.ScannerCodeActivity"/>
+        <activity android:name=".activity.PreScanActivity"/>
+        <activity android:name=".activity.OrderCompleteActivity"/>
+        <activity
+            android:name="com.king.zxing.CaptureActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CaptureTheme"/>
 
         <!--送你上学拼车单提交账单后页面-->
         <activity android:name=".orderdetail.trip.CarpoolTripEndActivity"/>

@@ -24,6 +24,11 @@ public class OrderDetailContract {
          */
         void changeOrderStatusSuccess(int status);
 
+        /**
+         * 改变顺丰订单状态
+         */
+        void changeShunFengOrderStatusSuccess(int status);
+
         void changeOrderStatusFail();
 
         /**
@@ -49,6 +54,11 @@ public class OrderDetailContract {
          * 获取订单详情
          */
         void getOrderDetail(int orderId);
+
+        /**
+         * 获取顺丰订单详情
+         */
+        void getShunfengOrderDetail(int orderId);
 
 
         /**

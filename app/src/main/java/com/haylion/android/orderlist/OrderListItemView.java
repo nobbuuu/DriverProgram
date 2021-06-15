@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amap.api.maps.AMap;
 import com.haylion.android.R;
+import com.haylion.android.activity.OrderCompleteActivity;
+import com.haylion.android.activity.PreScanActivity;
 import com.haylion.android.common.map.AMapUtil;
 import com.haylion.android.data.base.BaseItemView;
 import com.haylion.android.data.model.Order;
@@ -16,6 +18,8 @@ import com.haylion.android.data.model.OrderStatus;
 import com.haylion.android.data.model.OrderTypeInfo;
 import com.haylion.android.data.util.BusinessUtils;
 import com.haylion.android.data.util.ResourceUtil;
+import com.haylion.android.orderdetail.OrderDetailActivity;
+import com.haylion.android.orderdetail.amapNavi.AMapNaviViewActivity;
 
 import java.text.ParseException;
 
@@ -75,7 +79,7 @@ public class OrderListItemView extends BaseItemView<Order> {
 //        }
 
         //是否展示listview的头部信息
-        if (order.getHeaderNameDisplay() != null && !("").equals(order.getHeaderNameDisplay())) {
+        if (order.getOrderType() != -1 && order.getHeaderNameDisplay() != null && !("").equals(order.getHeaderNameDisplay())) {
             tvOrderStatusHeader.setText(order.getHeaderNameDisplay());
             tvOrderStatusHeader.setVisibility(VISIBLE);
         } else {
@@ -88,8 +92,8 @@ public class OrderListItemView extends BaseItemView<Order> {
         //地址信息
         tvOrderGetOn.setText(order.getStartAddr().getName());
         tvOrderGetOff.setText(order.getEndAddr().getName());
-        tvGetOnDesc.setText(AMapUtil.getAddress(order.getStartAddr().getAddressDetail()));
-        tvGetOffDesc.setText(AMapUtil.getAddress(order.getEndAddr().getAddressDetail()));
+//        tvGetOnDesc.setText(AMapUtil.getAddress(order.getStartAddr().getAddressDetail()));
+//        tvGetOffDesc.setText(AMapUtil.getAddress(order.getEndAddr().getAddressDetail()));
 
         //订单时间信息
         //时间展示日期和小时信息
@@ -106,12 +110,32 @@ public class OrderListItemView extends BaseItemView<Order> {
 
         //订单状态
         orderStatus.setText(OrderStatus.getOrderStatusText(order));
-
+        if (order.getOrderType() == -1){
+            switch (order.getOrderStatus()){
+//                        待开始 = 0、待到店 = 1、待扫描=2、待取货签名=3、送货中=4、已完成=5
+                case 0:
+                    orderStatus.setText("待开始");
+                    break;
+                case 1:
+                case 2:
+                case 3:
+                    orderStatus.setText("待取货");
+                    break;
+                case 4:
+                    orderStatus.setText("送货中");
+                    break;
+                case 5:
+                    orderStatus.setText("已完成");
+                    break;
+            }
+        }
         //订单类型展示
         String orderTypeText;
+        int orderType = order.getOrderType();
+        Log.d("aaa","orderType = " + orderType);
         orderTypeText = OrderTypeInfo.getStatusText(order.getOrderType(), order.getChannel());
-        orderType.setText(orderTypeText);
-        orderType.setVisibility(VISIBLE);
+        this.orderType.setText(orderTypeText);
+        this.orderType.setVisibility(VISIBLE);
     }
 
 }

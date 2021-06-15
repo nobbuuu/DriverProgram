@@ -34,16 +34,24 @@ import com.amap.api.navi.AmapPageType;
 import com.amap.api.navi.INaviInfoCallback;
 import com.amap.api.navi.model.AMapNaviLocation;
 import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.route.DistanceResult;
+import com.amap.api.services.route.DistanceSearch;
 import com.amap.api.services.route.DrivePath;
 import com.amap.api.services.route.DriveRouteResult;
 import com.haylion.android.Constants;
 import com.haylion.android.MyApplication;
 import com.haylion.android.R;
+import com.haylion.android.activity.OrderPreSignActivity;
+import com.haylion.android.activity.PreScanActivity;
+import com.haylion.android.activity.ScannerCodeActivity;
+import com.haylion.android.common.Const;
 import com.haylion.android.common.aibus_location.data.GpsData;
 import com.haylion.android.common.map.AMapUtil;
 import com.haylion.android.common.map.BaseMapActivity;
 import com.haylion.android.common.view.CargoRestTimeView;
 import com.haylion.android.common.view.dialog.DialogUtils;
+import com.haylion.android.customview.DetailTopPickGoodsView;
+import com.haylion.android.customview.DetailTopStartOrderView;
 import com.haylion.android.data.base.ConfirmDialog;
 import com.haylion.android.data.model.AddressInfo;
 import com.haylion.android.data.model.EventBean;
@@ -65,9 +73,14 @@ import com.haylion.android.orderdetail.amapNavi.AMapNaviViewActivity;
 import com.haylion.android.orderdetail.trip.TripDetailActivity;
 import com.haylion.android.orderdetail.trip.TripOperateActivity;
 import com.haylion.android.pay.PayMainActivity;
+import com.haylion.android.permissions.OnPermission;
+import com.haylion.android.permissions.Permission;
+import com.haylion.android.permissions.XXPermissions;
 import com.haylion.android.service.FloatDialogService;
 import com.haylion.android.service.WsCommands;
 import com.haylion.android.uploadPhoto.UploadChildImgActivity;
+import com.haylion.android.utils.AmapUtils;
+import com.haylion.android.utils.SpUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -99,6 +112,7 @@ import io.reactivex.functions.Consumer;
 public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Presenter> implements OrderDetailContract.View {
 
     private static final String TAG = "OrderDetailActivity";
+    public static long startTime;
     /**
      * handler msg code
      */
@@ -108,6 +122,8 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
     private final int HANDLER_MSG_WAITING_PASSENGER_COUNTING_TIME = 1002;
 
     public final static String ORDER_ID = "EXTRA_ORDER_ID";
+    public final static String ORDER_STATUS = "EXTRA_ORDER_STATUS";
+    public final static String ORDER_TYPE = "EXTRA_ORDER_TYPE";
     public final static String CARGO_ORDER_ID = "EXTRA_CARGO_ORDER_ID";
     public final static String ORDER_IS_NEW = "EXTRA_ORDER_IS_NEW";
     public final static String ORDER_START_ADDR = "EXTRA_ORDER_START_ADDR";
@@ -285,8 +301,12 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
      */
     @BindView(R.id.tv_realtime_contact_number)
     TextView tvRealtimeContactNumber;
+    @BindView(R.id.tv_realtime_contact)
+    TextView tvRealtimeContact;
     @BindView(R.id.rl_realtime_contact)
     RelativeLayout rlRealtimeContact;
+    @BindView(R.id.top_fra)
+    FrameLayout top_fra;
 
 
     /**
@@ -294,6 +314,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
      */
     private Order order;
     private int orderId;    //订单id
+    private int orderType;    //订单类型
     private int cargoOrderId = 0;  //货单id,目前按理不会有实际使用到的时机，暂时保留，只在此页面处于货拼客待支付or已完成情况下有用
     private double linearDistance = -1;  //直线距离
     private GpsData currentGps;
@@ -309,6 +330,8 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
      */
     private boolean carpoolFlag = false;
 
+    private boolean expand;
+
     /**
      * 跳转
      *
@@ -318,6 +341,19 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
     public static void go(Context context, int orderId) {
         Intent intent = new Intent(context, OrderDetailActivity.class);
         intent.putExtra(ORDER_ID, orderId);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 跳转
+     *
+     * @param context
+     * @param orderId 订单id
+     */
+    public static void go(Context context, int orderId, int orderType) {
+        Intent intent = new Intent(context, OrderDetailActivity.class);
+        intent.putExtra(ORDER_ID, orderId);
+        intent.putExtra(ORDER_TYPE, orderType);
         context.startActivity(intent);
     }
 
@@ -355,6 +391,8 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
             }
         } else {
             orderId = getIntent().getIntExtra(ORDER_ID, 0);
+            Log.d(TAG, "orderId = " + orderId);
+            orderType = getIntent().getIntExtra(ORDER_TYPE, 0);
             cargoOrderId = getIntent().getIntExtra(CARGO_ORDER_ID, 0);
             if (orderId == 0) {
                 LogUtils.d(TAG, "订单ID为空");
@@ -402,8 +440,19 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
                         || order.getOrderType() == Order.ORDER_TYPE_CARGO_PASSENGER) {
                     //实时订单 or 货拼客单
                     handleRealTimeOrderSlide();
+                } else if (order.getOrderType() == -1) {//顺丰单
+                    slideview.reset();
+                    int orderStatus = order.getOrderStatus();
+                    Log.d("aaa", "addSlideListener orderStatus = " + orderStatus);
+                    switch (orderStatus) {
+                        case 0://待开始
+                        case 1://待到店
+                            presenter.changeOrderStatus(orderId, orderStatus + 1);
+                            break;
+                    }
+
                 } else {
-                    presenter.changeOrderStatus(cargoOrderId, OrderDetailPresenter.OPERATAR_BY_DETAIL);
+                    presenter.changeOrderStatus(orderId, OrderDetailPresenter.OPERATAR_BY_DETAIL);
                 }
             }
         });
@@ -678,7 +727,12 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
         }
 
         //地址信息卡片的展示
-        updateAddrInfoCardView();
+        refreshTitleright();
+        if (orderType == -1) {
+            refreshTopView();
+        } else {
+            updateAddrInfoCardView();
+        }
 
         //各个订单类型单独处理显示View
         if (order.getOrderType() == Order.ORDER_TYPE_REALTIME
@@ -691,13 +745,14 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
         } else if (order.getOrderType() == Order.ORDER_TYPE_CARGO_PASSENGER) { //货拼客单
             updateRealTimeOrderView();
             presenter.getCargoOrderSendDeadTime(order.getCargoOrderId());
-        } else { //其他订单
+        } else if (order.getOrderType() == -1) { //其他订单
+            updateRealTimeOrderView();
+        } else {//其他订单
             updateRealTimeOrderView();
         }
 
         //button显示。
         changeOrderStatusSuccess(order.getOrderStatus());
-
     }
 
     private void payOrderNow() {
@@ -759,8 +814,8 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
             tvGetOffAddrPrefix.setText("送乘客到");
         }
         //详细地址
-        tvGetOnDesc.setText(AMapUtil.getAddress(order.getStartAddr().getAddressDetail()));
-        tvGetOffDesc.setText(AMapUtil.getAddress(order.getEndAddr().getAddressDetail()));
+//        tvGetOnDesc.setText(AMapUtil.getAddress(order.getStartAddr().getAddressDetail()));
+//        tvGetOffDesc.setText(AMapUtil.getAddress(order.getEndAddr().getAddressDetail()));
 
         //2.图标类型展示
         if (order.getOrderType() == Order.ORDER_TYPE_CARGO) { //货单
@@ -827,6 +882,33 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
             ivNaviAction.setVisibility(View.VISIBLE);
         }
 
+    }
+
+    private void refreshTopView() {
+        top_fra.removeAllViews();
+        if (order != null) {
+            int orderStatus = order.getOrderStatus();
+            Log.d("aaa", "refreshTopView orderStatus = " + orderStatus);
+            slideview.reset();
+            switch (orderStatus) {
+                case 0:
+                    rlRealtimeContact.setVisibility(View.GONE);
+                    top_fra.addView(new DetailTopStartOrderView(this, order));
+                    slideview.setBackgroundText(getResources().getString(R.string.slide_view_start_order));
+                    tvHeaderName.setText("订单详情");
+                    break;
+                case 1:
+                    top_fra.addView(new DetailTopPickGoodsView(this, order));
+                    slideview.setBackgroundText(getResources().getString(R.string.slide_view_to_shop));
+                    tvHeaderName.setText("取货中");
+                    rlRealtimeContact.setVisibility(View.VISIBLE);
+                    break;
+                case 2:
+                    PreScanActivity.go(getContext(), orderId);
+                    finish();
+                    break;
+            }
+        }
     }
 
 
@@ -933,7 +1015,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
         currentGps = gpsData;
         //更新线路规划
         if (isOnResume) {
-            showOrderInfoInMap(order);
+//            showOrderInfoInMap(order);
         }
     }
 
@@ -1146,9 +1228,9 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
             LogUtils.e(TAG, "订单状态异常,当前状态：" + status);
             return;
         }
-        if (startAddr != null) {
-            mStartPoint = new LatLonPoint(order.getStartAddr().getLatLng().latitude,
-                    order.getStartAddr().getLatLng().longitude);
+        if (order.getOrderStatus() == 2) {
+            mStartPoint = new LatLonPoint(order.getStartAddr().getLatLng().latitude, order.getStartAddr().getLatLng().longitude);
+            mEndPoint = new LatLonPoint(endAddr.getLatLng().latitude, endAddr.getLatLng().longitude);
         } else {
             //当前车辆位置
             if (currentGps == null) {
@@ -1156,9 +1238,8 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
                 return;
             }
             mStartPoint = new LatLonPoint(currentGps.getLatitude(), currentGps.getLongitude());
+            mEndPoint = new LatLonPoint(order.getStartAddr().getLatLng().latitude, order.getStartAddr().getLatLng().longitude);
         }
-        mEndPoint = new LatLonPoint(endAddr.getLatLng().latitude, endAddr.getLatLng().longitude);
-
         if (order.getOrderType() == Order.ORDER_TYPE_SEND_CHILD &&
                 order.getOrderStatus() == Order.ORDER_STATUS_GET_OFF) {
             if (isNeedShowTrueLang) {
@@ -1174,6 +1255,25 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
             //开始路线规划
             searchRoute();
         }
+    }
+
+    /**
+     * 更新顺丰订单状态后的回调
+     *
+     * @param status 0-1-2-3 分别是待抢单-带取货-送货中-已完成
+     */
+    @Override
+    public void changeShunFengOrderStatusSuccess(int status) {
+        Log.d("aaa", "changeShunFengOrderStatusSuccess status = " + status);
+        startTime = System.currentTimeMillis();
+        if (order != null) {
+            String phoneNum = order.getUserInfo().getPhoneNum();
+            if (!TextUtils.isEmpty(phoneNum) && phoneNum.length() >= 11) {
+                tvRealtimeContact.setText("取货电话：" + phoneNum.substring(0, 3) + "****" + phoneNum.substring(phoneNum.length() - 5, phoneNum.length() - 1));
+            }
+            order.setOrderStatus(status);
+        }
+        refreshTopView();
     }
 
     /**
@@ -1341,7 +1441,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
         } else {
             slideview.setBgAndIconResId(R.drawable.btn_bg_enable, R.mipmap.btn_slide);
         }
-        slideview.setBackgroundText(tvOrderStatusAction.getText().toString());
+//        slideview.setBackgroundText(tvOrderStatusAction.getText().toString());
         slideview.reset();
     }
 
@@ -1558,7 +1658,11 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
     @Override
     public void handleDriveRouteSearchedResult(DriveRouteResult driveRouteResult, int i) {
         Log.e(TAG, "路线规划成功");
-
+        DrivePath drivePath = driveRouteResult.getPaths().get(0);
+        if (drivePath != null) {
+            order.setDistance(drivePath.getDistance());
+            order.setCostTime(drivePath.getDuration());
+        }
         //1.起点和终点Marker的显示
         if (order.getOrderStatus() == Order.ORDER_STATUS_WAIT_CAR
                 || order.getOrderStatus() == Order.ORDER_STATUS_ARRIVED_START_ADDR
@@ -1619,7 +1723,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
         }
 
         //更新剩余距离 和 时间
-        updateDistanceView(driveRouteResult.getPaths().get(0));
+        updateDistanceView(drivePath);
     }
 
     /**
@@ -1646,6 +1750,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
     public void updateDistanceView(DrivePath drivePath) {
         //Log.e(TAG, "测量距离：" + drivePath.getDistance() + "   " + "测量时间:" + drivePath.getDuration());
         distance = drivePath.getDistance();
+        Log.d("aaa", "distance = " + distance);
         //剩余距离
         if (distance > 1000) {
             tvRestDistance.setText(String.format(Locale.getDefault(), "%.1f", distance / 1000));
@@ -1688,6 +1793,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
         //先获取当前的位置
         currentGps = FloatDialogService.getCurrentGps();
         refreshOrderDetails();
+        refreshTopView();
         MyApplication.setOrderIdRunning(orderId);
     }
 
@@ -1695,7 +1801,11 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
         if (carpoolFlag) {
             presenter.getCarpoolOrderDetails(carpoolCode);
         } else {
-            presenter.getOrderDetail(orderId);
+            if (orderType == -1) {
+                presenter.getShunfengOrderDetail(orderId);
+            } else {
+                presenter.getOrderDetail(orderId);
+            }
         }
     }
 
@@ -1760,8 +1870,11 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
      * 处理 实时订单/货拼客单 的显示
      */
     private void updateRealTimeOrderView() {
+        if (orderType == -1) {
+
+        }
         handler.removeMessages(HANDLER_MSG_WAITING_PASSENGER_COUNTING_TIME);
-        tvTitleRight.setVisibility(View.VISIBLE);
+        refreshTitleright();
         //实时订单tips View
         if (order.getOrderStatus() == Order.ORDER_STATUS_WAIT_CAR || order.getOrderStatus() == Order.ORDER_STATUS_READY) {
             //去接乘客，显示预计到达上车点时间tips
@@ -1799,7 +1912,13 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
             llOrderTips.setVisibility(View.GONE);
         }
         //联系电话
-        rlRealtimeContact.setVisibility(View.VISIBLE);
+        if (orderType == -1) {
+            rlRealtimeContact.setVisibility(View.GONE);
+            top_fra.setVisibility(View.VISIBLE);
+        } else {
+            rlRealtimeContact.setVisibility(View.VISIBLE);
+            top_fra.setVisibility(View.GONE);
+        }
         if (order.getOrderStatus() == Order.ORDER_STATUS_GET_ON) {
             rlRealtimeContact.setVisibility(View.GONE);
         }
@@ -1809,6 +1928,14 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
             } else {
                 tvRealtimeContactNumber.setText(order.getUserInfo().getPhoneNum());
             }
+        }
+    }
+
+    private void refreshTitleright() {
+        if (orderType == -1) {
+            tvTitleRight.setVisibility(View.GONE);
+        } else {
+            tvTitleRight.setVisibility(View.VISIBLE);
         }
     }
 
@@ -2048,7 +2175,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
      * 处理 送你上学 订单的显示
      */
     private void updateChildOrderView() {
-        tvTitleRight.setVisibility(View.VISIBLE);
+        refreshTitleright();
         //1.订单提示View的显示
         if (order.getOrderStatus() == Order.ORDER_STATUS_WAIT_CAR) {
             //去接乘客，显示预计到达上车点时间，此处和实时订单不同，要取订单的时间。

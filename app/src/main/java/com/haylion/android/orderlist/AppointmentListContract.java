@@ -30,11 +30,13 @@ public class AppointmentListContract {
 
         void refreshAppointmentList();
 
+        void refreshShunfengList();
+
         void appointmentHall();
 
         void refreshAppointmentHall();
 
-        void grabOrder(Order order);
+        void grabOrder(Order order,List<String> list);
 
         void childrenOrderCenter();
 

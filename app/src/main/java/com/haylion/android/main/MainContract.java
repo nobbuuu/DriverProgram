@@ -1,5 +1,6 @@
 package com.haylion.android.main;
 
+import com.haylion.android.data.bean.ShunfengWaitBean;
 import com.haylion.android.data.model.AddressForSuggestLine;
 import com.haylion.android.data.model.AmapTrack;
 import com.haylion.android.data.model.Driver;
@@ -57,6 +58,8 @@ public class MainContract {
         void haveWaitPayOrder(boolean have);
 
         void onNewOrder(int newOrderCount, String latestOrderTime);
+
+        void onShunfengOrders(List<Order> list);
     }
 
     interface Presenter extends AbstractPresenter {
@@ -93,6 +96,8 @@ public class MainContract {
         void getOrderList();
 
         void queryNewOrder();
+
+        void queryShunfengOrder();
     }
 
 }

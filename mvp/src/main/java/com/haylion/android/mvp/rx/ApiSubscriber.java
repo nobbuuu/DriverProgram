@@ -37,6 +37,7 @@ public abstract class ApiSubscriber<T> extends DisposableObserver<T> {
      */
     @Override
     public final void onError(Throwable e) {
+        Log.e("onError","e = " + e.getMessage());
         if (isDisposed()) {
             return;
         }
@@ -74,7 +75,6 @@ public abstract class ApiSubscriber<T> extends DisposableObserver<T> {
         }
         if (BuildConfig.DEBUG) {
             e.printStackTrace();
-            Log.d("aaa","e = " + e.getMessage());
         }
         onError(code, msg);
         dispose();

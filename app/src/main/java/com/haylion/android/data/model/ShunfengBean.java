@@ -6,6 +6,7 @@ public class ShunfengBean {
 
     /**
      * id : 2
+     * driverStatus:0
      * depotStartAddress : 广东省深圳市罗湖区深圳站
      * depotStartLongitude : 22.531948
      * depotStartLatitude : 114.117751
@@ -33,6 +34,7 @@ public class ShunfengBean {
      */
 
     private int id;
+    private int driverStatus;
     private String depotStartAddress;
     private double depotStartLongitude;
     private double depotStartLatitude;
@@ -58,6 +60,14 @@ public class ShunfengBean {
     private int price;
     private int orderType = -1;
     private List<GrabDateListBean> grabDateList;
+
+    public int getDriverStatus() {
+        return driverStatus;
+    }
+
+    public void setDriverStatus(int driverStatus) {
+        this.driverStatus = driverStatus;
+    }
 
     public int getOrderType() {
         return orderType;

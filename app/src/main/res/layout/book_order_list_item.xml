@@ -106,7 +106,7 @@
                     android:id="@+id/instance_fromme"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="距你20.2km"
+                    android:text="距你0km"
                     android:textColor="#ff333333"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/dp_14"

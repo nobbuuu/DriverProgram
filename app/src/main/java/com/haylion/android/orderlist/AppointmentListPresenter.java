@@ -1,6 +1,11 @@
 package com.haylion.android.orderlist;
 
+import android.util.Log;
+
+import com.google.gson.Gson;
 import com.haylion.android.Constants;
+import com.haylion.android.data.bean.ClaimBean;
+import com.haylion.android.data.bean.ClaimResult;
 import com.haylion.android.data.event.AppointmentChangedEvent;
 import com.haylion.android.data.model.AppointmentList;
 import com.haylion.android.data.model.Order;
@@ -116,6 +121,11 @@ public class AppointmentListPresenter extends BasePresenter<AppointmentListContr
         getAppointmentListInternal();
     }
 
+    @Override
+    public void refreshShunfengList() {
+        getShunfengOrder();
+    }
+
     /**
      * 订单池 - 获取预约订单
      */
@@ -180,16 +190,41 @@ public class AppointmentListPresenter extends BasePresenter<AppointmentListContr
      * @param order 订单
      */
     @Override
-    public void grabOrder(Order order) {
-        if (order.getOrderType() == Order.ORDER_TYPE_SEND_CHILD) {
+    public void grabOrder(Order order,List<String> chosedDates) {
+        int orderType = order.getOrderType();
+        String orderCode = order.getOrderCode();
+        Log.d("aaa","orderType = " + orderType);
+        Log.d("aaa","orderCode = " + orderCode);
+        if (orderType == Order.ORDER_TYPE_SEND_CHILD) {
             // 送小孩单，调用专门的抢单接口
-            repo.grabChildrenOrder(order, new GrabOrderCallback(order.getOrderType()));
-        } else if (order.getOrderType() == Order.ORDER_TYPE_ACCESSIBILITY) {
-            repo.grabAccessibilityOrder(order.getOrderCode(),
-                    order.isParentOrder(), new GrabOrderCallback(order.getOrderType()));
-        } else {
-            repo.grabAppointment(order.getOrderCode(),
-                    order.isParentOrder(), new GrabOrderCallback(order.getOrderType()));
+            repo.grabChildrenOrder(order, new GrabOrderCallback(orderType));
+        } else if (orderType == Order.ORDER_TYPE_ACCESSIBILITY) {
+            repo.grabAccessibilityOrder(orderCode,
+                    order.isParentOrder(), new GrabOrderCallback(orderType));
+        } else if (orderType == -1){
+            ClaimBean claimBean = new ClaimBean(order.getOrderId(), chosedDates);
+            String paramJson = new Gson().toJson(claimBean);
+            Log.d("aaa","paramJson = " + paramJson);
+            repo.grabShunfengOrder(claimBean, new ApiSubscriber<ClaimResult>() {
+                @Override
+                public void onSuccess(ClaimResult claimResult) {
+                    if (claimResult.isClaimResult()){
+                        Log.d("aaa","抢单成功~");
+                        toast("抢单成功");
+                    }else {
+                        toast("订单已被抢走~");
+                    }
+                    getShunfengOrder();
+                }
+
+                @Override
+                public void onError(int code, String msg) {
+                    Log.d("aaa","抢单失败~  code = " + code + " msg = " + msg);
+                }
+            });
+        }else {
+            repo.grabAppointment(orderCode,
+                    order.isParentOrder(), new GrabOrderCallback(orderType));
         }
     }
 
@@ -289,6 +324,7 @@ public class AppointmentListPresenter extends BasePresenter<AppointmentListContr
                 toast("获取顺丰订单失败");
                 LogUtils.e("获取顺丰订单出错：" + code + ", " + msg);
                 view.showShunfengOrders(mShunfengOrders);
+
             }
         });
     }

@@ -3,6 +3,7 @@ package com.haylion.android.common.map;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
@@ -41,7 +42,7 @@ import java.util.List;
  */
 public class MaasTaxiOverlay extends RouteOverlay {
 
-    private String TAG = getClass().getSimpleName();
+    private String TAG = "MaasTaxiOverlay";
 
     /**
      * 规划路线
@@ -200,7 +201,7 @@ public class MaasTaxiOverlay extends RouteOverlay {
         startPoint = AMapUtil.convertToLatLng(start);
         endPoint = AMapUtil.convertToLatLng(end);
         mWayPoints = wayPoints;
-        addStartAndEndMarker();
+        addStartAndEndMarker(drivePath);
         addWayPointMaker();
         addPlanPolyline();
     }
@@ -212,17 +213,19 @@ public class MaasTaxiOverlay extends RouteOverlay {
      * 终点：上车点/下车点。
      * 注意：车辆icon旋转中心点要在icon中心，所以要调整setAnchor。
      */
-    protected void addStartAndEndMarker() {
+    protected void addStartAndEndMarker(DrivePath drivePath) {
+        Log.d(TAG, "onAction addStartAndEndMarker 111");
 
         //起点
         if (isUpdateStartMarker || isCarStart) {
-            View startMarkerView = AMapUtil.getView(mContext, resIdStart, startAddress);
+            View startMarkerView = AMapUtil.getCurMarkerView(mContext, resIdStart, startAddress);
             if (startMarker != null) {
                 startMarker.remove();
             }
             startMarker = mAMap.addMarker(new MarkerOptions()
                     .position(startPoint)
                     .icon(BitmapDescriptorFactory.fromView(startMarkerView)));
+            Log.d(TAG, "onAction addStartAndEndMarker 222");
             if (isCarStart) {
                 //车辆icon瞄点
                 startMarker.setAnchor(0.5f, 0.5f);
@@ -245,13 +248,14 @@ public class MaasTaxiOverlay extends RouteOverlay {
 
         //终点
         if (isUpdateEndMarker) {
-            View endMarkerView = AMapUtil.getView(mContext, resIdEnd, endAddress);
+            View endMarkerView = AMapUtil.getEndMarkerView(mContext, resIdEnd, drivePath);
             if (endMarker != null) {
                 endMarker.remove();
             }
             endMarker = mAMap.addMarker(new MarkerOptions()
                     .position(endPoint)
                     .icon(BitmapDescriptorFactory.fromView(endMarkerView)));
+            Log.d(TAG, "onAction addStartAndEndMarker 333");
             endMarker.setAnchor(0.5f, 1);
             endMarker.setToTop(); //防止被车辆图标覆盖
             endMarker.showInfoWindow();
@@ -283,12 +287,14 @@ public class MaasTaxiOverlay extends RouteOverlay {
      */
     private void addPlanPolyline() {
         if (mDrivePath == null) {
+            Log.e(TAG, "路线规划 数据异常");
             return;
         }
         mPlanLatLngList.clear();
         mTmcList.clear();
         //返回驾车规划方案的路段列表
         List<DriveStep> drivePaths = mDrivePath.getSteps();
+        Log.d(TAG, "drivePaths.size() = " + drivePaths.size());
         for (DriveStep step : drivePaths) {
             //返回驾车路段的坐标点集合
             List<LatLonPoint> latlonPoints = step.getPolyline();
@@ -301,12 +307,14 @@ public class MaasTaxiOverlay extends RouteOverlay {
             }
         }
 
-        if (mTmcList.size() > 0) {
-            if (isColorFulLine) {
-                addPolylinesWithTexture(mTmcList);
-            } else {
-                addPolylineWithSingleColor();
-            }
+        Log.d(TAG, "mTmcList.size() = " + mTmcList.size());
+        Log.d(TAG, "isColorFulLine = " + isColorFulLine);
+        /*if (mTmcList.size() > 0) {
+        }*/
+        if (isColorFulLine && mTmcList.size() > 0) {
+            addPolylinesWithTexture(mTmcList);
+        } else {
+            addPolylineWithSingleColor();
         }
     }
 

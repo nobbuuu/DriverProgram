@@ -138,15 +138,15 @@ public class LogUtils {
     }
 
     public static void i(String msg) {
-//        XLog.i(msg);
+        XLog.i(msg);
     }
 
     public static void d(String msg) {
-//        XLog.d(msg);
+        XLog.d(msg);
     }
 
     public static void v(String msg) {
-//        XLog.v(msg);
+        XLog.v(msg);
     }
 
     public static void e(String tag, Throwable throwable) {
@@ -162,15 +162,15 @@ public class LogUtils {
     }
 
     public static void i(String tag, String msg) {
-//        XLog.tag(tag).i(msg);
+        XLog.tag(tag).i(msg);
     }
 
     public static void d(String tag, String msg) {
-//        XLog.tag(tag).d(msg);
+        XLog.tag(tag).d(msg);
     }
 
     public static void v(String tag, String msg) {
-//        XLog.tag(tag).v(msg);
+        XLog.tag(tag).v(msg);
     }
 
 

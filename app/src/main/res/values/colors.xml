@@ -255,7 +255,17 @@
 
     <!--popwindow 半透明背景-->
     <color name="pop_window_translucence">#33000000</color>
-    <color name="color333">#333333</color>
+
+
+    <color name="color333">#ff333333</color>
     <color name="color_divider">#ffe4e4e4</color>
+    <color name="cldcontent">#A3A9B6</color>
+    <color name="iscal">#ff4453</color>
+    <color name="main_botcandy">#fb9598</color>
+    <color name="layou_mrbg">#eeeeee</color>
+    <color name="calender_week">#262626</color>
+    <color name="part_text_bg">#ff4b7efb</color>
+
+
 </resources>
 

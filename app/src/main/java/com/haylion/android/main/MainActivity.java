@@ -29,6 +29,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.hubert.guide.NewbieGuide;
 import com.app.hubert.guide.model.GuidePage;
@@ -37,6 +38,10 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.gyf.immersionbar.ImmersionBar;
 import com.haylion.android.R;
+import com.haylion.android.activity.OrderCompleteActivity;
+import com.haylion.android.activity.PreScanActivity;
+import com.haylion.android.adapter.MainShunfengAdapter;
+import com.haylion.android.common.Const;
 import com.haylion.android.common.aibus_location.DeviceLocationManager;
 import com.haylion.android.common.aibus_location.LocationListener;
 import com.haylion.android.common.aibus_location.data.GpsData;
@@ -45,9 +50,11 @@ import com.haylion.android.common.view.OrderCargoContainerView;
 import com.haylion.android.common.view.dialog.DBaseDialog;
 import com.haylion.android.common.view.dialog.DialogUtils;
 import com.haylion.android.common.view.popwindow.VehiclePopUpWindow;
+import com.haylion.android.constract.ItemClickListener;
 import com.haylion.android.data.base.BaseActivity;
 import com.haylion.android.data.base.BaseDialog;
 import com.haylion.android.data.base.ConfirmDialog;
+import com.haylion.android.data.bean.ShunfengWaitBean;
 import com.haylion.android.data.event.VehicleSyncEvent;
 import com.haylion.android.data.model.AddressForSuggestLine;
 import com.haylion.android.data.model.AmapTrack;
@@ -76,6 +83,7 @@ import com.haylion.android.mvp.util.LogUtils;
 import com.haylion.android.mvp.util.SizeUtil;
 import com.haylion.android.notification.NotificationListActivity;
 import com.haylion.android.orderdetail.OrderDetailActivity;
+import com.haylion.android.orderdetail.amapNavi.AMapNaviViewActivity;
 import com.haylion.android.orderdetail.multiday.MultiDayDetailActivity;
 import com.haylion.android.orderdetail.trip.CarpoolTripEndActivity;
 import com.haylion.android.orderdetail.trip.TripDetailActivity;
@@ -94,6 +102,8 @@ import com.haylion.android.user.setting.SettingActivity;
 import com.haylion.android.user.shift.ShiftInfoActivity;
 import com.haylion.android.user.vehicle.MyVehicleActivity;
 import com.haylion.android.user.wallet.MyWalletActivity;
+import com.haylion.android.utils.AmapUtils;
+import com.haylion.android.utils.SpUtils;
 import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
 import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
 
@@ -284,7 +294,7 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
 
 
         //下拉刷新
-        PullToRefreshLayout pullToRefreshLayout = findViewById(R.id.ptr_order_refresh);
+       /* PullToRefreshLayout pullToRefreshLayout = findViewById(R.id.ptr_order_refresh);
         pullToRefreshLayout.setRefreshListener(new BaseRefreshListener() {
             @Override
             public void refresh() {
@@ -309,7 +319,7 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
                     }
                 }, 1000);
             }
-        });
+        });*/
 
         setupGuidePage();
     }
@@ -613,6 +623,7 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
 
         presenter.getServiceTelNumber(false);
         presenter.getListenOrderSetting(); //获取听单状态
+        presenter.queryShunfengOrder();//获取顺丰听单列表
         //   presenter.checkUpdates();
     }
 
@@ -672,6 +683,39 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
             newOrderBadge.setVisibility(View.GONE);
         }
         newOrderBadge.setTag(latestOrderTime); // 通过tag保存最新一个预约单的时间
+    }
+
+    @Override
+    public void onShunfengOrders(List<Order> list) {
+        if (list != null && list.size() > 0){
+            llOrderListIsNull.setVisibility(View.GONE);
+
+            RecyclerView mShunfengListview = findViewById(R.id.myListView_shunfeng_order);
+            MainShunfengAdapter adapter = new MainShunfengAdapter(this, list, R.layout.main_shunfeng_list_item);
+            mShunfengListview.setAdapter(adapter);
+            adapter.setItemClickListener(new ItemClickListener() {
+                @Override
+                public void onItemClick(Order order) {
+                    switch (order.getOrderStatus()){
+//                        待开始 = 0、待到店 = 1、待扫描=2、待取货签名=3、送货中=4、已完成=5
+                        case 0:
+                        case 1:
+                            OrderDetailActivity.go(getContext(), order.getOrderId(),-1);
+                            break;
+                        case 2:
+                        case 3:
+                            PreScanActivity.go(getContext(),order.getOrderId());
+                            break;
+                        case 4:
+                            AMapNaviViewActivity.go(getContext(), order.getOrderId(), -1);
+                            break;
+                        case 5:
+                            OrderCompleteActivity.go(getContext(), order.getOrderId(),2);
+                            break;
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -918,7 +962,6 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
     OrderCargoContainerView rlOrderCargoContainer;
     @BindView(R.id.tv_time_to_arrive_destination)
     TextView tvTimeShouldArriveDestination;
-
 
     List<Order> passengerList = new ArrayList<>();
     List<Order> cargoList = new ArrayList<>();
@@ -1352,7 +1395,7 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
 
     @Override
     public void itemClick(Order order) {
-        if (order.isParentOrder()) {
+        if (order.isParentOrder() || order.getOrderType() == -1) {
             Intent intent = new Intent(MainActivity.this, MultiDayDetailActivity.class);
             intent.putExtra(MultiDayDetailActivity.ORDER_ID, order.getOrderCode());
             startActivity(intent);
@@ -1699,7 +1742,7 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
 //                })
 //                .anchor(findViewById(R.id.ll_listen_order))//如果是Activity上增加引导层，不需要设置anchor
                 .addHighLight(viewId, R.layout.layout_pay_confirm, new OnLeftPosCallback(45), new RectLightShape(0, 0, 15, 0, 0));//矩形去除圆角
-        /*                .addHighLight(R.id.btn_light,R.layout.info_known,new OnRightPosCallback(5),
+        /*                .addHighLight(R.id.btn_light,R.rvitem_goods.info_known,new OnRightPosCallback(5),
                         new BaseLightShape(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                                 5,getResources().getDisplayMetrics()), TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,5,getResources().getDisplayMetrics()),0) {
                     @Override
@@ -1723,8 +1766,8 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
                         canvas.drawOval(rectF, paint);
                     }
                 })
-                .addHighLight(R.id.btn_bottomLight,R.layout.info_known,new OnTopPosCallback(),new CircleLightShape())
-                .addHighLight(view,R.layout.info_known,new OnBottomPosCallback(10),new OvalLightShape(5,5,20))
+                .addHighLight(R.id.btn_bottomLight,R.rvitem_goods.info_known,new OnTopPosCallback(),new CircleLightShape())
+                .addHighLight(view,R.rvitem_goods.info_known,new OnBottomPosCallback(10),new OvalLightShape(5,5,20))
                 .setOnRemoveCallback(new HighLightInterface.OnRemoveCallback() {//监听移除回调
                     @Override
                     public void onRemove() {

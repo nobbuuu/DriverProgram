@@ -41,7 +41,7 @@ import androidx.core.view.ViewCompat;
  * Helper for layouts that want to support percentage based dimensions.
  * <p/>
  * <p>This class collects utility methods that are involved in extracting percentage based dimension
- * attributes and applying them to ViewGroup's children. If you would like to implement a layout
+ * attributes and applying them to ViewGroup's children. If you would like to implement a rvitem_goods
  * that supports percentage based dimensions, you need to take several steps:
  * <p/>
  * <ol>
@@ -580,7 +580,7 @@ public class PercentLayoutHelper {
      * Iterates over children and checks if any of them would like to get more space than it
      * received through the percentage dimension.
      * <p/>
-     * If you are building a layout that supports percentage dimensions you are encouraged to take
+     * If you are building a rvitem_goods that supports percentage dimensions you are encouraged to take
      * advantage of this method. The developer should be able to specify that a child should be
      * remeasured by adding normal dimension attribute with {@code wrap_content} value. For example
      * he might specify child's attributes as {@code app:layout_widthPercent="60%p"} and
@@ -729,7 +729,7 @@ public class PercentLayoutHelper {
          */
         public void fillLayoutParams(ViewGroup.LayoutParams params, int widthHint,
                                      int heightHint) {
-            // Preserve the original layout params, so we can restore them after the measure step.
+            // Preserve the original rvitem_goods params, so we can restore them after the measure step.
             mPreservedParams.width = params.width;
             mPreservedParams.height = params.height;
 
@@ -850,7 +850,7 @@ public class PercentLayoutHelper {
     }
 
     /**
-     * If a layout wants to support percentage based dimensions and use this helper class, its
+     * If a rvitem_goods wants to support percentage based dimensions and use this helper class, its
      * {@code LayoutParams} subclass must implement this interface.
      * <p/>
      * Your {@code LayoutParams} subclass should contain an instance of {@code PercentLayoutInfo}

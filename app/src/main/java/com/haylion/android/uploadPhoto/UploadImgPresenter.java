@@ -19,7 +19,7 @@ public class UploadImgPresenter extends BasePresenter<UploadImgContract.View, Up
 
     private static final String TAG = "UploadImgPresenter";
 
-    UploadImgPresenter(UploadImgContract.View view) {
+    public UploadImgPresenter(UploadImgContract.View view) {
         super(view, UploadRepository.INSTANCE);
     }
 

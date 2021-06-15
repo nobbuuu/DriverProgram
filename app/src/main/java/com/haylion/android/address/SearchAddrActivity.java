@@ -189,7 +189,7 @@ public class SearchAddrActivity extends BaseActivity<SearchAddrContract.Presente
                     searchAdapter = new SearchAddressAdapter(SearchAddrActivity.this, searchList);//新建一个适配器
                     SearchAddrActivity.this.search_list.setAdapter(searchAdapter);//为listview适配
                     searchAdapter.notifyDataSetChanged();//动态更新listview*/
-/*                            SimpleAdapter aAdapter = new SimpleAdapter(getApplicationContext(), searchList, R.layout.search_list_item,
+/*                            SimpleAdapter aAdapter = new SimpleAdapter(getApplicationContext(), searchList, R.rvitem_goods.search_list_item,
                                     new String[]{"name", "address"}, new int[]{R.id.search_item_title, R.id.search_item_text});
                             SearchAddrActivity.this.search_list.setAdapter(aAdapter);
                             aAdapter.notifyDataSetChanged();//动态更新listview*/
@@ -239,7 +239,7 @@ public class SearchAddrActivity extends BaseActivity<SearchAddrContract.Presente
         searchAdapter = new SearchAddressAdapter(SearchAddrActivity.this, searchList);//新建一个适配器
         SearchAddrActivity.this.search_list.setAdapter(searchAdapter);//为listview适配
         searchAdapter.notifyDataSetChanged();//动态更新listview*/
-/*        SimpleAdapter aAdapter = new SimpleAdapter(getApplicationContext(), searchList, R.layout.search_list_item,
+/*        SimpleAdapter aAdapter = new SimpleAdapter(getApplicationContext(), searchList, R.rvitem_goods.search_list_item,
                 new String[]{"name", "address"}, new int[]{R.id.search_item_title, R.id.search_item_text});
 
         SearchAddrActivity.this.search_list.setAdapter(aAdapter);

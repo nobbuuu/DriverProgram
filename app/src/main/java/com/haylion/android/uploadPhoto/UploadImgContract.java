@@ -10,12 +10,12 @@ import java.io.File;
  */
 public class UploadImgContract {
 
-    interface View extends AbstractView {
+    public interface View extends AbstractView {
         void uploadImgSuccess(String url);
         void uploadImgFail();
     }
 
-    interface Presenter extends AbstractPresenter {
+    public interface Presenter extends AbstractPresenter {
         void uploadImg(File file);
     }
 }

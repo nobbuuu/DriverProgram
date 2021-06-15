@@ -15,7 +15,6 @@ public class OrderListContract {
         void addMoreOrders(List<Order> list);
 
         void noMoreOrders();
-
     }
 
     public interface Presenter extends AbstractPresenter {
@@ -26,6 +25,7 @@ public class OrderListContract {
         void refreshOrderList();
 
         void setOrderType(boolean showPassenger);
+        void getShunfengOrders();
 
     }
 

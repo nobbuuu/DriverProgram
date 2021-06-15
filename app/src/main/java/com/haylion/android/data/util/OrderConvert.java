@@ -10,9 +10,12 @@ import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.LatLng;
 import com.haylion.android.Constants;
 import com.haylion.android.R;
+import com.haylion.android.data.bean.OrderDetailBean;
+import com.haylion.android.data.bean.ShunfengWaitBean;
 import com.haylion.android.data.model.AddressInfo;
 import com.haylion.android.data.model.CarpoolStatus;
 import com.haylion.android.data.model.ChildInfo;
+import com.haylion.android.data.model.HistoryOrderBean;
 import com.haylion.android.data.model.NewOrder;
 import com.haylion.android.data.model.Order;
 import com.haylion.android.data.model.OrderCostInfo;
@@ -140,6 +143,8 @@ public class OrderConvert {
 
         order.setStartAddr(start);
         order.setEndAddr(end);
+        order.setStartTime(shunfengOrder.getStartDate());
+        order.setEndTime(shunfengOrder.getEndDate());
 
         //用户信息
         UserInfo userInfo = new UserInfo();
@@ -149,7 +154,7 @@ public class OrderConvert {
 
         //订单类型和时间
         order.setOrderType(shunfengOrder.getOrderType());
-//        order.setOrderStatus(shunfengOrder.getOrderStatus());
+        order.setOrderStatus(shunfengOrder.getDriverStatus());
 //        order.setOrderSubStatus(shunfengOrder.getOrderSubStatus());
 //        order.setEstimateArriveTime(shunfengOrder.getEstimateArriveTime());
         order.setOrderTime(shunfengOrder.getTakeTime());
@@ -157,10 +162,6 @@ public class OrderConvert {
 
         //费用
         order.setTotalMoney(shunfengOrder.getPrice());
-        double totalInstance = AmapUtils.getDistance(order.getStartAddr().getLatLng(), order.getEndAddr().getLatLng());
-        Log.d("aaa","totalInstance = " + totalInstance);
-        //预估行程距离
-        order.setDistance((long) totalInstance);
         //送小孩的信息
         /*List<ChildInfo> childInfoList = new ArrayList<>();
         if (shunfengOrder.getChildNameList() != null) {
@@ -214,6 +215,8 @@ public class OrderConvert {
         order.setChannel(orderDetail.getChannel());
         order.setOrderStatus(orderDetail.getOrderStatus());
         order.setOrderSubStatus(orderDetail.getOrderSubStatus());
+        order.setStartTime(orderDetail.getStartTime());
+        order.setEndTime(orderDetail.getEndTime());
 
         //起点和终点
         AddressInfo start = new AddressInfo();
@@ -306,6 +309,131 @@ public class OrderConvert {
         }
 
         Log.d(TAG, "order: " + order.getStartAddr().toString());
+
+        // 未支付取消费状态 2-1 ，状态置为 - 已取消
+        if (order.getOrderStatus() == Order.ORDER_STATUS_WAIT_PAY && order.getOrderSubStatus() == Order.ORDER_SUB_STATUS_WAIT_PAY_CANCAL_FEE) {
+            order.setOrderStatus(Order.ORDER_STATUS_CANCELED);
+        }
+        return order;
+    }
+    /**
+     * 订单详情数据转换成order
+     *
+     * @param orderDetail
+     * @return
+     */
+    public static Order orderShunfengDetailToOrder(OrderDetailBean orderDetail) {
+        Order order = new Order();
+        order.setOrderId(orderDetail.getId());
+        order.setOrderCode(orderDetail.getOrderCode());
+//        order.setCargoOrderId(orderDetail.getCargoOrderId());
+
+        //订单类型和时间
+        order.setOrderType(-1);
+//        order.setChannel(orderDetail.getChannel());
+        order.setOrderStatus(orderDetail.getDriverStatus());
+//        order.setOrderSubStatus(orderDetail.getOrderSubStatus());
+        order.setOrderTime(orderDetail.getTakeTime());
+
+        //起点和终点
+        AddressInfo start = new AddressInfo();
+        start.setLatLng(new LatLng(orderDetail.getDepotStartLatitude(), orderDetail.getDepotStartLongitude()));
+        start.setName(orderDetail.getDepotStartAddress());
+//        start.setAddressDetail(orderDetail.getOnLocationDescription());
+
+//        order.setDistance(orderDetail.getTotalDistance());
+
+        AddressInfo end = new AddressInfo();
+        end.setLatLng(new LatLng(orderDetail.getDepotEndLatitude(), orderDetail.getDepotEndLongitude()));
+        end.setName(orderDetail.getDepotEndAddress());
+//        end.setAddressDetail(orderDetail.getOffLocationDescription());
+
+        order.setStartAddr(start);
+        order.setEndAddr(end);
+        order.setStartTime(orderDetail.getStartDate());
+        order.setEndTime(orderDetail.getEndDate());
+
+        //用户信息
+        UserInfo userInfo = new UserInfo();
+        userInfo.setPhoneNum(orderDetail.getDepotStartPhone1());
+        userInfo.setPhoneNum2(orderDetail.getDepotStartPhone2());
+        userInfo.setPhoneNum3(orderDetail.getDepotStartPhone3());
+        order.setUserInfo(userInfo);
+//        order.setPassengerNum(orderDetail.getPassengerNum());
+
+        //货物 收发货人信息
+//        order.setPickupContactMobile(orderDetail.getPickupContactMobile());
+//        order.setDropOffContactMobile(orderDetail.getDropOffContactMobile());
+        order.setPickupCode(orderDetail.getPickupCode());
+
+        //订单耗时
+//        order.setTotalTime(orderDetail.getOrderDuration());
+
+        //司机预计到达上车点时间
+        order.setEstimatePickUpTime(orderDetail.getTakeTime());
+        //司机实际到达上车点时间
+        order.setBoardingPlaceArriveTime(orderDetail.getTakeTime());
+
+        //最晚达到时间
+        order.setEstimateArriveTime(orderDetail.getDeliveryTime());
+
+       /* if (orderDetail.getOrderType() == Order.ORDER_TYPE_REALTIME
+                || orderDetail.getOrderType() == Order.ORDER_TYPE_REALTIME_CARPOOL
+                || orderDetail.getOrderType() == Order.ORDER_TYPE_CARGO
+                || orderDetail.getOrderType() == Order.ORDER_TYPE_CARGO_PASSENGER) {
+            order.setOrderTime(orderDetail.getCreatedTime());
+        } else {
+            order.setOrderTime(orderDetail.getAppointmentTime());
+        }*/
+
+        //费用信息
+        OrderCostInfo costInfo = new OrderCostInfo();
+//        costInfo.setTotalCost(orderDetail.getAmount());
+//        costInfo.setBaseCost(orderDetail.getRegularAmount());
+//        costInfo.setServiceCost(orderDetail.getServiceAmount());
+//        costInfo.setOtherCost(orderDetail.getOtherAmount());
+        order.setCostDetail(costInfo);
+
+        //货物描述
+//        order.setGoodsDescription(orderDetail.getCargoDescription());
+
+        //送小孩的专有信息
+//        order.setChildList(orderDetail.getChildList());
+//        order.setGuardianList(orderDetail.getGuardianList());
+//        order.setParentMessage(orderDetail.getParentMessage());
+//        order.setGetOnAutoCheck(orderDetail.getOnAutoCheck());
+//        order.setGetOffAutoCheck(orderDetail.getOffAutoCheck());
+
+        //联系电话//todo
+
+        order.setPickupContactMobile(orderDetail.getDepotStartPhone1());
+        order.setPickupContactMobile1(orderDetail.getDepotStartPhone2());
+        order.setPickupContactMobile2(orderDetail.getDepotStartPhone3());
+        order.setPickupContactName(orderDetail.getDepotStartConcat1());
+        order.setPickupContactName1(orderDetail.getDepotStartConcat2());
+        order.setPickupContactName2(orderDetail.getDepotStartConcat3());
+//        order.setGetOnPicUrl(orderDetail.getOnPic());
+//        order.setGetOffPicUrl(orderDetail.getOffPic());
+//        order.setOnPicTime(orderDetail.getOnPicTime());
+//        order.setOffPicTime(orderDetail.getOffPicTime());
+
+        //取消原因
+//        order.setOrderCancellerType(orderDetail.getOrderCancellerType());
+//        order.setOrderCancellerMsg(orderDetail.getOrderCancellerMsg());
+
+        order.setTotalMoney(orderDetail.getPrice());
+
+        //订单行驶的轨迹
+       /* if (orderDetail.getTrackCoordinateList() != null && orderDetail.getTrackCoordinateList().size() >= 10) {
+            List<LatLng> list = new ArrayList<>();
+            for (int i = 0; i < orderDetail.getTrackCoordinateList().size(); i++) {
+                list.add(new LatLng(orderDetail.getTrackCoordinateList().get(i).getLat(),
+                        orderDetail.getTrackCoordinateList().get(i).getLon()));
+                order.setTrackCoordinateList(list);
+            }
+        } else {
+            order.setTrackCoordinateList(null);
+        }*/
 
         // 未支付取消费状态 2-1 ，状态置为 - 已取消
         if (order.getOrderStatus() == Order.ORDER_STATUS_WAIT_PAY && order.getOrderSubStatus() == Order.ORDER_SUB_STATUS_WAIT_PAY_CANCAL_FEE) {
@@ -498,6 +626,68 @@ public class OrderConvert {
     }
 
     /**
+     * 顺丰订单数据类型转换成订单类型
+     *
+     * @param newOrder
+     * @return
+     */
+    public static Order shufengConvertToOrder(ShunfengWaitBean newOrder) {
+        Log.d(TAG, "newOrderConvertToOrder:" + newOrder.toString());
+
+        Order order = new Order();
+        order.setOrderId(newOrder.getId());
+        //起点和终点
+        AddressInfo start = new AddressInfo();
+        start.setLatLng(new LatLng(newOrder.getDepotStartLatitude(), newOrder.getDepotStartLongitude()));
+        start.setName(newOrder.getDepotStartAddress());
+//        start.setAddressDetail(newOrder.getBoardingAddress());
+
+        AddressInfo end = new AddressInfo();
+        end.setLatLng(new LatLng(newOrder.getDepotEndLatitude(), newOrder.getDepotEndLongitude()));
+        end.setName(newOrder.getDepotEndAddress());
+//        end.setAddressDetail(newOrder.getArrivalAddress());
+
+        order.setStartAddr(start);
+        order.setEndAddr(end);
+        order.setStartTime(newOrder.getStartDate());
+        order.setEndTime(newOrder.getEndDate());
+
+        //用户信息
+//        UserInfo userInfo = new UserInfo();
+//        userInfo.setPhoneNum("18612345678");
+//        order.setUserInfo(userInfo);
+//
+//        order.setPassengerNum(newOrder.getCarpoolNumber());
+
+        //订单类型和时间
+        order.setOrderType(newOrder.getOrderType());
+//        order.setChannel(newOrder.getChannel());
+        order.setEstimateArriveTime(newOrder.getDeliveryTime());
+        order.setOrderTime(newOrder.getTakeTime());
+//        order.setDistance(newOrder.getTotalDistance());
+
+        //货单，预计剩余时间
+//        order.setMinPreservedSeconds(newOrder.getMinPreservedSeconds());
+
+        //价格
+        order.setTotalMoney(newOrder.getPrice());
+
+        //推荐指数
+//        order.setRoadLevel(newOrder.getRoadLevel());
+//        order.setAmountLevel(newOrder.getAmountLevel());
+//        order.setStarLevel(newOrder.getStarLevel());
+
+/*        //for test
+        order.setOrderType(Order.ORDER_TYPE_CARGO_PASSENGER);
+        order.setRoadLevel(3);
+        order.setAmountLevel(3);
+        order.setStarLevel(3);*/
+
+
+        return order;
+    }
+
+    /**
      * 历史订单接口返回的数据类型 转换成 订单类型
      *
      * @param orderHistory
@@ -567,6 +757,87 @@ public class OrderConvert {
         }
         order.setChildList(childInfoList);
         order.setParentMessage(orderHistory.getParentMessage());
+
+        Log.d(TAG, "order: " + order.getStartAddr().toString());
+
+        // 未支付取消费状态 2-1 ，当作已取消处理
+        if (order.getOrderStatus() == Order.ORDER_STATUS_WAIT_PAY && order.getOrderSubStatus() == Order.ORDER_SUB_STATUS_WAIT_PAY_CANCAL_FEE) {
+            order.setOrderStatus(Order.ORDER_STATUS_CANCELED);
+        }
+
+        return order;
+    }
+
+    /**
+     * 历史订单接口返回的数据类型 转换成 订单类型
+     *
+     * @param orderHistory
+     * @return
+     */
+    public static Order orderHistoryToOrder(HistoryOrderBean.ListBean orderHistory) {
+        Order order = new Order();
+        order.setOrderId(orderHistory.getId());
+        order.setOrderCode(orderHistory.getOrderNo());
+
+        //起点和终点
+        AddressInfo start = new AddressInfo();
+        start.setName(orderHistory.getDepotStartAddress());
+//        start.setAddressDetail(orderHistory.getOnPlaceDescription());
+
+        AddressInfo end = new AddressInfo();
+        end.setName(orderHistory.getDepotEndAddress());
+//        end.setAddressDetail(orderHistory.getOffPlaceDescription());
+
+        order.setStartAddr(start);
+        order.setEndAddr(end);
+
+        //用户信息
+        UserInfo userInfo = new UserInfo();
+//        userInfo.setPhoneNum(orderHistory.get());
+        order.setUserInfo(userInfo);
+//        order.setPassengerNum(orderHistory.getCarpoolNumber());
+
+        //订单状态
+        order.setOrderStatus(orderHistory.getDriverStatus());
+//        order.setOrderSubStatus(orderHistory.getOrderSubStatus());
+
+        //订单类型和时间
+        order.setOrderType(-1);
+//        order.setChannel(orderHistory.getChannel());
+        if (orderHistory.getOrderType() == Order.ORDER_TYPE_BOOK
+                || orderHistory.getOrderType() == Order.ORDER_TYPE_SEND_CHILD) {
+//            order.setOrderTime(orderHistory.getAppointmentDate());
+        } else {
+            order.setOrderTime(orderHistory.getTakeTime());
+        }
+//        order.setTotalTime(orderHistory.get());
+
+        order.setTotalMoney(orderHistory.getPrice());
+
+        //取消原因
+//        order.setOrderCancellerType(orderHistory.getOrderCancellerType());
+//        order.setOrderCancellerMsg(orderHistory.getOrderCancellerMessage());
+
+        //货物信息
+//        order.setPickupContactMobile(orderHistory.getPickupContactMobile());
+//        order.setDropOffContactMobile(orderHistory.getDropOffContactMobile());
+//        order.setGoodsDescription(orderHistory.getGoodsDescription());
+
+        //顺丰ID
+//        order.setSfOrderId(orderHistory.getSfOrderId());
+
+        //小时信息
+        //送小孩的信息
+        /*List<ChildInfo> childInfoList = new ArrayList<>();
+        if (orderHistory.getChildNameList() != null) {
+            for (int i = 0; i < orderHistory.getChildNameList().size(); i++) {
+                ChildInfo childInfo = new ChildInfo();
+                childInfo.setName(orderHistory.getChildNameList().get(i));
+                childInfoList.add(childInfo);
+            }
+        }
+        order.setChildList(childInfoList);
+        order.setParentMessage(orderHistory.getParentMessage());*/
 
         Log.d(TAG, "order: " + order.getStartAddr().toString());
 

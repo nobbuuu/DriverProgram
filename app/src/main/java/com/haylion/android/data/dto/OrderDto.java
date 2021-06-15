@@ -60,6 +60,12 @@ public class OrderDto {
             params.put("showPassenger", showPassenger);
             params.put("index", index);
         }
+
+        public OrderListRequest(boolean showCompletionOnly, int index, int page, int size) {
+            super(page, size);
+            params.put("showCompletionOnly", showCompletionOnly);
+            params.put("index", index);
+        }
     }
 
 

@@ -197,7 +197,7 @@ public class NewOrderDialog extends Dialog {
             tvDistanceFixedUnit.setText("米");
         }
         //计算全程公里数
-        long distance = order.getDistance();
+        double distance = order.getDistance();
         if (distance > 1000) {
             tvDistance.setText(NumberUtil.roundHalfUp(distance / 1000.0, 1) + "");
             tvDistanceUnit.setText("公里");

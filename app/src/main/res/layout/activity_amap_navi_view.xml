@@ -149,7 +149,7 @@
             android:clickable="true"
             android:textStyle="bold"
             app:bg_drawable="@drawable/btn_bg_enable"
-            app:bg_text="@string/slide_view_default_text"
+            app:bg_text="@string/slide_view_arrive"
             app:bg_text_color="@color/white"
             app:bg_text_complete="@string/slide_view_default_complete_text"
             app:bg_text_enable_false=""
@@ -175,6 +175,7 @@
         android:layout_marginRight="@dimen/dp_5"
         android:background="@mipmap/order_detail_contact_bg"
         android:layout_marginTop="@dimen/dp_3"
+        android:visibility="gone"
         android:clickable="true">
 
         <FrameLayout

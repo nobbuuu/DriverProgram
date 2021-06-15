@@ -266,7 +266,7 @@ public class FloatDialogService extends Service {
             overTimeDialog = new Dialog(this, R.style.Translucent_NoTitle);
         }
         LayoutInflater inflater = LayoutInflater.from(this);
-        View view = inflater.inflate(R.layout.layout_overtime_order, null);
+        View view = inflater.inflate(R.rvitem_goods.layout_overtime_order, null);
 
         //操作
         TextView btnConfirm = view.findViewById(R.id.btn_confirm);
@@ -337,7 +337,7 @@ public class FloatDialogService extends Service {
      * @param order
      */
     public static long grabOrderResetTime = 0;  //抢单剩余时间,单位ms
-    private long totalDistance = 0;  //全程距离
+    private double totalDistance = 0;  //全程距离
     CountDownTimer timer;
 
     private void newOrderCommingDialog(Order order) {

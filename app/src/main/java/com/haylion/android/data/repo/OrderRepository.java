@@ -1,6 +1,15 @@
 package com.haylion.android.data.repo;
 
+import android.util.Log;
+
 import com.haylion.android.common.aibus_location.data.GpsData;
+import com.haylion.android.data.bean.ChangeOrderStatusBean;
+import com.haylion.android.data.bean.ClaimBean;
+import com.haylion.android.data.bean.ClaimResult;
+import com.haylion.android.data.bean.OrderDetailBean;
+import com.haylion.android.data.bean.OrderIdBean;
+import com.haylion.android.data.bean.PhoneBean;
+import com.haylion.android.data.bean.ShunfengWaitBean;
 import com.haylion.android.data.model.CancelReason;
 import com.haylion.android.data.api.AccountApi;
 import com.haylion.android.data.api.OrderApi;
@@ -11,6 +20,7 @@ import com.haylion.android.data.model.AddressInfo;
 import com.haylion.android.data.model.AmapTrack;
 import com.haylion.android.data.model.BackHomeAddress;
 import com.haylion.android.data.model.Driver;
+import com.haylion.android.data.model.HistoryOrderBean;
 import com.haylion.android.data.model.LatestVersionBean;
 import com.haylion.android.data.model.ListenOrderSetting;
 import com.haylion.android.data.model.ListenStatus;
@@ -39,6 +49,7 @@ import com.haylion.android.mvp.rx.ApiSubscriber;
 import com.haylion.android.mvp.rx.ApiTransformer;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @class OrderRepository
@@ -89,6 +100,15 @@ public class OrderRepository extends BaseRepository {
     public void getToadyOrder(ApiSubscriber<List<OrderForMainActivity>> callback) {
         addDisposable(RetrofitHelper.getApi(OrderApi.class)
                 .getCurrentOrder()
+                .compose(new ApiTransformer<>())
+                .subscribeWith(callback)
+        );
+    }
+
+    //历史订单
+    public void getHistoryOrder(boolean onlyShowCompleted, int index, int page,ApiSubscriber<HistoryOrderBean> callback) {
+        addDisposable(RetrofitHelper.getApi(OrderApi.class)
+                .getHistoryOrderList(new OrderDto.OrderListRequest(onlyShowCompleted, index, page, 20).getQueryMap())
                 .compose(new ApiTransformer<>())
                 .subscribeWith(callback)
         );
@@ -157,6 +177,15 @@ public class OrderRepository extends BaseRepository {
         );
     }
 
+    //改变订单(顺丰)状态
+    public void changeOrderStatus(ChangeOrderStatusBean paramBean, ApiSubscriber<Boolean> callback) {
+        addDisposable(RetrofitHelper.getApi(OrderApi.class)
+                .updateOrderStatus(paramBean)
+                .compose(new ApiTransformer<>())
+                .subscribeWith(callback)
+        );
+    }
+
     //取消订单
     public void cancelOrder(int orderId, String cancelReason, String picUrl, ApiSubscriber<Boolean> callback) {
         addDisposable(RetrofitHelper.getApi(OrderApi.class)
@@ -195,8 +224,28 @@ public class OrderRepository extends BaseRepository {
 
     //获取订单详情
     public void getWorkOrderDetail(int orderId, ApiSubscriber<OrderDetail> callback) {
+        Log.d("aaa","orderId = " + orderId);
         addDisposable(RetrofitHelper.getApi(OrderApi.class)
                 .getWorkOrderDetail(orderId)
+                .compose(new ApiTransformer<>())
+                .subscribeWith(callback)
+        );
+    }
+
+    //获取顺丰订单详情
+    public void getShunfengOrderDetail(int orderId, ApiSubscriber<OrderDetailBean> callback) {
+        Log.d("aaa","orderId = " + orderId);
+        addDisposable(RetrofitHelper.getApi(OrderApi.class)
+                .getOrderDetail(new OrderIdBean(orderId))
+                .compose(new ApiTransformer<>())
+                .subscribeWith(callback)
+        );
+    }
+
+    //获取客服电话
+    public void getServicePhoneNum(ApiSubscriber<PhoneBean> callback) {
+        addDisposable(RetrofitHelper.getApi(OrderApi.class)
+                .getServicePhoneNum()
                 .compose(new ApiTransformer<>())
                 .subscribeWith(callback)
         );
@@ -383,6 +432,16 @@ public class OrderRepository extends BaseRepository {
     }
 
     /**
+     * 抢预约订单
+     */
+    public void grabShunfengOrder(ClaimBean bean, ApiSubscriber<ClaimResult> callback) {
+        addDisposable(RetrofitHelper.getApi(OrderApi.class)
+                .grabShunfeng(bean)
+                .compose(new ApiTransformer<>())
+                .subscribeWith(callback));
+    }
+
+    /**
      * 抢单池 - 送小孩单
      *
      * @param callback 回调
@@ -390,6 +449,18 @@ public class OrderRepository extends BaseRepository {
     public void childrenOrderCenter(ApiSubscriber<List<OrderForMainActivity>> callback) {
         addDisposable(RetrofitHelper.getApi(OrderApi.class)
                 .childrenOrderCenter()
+                .compose(new ApiTransformer<>())
+                .subscribeWith(callback)
+        );
+    }
+
+    /**
+     *
+     * @param callback 回调
+     */
+    public void getShunfengWaitList(ApiSubscriber<List<ShunfengWaitBean>> callback) {
+        addDisposable(RetrofitHelper.getApi(OrderApi.class)
+                .getShunfengWaitList()
                 .compose(new ApiTransformer<>())
                 .subscribeWith(callback)
         );

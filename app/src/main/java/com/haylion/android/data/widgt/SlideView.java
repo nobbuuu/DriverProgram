@@ -109,6 +109,7 @@ public class SlideView extends ViewGroup {
 
     public void setBackgroundText(String context) {
         mBgText = context;
+        reset();
     }
 
     public void setBgAndIconResId(int bgId, int iconId) {

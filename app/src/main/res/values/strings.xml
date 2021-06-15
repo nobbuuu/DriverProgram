@@ -233,6 +233,11 @@
     <string name="passenger_tail_number">乘客尾号</string>
     <string name="slide_view_default_text">滑动确认</string>
     <string name="slide_view_default_complete_text">松开即可确认</string>
+    <string name="slide_view_start_order">右滑开始订单</string>
+    <string name="slide_view_to_shop">右滑确认到店</string>
+    <string name="slide_view_arrive">右滑确认货物送达</string>
+    <string name="slide_view_signarrive">右滑签名确认送达</string>
+    <string name="slide_view_sign_take">右滑签名确认取货</string>
     <string name="estimate">预计</string>
     <string name="total">总计</string>
     <string name="total_cost">费用总计</string>

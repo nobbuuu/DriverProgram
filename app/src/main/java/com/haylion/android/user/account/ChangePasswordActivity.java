@@ -117,7 +117,7 @@ public class ChangePasswordActivity extends BaseActivity<ChangePasswordContract.
     }
 
    /* private void showSuccessDialog(){
-        BaseDialog dialog = new BaseDialog(this,R.layout.dialog_change_pwd_success, Gravity.CENTER,true);
+        BaseDialog dialog = new BaseDialog(this,R.rvitem_goods.dialog_change_pwd_success, Gravity.CENTER,true);
         dialog.getView(R.id.ll_main).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.haylion.android.R;
+import com.haylion.android.activity.OrderCompleteActivity;
+import com.haylion.android.activity.PreScanActivity;
 import com.haylion.android.data.model.EventMsg;
 import com.haylion.android.data.model.Order;
 import com.haylion.android.data.model.OrderTimeType;
@@ -22,6 +24,8 @@ import com.haylion.android.data.widgt.MassLoadingMoreFooter;
 import com.haylion.android.data.base.BaseActivity;
 import com.haylion.android.main.MainActivity;
 import com.haylion.android.mvp.util.LogUtils;
+import com.haylion.android.orderdetail.OrderDetailActivity;
+import com.haylion.android.orderdetail.amapNavi.AMapNaviViewActivity;
 import com.haylion.android.orderdetail.trip.TripDetailActivity;
 import com.haylion.android.service.WsCommands;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -63,12 +67,18 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
     @BindView(R.id.tv_order_type_goods)
     TextView tvTypeGoods;
 
+    @BindView(R.id.tv_order_type_shunfeng)
+    TextView tvTypeShunfeng;
+
     @BindView(R.id.ll_order_type_header)
     LinearLayout llOrderTypeHeader;
     @BindView(R.id.line_order_type_passenger)
     View lineOrderTypePassenger;
     @BindView(R.id.line_order_type_goods)
     View lineOrderTypeGoods;
+
+    @BindView(R.id.line_order_type_shunfeng)
+    View lineOrderTypeShunfeng;
 
     private static final String EXTRA_ORDER_TYPE = "order_type";
     private static final String IS_FORCE_BACK_TO_MAIN = "isForceBackToMain";
@@ -141,7 +151,7 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
         Toast.makeText(this, "刷新", Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick({R.id.iv_back, R.id.ll_order_type_passenger, R.id.ll_order_type_goods})
+    @OnClick({R.id.iv_back, R.id.ll_order_type_passenger, R.id.ll_order_type_goods,R.id.ll_order_type_shunfeng})
     public void onButtonClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -150,8 +160,10 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
             case R.id.ll_order_type_passenger:  //客单
                 tvTypePassenger.setTextColor(getResources().getColor(R.color.maas_text_blue));
                 tvTypeGoods.setTextColor(getResources().getColor(R.color.maas_text_primary));
+                tvTypeShunfeng.setTextColor(getResources().getColor(R.color.maas_text_primary));
                 lineOrderTypePassenger.setVisibility(View.VISIBLE);
                 lineOrderTypeGoods.setVisibility(View.GONE);
+                lineOrderTypeShunfeng.setVisibility(View.GONE);
 
                 showPassenger = true;
 
@@ -164,8 +176,10 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
                 break;
             case R.id.ll_order_type_goods:  //货单
                 tvTypePassenger.setTextColor(getResources().getColor(R.color.maas_text_primary));
+                tvTypeShunfeng.setTextColor(getResources().getColor(R.color.maas_text_primary));
                 tvTypeGoods.setTextColor(getResources().getColor(R.color.maas_text_blue));
                 lineOrderTypePassenger.setVisibility(View.GONE);
+                lineOrderTypeShunfeng.setVisibility(View.GONE);
                 lineOrderTypeGoods.setVisibility(View.VISIBLE);
 
                 showPassenger = false;
@@ -176,6 +190,23 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
                         .listener(this)
                         .into(mOrderList);
                 presenter.refreshOrderList();
+                break;
+            case R.id.ll_order_type_shunfeng:  //顺丰单
+                tvTypePassenger.setTextColor(getResources().getColor(R.color.maas_text_primary));
+                tvTypeGoods.setTextColor(getResources().getColor(R.color.maas_text_primary));
+                tvTypeShunfeng.setTextColor(getResources().getColor(R.color.maas_text_blue));
+                lineOrderTypePassenger.setVisibility(View.GONE);
+                lineOrderTypeGoods.setVisibility(View.GONE);
+                lineOrderTypeShunfeng.setVisibility(View.VISIBLE);
+
+                showPassenger = false;
+
+                presenter.setOrderType(false);
+                mAdapter = SmartAdapter.empty()
+                        .map(Order.class, OrderListItemView.class)
+                        .listener(this)
+                        .into(mOrderList);
+                presenter.getShunfengOrders();
                 break;
             default:
                 break;
@@ -214,6 +245,7 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
      */
     @Override
     public void setOrderList(List<Order> list) {
+        Log.d("aaa","setOrderList list =" + list);
         if (list == null || list.isEmpty()) {
             if (mOrderTimeType == OrderTimeType.HISTORY) {
                 mEmptyView.setText("暂无历史订单");
@@ -225,15 +257,15 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
         }
 
 //        LogUtils.d(TAG, "showPassenger:" + showPassenger + ", orderType:" + list.get(0).getOrderType());
-        if (showPassenger && (list != null && list.size() > 0 && list.get(0).getOrderType() != Order.ORDER_TYPE_CARGO)) {
+        /*if (showPassenger && (list != null && list.size() > 0 && list.get(0).getOrderType() != Order.ORDER_TYPE_CARGO)) {
             LogUtils.d(TAG, "passenger, show:");
         } else if (!showPassenger && (list != null && list.size() > 0 && list.get(0).getOrderType() == Order.ORDER_TYPE_CARGO)) {
             LogUtils.d(TAG, "cargo, show:");
         } else {
             LogUtils.d(TAG, "return:");
             return;
-        }
-
+        }*/
+        Log.d("aaa","setOrderList  list,size() = " + list.size());
         mAdapter.setItems(list);
         mOrderList.refreshComplete();
     }
@@ -259,13 +291,32 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
 
     @Override
     public void onViewEvent(int actionType, Order order, int position, View view) {
-        if (actionType == OrderClickArea.CONTACT_PASSENGER
-                || actionType == OrderClickArea.CONTACT_SEND_PASSENGER
-                || actionType == OrderClickArea.CONTACT_RECEIVE_PASSENGER) {
-            showCallDialog(actionType, order);
-        } else if (actionType == OrderClickArea.SHOW_IN_MAP) {
-            //实时订单/送小孩单/货拼客单 跳转到新的行程详情页面
-            TripDetailActivity.go(this, order.getOrderId(), false);
+        if (order.getOrderType() == -1){
+            switch (order.getOrderStatus()){
+//                        待开始 = 0、待到店 = 1、待扫描=2、待取货签名=3、送货中=4、已完成=5
+                case 0:
+                case 1:
+                    OrderDetailActivity.go(getContext(), order.getOrderId(),-1);
+                    break;
+                case 2:
+                case 3:
+                    PreScanActivity.go(getContext(),order.getOrderId());
+                    break;
+                case 4:
+                    AMapNaviViewActivity.go(getContext(), order.getOrderId(), -1);
+                    break;
+                case 5:
+                    OrderCompleteActivity.go(getContext(), order.getOrderId(),2);
+                    break;
+            }
+        }else {
+            if (actionType == OrderClickArea.CONTACT_PASSENGER
+                    || actionType == OrderClickArea.CONTACT_SEND_PASSENGER
+                    || actionType == OrderClickArea.CONTACT_RECEIVE_PASSENGER) {
+                showCallDialog(actionType, order);
+            } else if (actionType == OrderClickArea.SHOW_IN_MAP) {
+                //实时订单/送小孩单/货拼客单 跳转到新的行程详情页面
+                TripDetailActivity.go(this, order.getOrderId(), false);
 
             /*if (order.getOrderType() == Order.ORDER_TYPE_REALTIME || order.getOrderType() == Order.ORDER_TYPE_SEND_CHILD
                     || order.getOrderType() == Order.ORDER_TYPE_CARGO_PASSENGER || order.getOrderType() == Order.ORDER_TYPE_CARGO) {
@@ -275,6 +326,7 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
                 intent.putExtra(ShowInMapNewActivity.ORDER_ID, order.getOrderId());
                 startActivity(intent);
             }*/
+            }
         }
     }
 

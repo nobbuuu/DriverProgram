@@ -1,6 +1,7 @@
 package com.haylion.android.orderlist;
 
 import android.content.Context;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -13,12 +14,24 @@ import android.widget.TextView;
 import androidx.appcompat.widget.ListPopupWindow;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.services.route.BusRouteResult;
+import com.amap.api.services.route.DistanceResult;
+import com.amap.api.services.route.DistanceSearch;
+import com.amap.api.services.route.DriveRouteResult;
+import com.amap.api.services.route.RideRouteResult;
+import com.amap.api.services.route.RouteSearch;
+import com.amap.api.services.route.WalkRouteResult;
 import com.haylion.android.R;
+import com.haylion.android.common.Const;
 import com.haylion.android.data.base.BaseItemView;
 import com.haylion.android.data.model.Order;
 import com.haylion.android.data.model.OrderStatus;
 import com.haylion.android.data.util.BusinessUtils;
+import com.haylion.android.data.util.StringUtil;
 import com.haylion.android.mvp.util.LogUtils;
+import com.haylion.android.utils.AmapUtils;
+import com.haylion.android.utils.SpUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -71,6 +84,9 @@ public class BookOrderListItemView extends BaseItemView<Order> {
 
     @BindView(R.id.tv_total_distance)
     TextView tvTotalDistance;
+
+    @BindView(R.id.instance_fromme)
+    TextView instance_fromme;
 
     @BindView(R.id.show_map)
     View tvShowMap;
@@ -151,21 +167,26 @@ public class BookOrderListItemView extends BaseItemView<Order> {
             orderTime.setText("预约" + timeFormat + "送达");
         }
 
+        String startTime = order.getStartTime();
+        String endTime = order.getEndTime();
+        if (startTime.equals(endTime)) {
+            startTime = "今日";
+        }
         List<String> orderDates = order.getOrderDates();
         if (orderDates != null && orderDates.size() > 0) {
-            String makeTime = orderDates.get(0);
-            if (makeTime.contains(" ")) {
-                String[] maketimeStr = makeTime.split(" ");
-                if (maketimeStr.length > 1) {
-                    orderStatus.setText("每日" + maketimeStr[1] + "取货");
-                }
-            }
+            SpannableString takeSpan = StringUtil.setTextPartSizeColor("每日 ", order.getOrderTime(), " 取货", R.color.part_text_bg);
+            orderStatus.setText(takeSpan);
+            grabOrder.setText("选择抢单日期");
         } else {
-            orderStatus.setText("今日" + order.getOrderTime() + "取货");
+            SpannableString takeSpan = StringUtil.setTextPartSizeColor(startTime + " ", order.getOrderTime(), " 取货", R.color.part_text_bg);
+            orderStatus.setText(takeSpan);
+            grabOrder.setText("抢单");
         }
         orderStatus.setVisibility(VISIBLE);
         orderStatus.setClickable(false);
         grabOrder.setVisibility(VISIBLE);
+
+        grabOrder.setOnClickListener(v -> notifyItemAction(ACTION_GRAB_ORDER));
 
         //订单状态
        /* if (order.getOrderStatus() == OrderStatus.ORDER_STATUS_INIT.getStatus()) {
@@ -212,8 +233,55 @@ public class BookOrderListItemView extends BaseItemView<Order> {
 
         //订单类型
         tvTotalDistance.setVisibility(VISIBLE);
-        tvTotalDistance.setText("取送距离" + BusinessUtils.formatDistance(order.getDistance()));
-        order_money.setText(order.getTotalMoney() + "");
+        AmapUtils.caculateDistance(order.getStartAddr().getLatLng(), order.getEndAddr().getLatLng(), new RouteSearch.OnRouteSearchListener() {
+            @Override
+            public void onBusRouteSearched(BusRouteResult busRouteResult, int i) {
+
+            }
+
+            @Override
+            public void onDriveRouteSearched(DriveRouteResult driveRouteResult, int i) {
+                float distance = driveRouteResult.getPaths().get(0).getDistance();
+                tvTotalDistance.setText("取送距离" + BusinessUtils.formatDistance(distance));
+            }
+
+            @Override
+            public void onWalkRouteSearched(WalkRouteResult walkRouteResult, int i) {
+
+            }
+
+            @Override
+            public void onRideRouteSearched(RideRouteResult rideRouteResult, int i) {
+
+            }
+        });
+        String location_lat = (String) SpUtils.getParam(Const.CUR_LATITUTE, "0");
+        String location_long = (String) SpUtils.getParam(Const.CUR_LONGITUDE, "0");
+        if (!location_lat.equals("0") && !location_long.equals("0")) {
+            AmapUtils.caculateDistance(new LatLng(Double.valueOf(location_lat), Double.valueOf(location_long)), order.getStartAddr().getLatLng(), new RouteSearch.OnRouteSearchListener() {
+                @Override
+                public void onBusRouteSearched(BusRouteResult busRouteResult, int i) {
+
+                }
+
+                @Override
+                public void onDriveRouteSearched(DriveRouteResult driveRouteResult, int i) {
+                    float distance = driveRouteResult.getPaths().get(0).getDistance();
+                    instance_fromme.setText("距你" + BusinessUtils.formatDistance(distance));
+                }
+
+                @Override
+                public void onWalkRouteSearched(WalkRouteResult walkRouteResult, int i) {
+
+                }
+
+                @Override
+                public void onRideRouteSearched(RideRouteResult rideRouteResult, int i) {
+
+                }
+            });
+        }
+        order_money.setText(order.getTotalMoney() / 100 + "");
     }
 
     private void showOrderDates(List<String> orderDates) {

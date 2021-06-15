@@ -20,21 +20,30 @@ import androidx.appcompat.widget.ListPopupWindow;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.haylion.android.R;
+import com.haylion.android.calendar.DateFormatUtil;
+import com.haylion.android.calendar.DateStyle;
 import com.haylion.android.common.view.dialog.DialogUtils;
+import com.haylion.android.constract.ChoseDateCallBack;
+import com.haylion.android.constract.ClaimActionListener;
 import com.haylion.android.data.base.BaseActivity;
 import com.haylion.android.data.base.BaseDialog;
 import com.haylion.android.data.model.AddressInfo;
 import com.haylion.android.data.model.Order;
 import com.haylion.android.data.model.OrderPayInfo;
 import com.haylion.android.data.model.OrderStatus;
+import com.haylion.android.dialog.ChoseDateDialog;
+import com.haylion.android.dialog.ClaimDialog;
 import com.haylion.android.mvp.util.LogUtils;
+import com.haylion.android.mvp.util.ToastUtils;
 import com.haylion.android.orderdetail.OrderDetailActivity;
 import com.haylion.android.orderdetail.map.ShowInMapNewActivity;
 import com.haylion.android.orderdetail.trip.TripDetailActivity;
 import com.haylion.android.pay.PayMainActivity;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindFont;
 import butterknife.BindView;
@@ -87,12 +96,15 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
         mAppointmentList.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-                if (mTabIndicator.getCheckedRadioButtonId() == R.id.tab_hall) {
+                int checkedRadioButtonId = mTabIndicator.getCheckedRadioButtonId();
+                if (checkedRadioButtonId == R.id.tab_hall) {
                     presenter.refreshAppointmentHall();
-                } else if (mTabIndicator.getCheckedRadioButtonId() == R.id.tab_children) {
+                } else if (checkedRadioButtonId == R.id.tab_children) {
                     presenter.refreshChildrenOrderCenter();
-                } else if (mTabIndicator.getCheckedRadioButtonId() == R.id.tab_accessibility) {
+                } else if (checkedRadioButtonId == R.id.tab_accessibility) {
                     presenter.refreshAccessibilityOrder();
+                } else if (checkedRadioButtonId == R.id.tab_shunfeng) {
+                    presenter.refreshShunfengList();
                 } else {
                     presenter.refreshAppointmentList();
                 }
@@ -112,9 +124,9 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
                 }
             }
             mAppointmentList.refreshComplete();
-            if (checkedId == R.id.tab_shunfeng){
+            if (checkedId == R.id.tab_shunfeng) {
                 presenter.getShunfengOrder();
-            }else if (checkedId == R.id.tab_hall) {
+            } else if (checkedId == R.id.tab_hall) {
                 presenter.appointmentHall();
                 mTabTips.setText(R.string.tips_appointment_hall);
             } else if (checkedId == R.id.tab_children) {
@@ -172,9 +184,9 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
         boolean noOrders = false;
         if (orders == null || orders.isEmpty()) {
             if (orderTab == mTabIndicator.getCheckedRadioButtonId()) {
-                if (orderTab == R.id.tab_shunfeng){
+                if (orderTab == R.id.tab_shunfeng) {
                     mNoOrders.setText("没有顺丰订单");
-                }else if (orderTab == R.id.tab_hall) {
+                } else if (orderTab == R.id.tab_hall) {
                     mNoOrders.setText("没有预约订单");
                 } else if (orderTab == R.id.tab_unfinished) {
                     mNoOrders.setText("没有未完成订单");
@@ -293,7 +305,7 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
 //            showOrderDates(order.getOrderDates());
 
         } else if (actionType == BookOrderListItemView.ACTION_GRAB_ORDER) {
-            if (mGrabDialog == null) {
+           /* if (mGrabDialog == null) {
                 mGrabDialog = new GrabAppointmentDialog(getContext());
             }
             mGrabDialog.setOnShowListener(new DialogInterface.OnShowListener() {
@@ -301,8 +313,46 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
                 public void onShow(DialogInterface dialog) {
                     presenter.grabOrder(order);
                 }
-            });
-            mGrabDialog.show();
+            });*/
+            List<String> orderDates = order.getOrderDates();
+            if (orderDates != null && orderDates.size() > 0) {
+                ChoseDateDialog choseDateDialog = new ChoseDateDialog(this, orderDates);
+                choseDateDialog.setCallBack(new ChoseDateCallBack() {
+                    @Override
+                    public void callBack(Map<Long, Boolean> map) {
+                        List<String> list = new ArrayList<>();
+                        for (Map.Entry<Long, Boolean> ma : map.entrySet()) {
+                            if (ma.getValue()) {
+                                String ymd = DateFormatUtil.getTime(ma.getKey(), DateStyle.YYYY_MM_DD.getValue());
+                                list.add(ymd + " 00:00:00");
+                            }
+                        }
+                        if (list.size()>0){
+                            choseDateDialog.dismiss();
+                            ClaimDialog dialog = new ClaimDialog(getContext(), order, map);
+                            dialog.setClaimListaner(new ClaimActionListener() {
+                                @Override
+                                public void onClaim() {
+                                    presenter.grabOrder(order, list);
+                                }
+                            });
+                            dialog.showDialog();
+                        }else {
+                            ToastUtils.showLong(getContext(), "请选择送货日期");
+                        }
+                    }
+                });
+                choseDateDialog.show();
+            } else {
+                ClaimDialog dialog = new ClaimDialog(this, order, null);
+                dialog.setClaimListaner(new ClaimActionListener() {
+                    @Override
+                    public void onClaim() {
+                        presenter.grabOrder(order, new ArrayList<>());
+                    }
+                });
+                dialog.showDialog();
+            }
         }
     }
 

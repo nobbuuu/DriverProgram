@@ -32,6 +32,7 @@ import com.amap.api.navi.model.NaviPoi;
 import com.gyf.immersionbar.ImmersionBar;
 import com.haylion.android.Constants;
 import com.haylion.android.R;
+import com.haylion.android.activity.OrderPreSignActivity;
 import com.haylion.android.common.aibus_location.data.GpsData;
 import com.haylion.android.common.map.AMapUtil;
 import com.haylion.android.common.map.BaseMapNaviActivity;
@@ -74,6 +75,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.haylion.android.orderdetail.OrderDetailActivity.ORDER_ID;
+import static com.haylion.android.orderdetail.OrderDetailActivity.ORDER_TYPE;
 
 /**
  * @author dengzh
@@ -115,6 +117,7 @@ public class AMapNaviViewActivity extends BaseMapNaviActivity<OrderDetailContrac
      */
     private Order order;
     private int orderId;  //订单id
+    private int orderType;  //订单type
     private int cargoOrderId = 0; //货单id
     private GpsData currentGps;  // 当前定位GPS信息
     private double linearDistance = -1; //距离目的地的直线距离
@@ -149,6 +152,20 @@ public class AMapNaviViewActivity extends BaseMapNaviActivity<OrderDetailContrac
         context.startActivity(intent);
     }
 
+    /**
+     * 跳转
+     *
+     * @param context
+     * @param orderId 订单id
+     */
+    public static void go(Context context, int orderId,int orderType) {
+        Intent intent = new Intent(context, AMapNaviViewActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(ORDER_ID, orderId);
+        intent.putExtra(ORDER_TYPE, orderType);
+        context.startActivity(intent);
+    }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -166,6 +183,7 @@ public class AMapNaviViewActivity extends BaseMapNaviActivity<OrderDetailContrac
             carpoolCode = getIntent().getStringExtra(OrderDetailActivity.EXTRA_CARPOOL_CODE);
         } else {
             orderId = getIntent().getIntExtra(ORDER_ID, 0);
+            orderType = getIntent().getIntExtra(ORDER_TYPE, 0);
         }
 
         currentGps = FloatDialogService.getCurrentGps();
@@ -175,6 +193,7 @@ public class AMapNaviViewActivity extends BaseMapNaviActivity<OrderDetailContrac
         //初始化导航地图
         initAMapNaviView(savedInstanceState);
 
+        //滑动监听
         slideview.addSlideListener(new SlideView.OnSlideListener() {
             @Override
             public void onSlideSuccess() {
@@ -190,7 +209,10 @@ public class AMapNaviViewActivity extends BaseMapNaviActivity<OrderDetailContrac
                 } else if (order.getOrderType() == Order.ORDER_TYPE_REALTIME || order.getOrderType() == Order.ORDER_TYPE_CARGO_PASSENGER) {
                     //实时订单 or 货拼客
                     handleRealTimeOrderSlide();
-                } else {
+                } else if (orderType == -1){
+                    OrderPreSignActivity.go(getContext(),orderId);
+                    finish();
+                }else {
                     presenter.changeOrderStatus(cargoOrderId, OrderDetailPresenter.OPERATAR_BY_AMAP_NAVI);
                 }
             }
@@ -206,7 +228,9 @@ public class AMapNaviViewActivity extends BaseMapNaviActivity<OrderDetailContrac
     private void refreshOrderDetails() {
         if (carpoolFlag) {
             presenter.getCarpoolOrderDetails(carpoolCode);
-        } else {
+        } else if (orderType == -1){
+            presenter.getShunfengOrderDetail(orderId);
+        }else {
             presenter.getOrderDetail(orderId);
         }
     }
@@ -438,40 +462,49 @@ public class AMapNaviViewActivity extends BaseMapNaviActivity<OrderDetailContrac
         if (orderInfo != null) {
             order = orderInfo;
             isDataLoaded = true;
-            //联系按钮显示时机，送你上学单和货单显示，其他订单在去接乘客状态显示。
-            if (order.getOrderType() == Order.ORDER_TYPE_SEND_CHILD || order.getOrderType() == Order.ORDER_TYPE_CARGO
-                    || order.getOrderStatus() == Order.ORDER_STATUS_WAIT_CAR) {
-                frContact.setVisibility(View.VISIBLE);
-            }
-            if (order.getOrderType() == Order.ORDER_TYPE_CARGO) {
-                //货单，底部按钮隐藏
-                slideview.setVisibility(View.GONE);
-            }
 
-            //进入此页面的正确状态是，接乘客和送乘客,其他情况当做异常处理
-            if (order.getOrderStatus() == Order.ORDER_STATUS_WAIT_CAR ||
-                    order.getOrderStatus() == Order.ORDER_STATUS_GET_ON ||
-
-                    ((order.getOrderType() == Order.ORDER_TYPE_BOOK ||
-                            order.getOrderType() == Order.ORDER_TYPE_ACCESSIBILITY) &&
-                            order.getOrderStatus() == Order.ORDER_STATUS_READY)
-            ) { // 2020.2.16，ready状态为预约单添加
-
-                if (order.getOrderType() == Order.ORDER_TYPE_CARGO_PASSENGER) {
-                    presenter.getCargoOrderSendDeadTime(order.getCargoOrderId());
-                } else if (order.getOrderType() == Order.ORDER_TYPE_CARGO) {
-                    getCargoRestTimeSuccess(order.getEstimateArriveTime());
-                }
+            if (orderType == -1){//顺丰单
                 changeOrderStatusSuccess(order.getOrderStatus());
                 //订单信息
                 updateOrderInfoCardView();
                 //地图信息
                 showOrderInfoInMap();
-            } else if (order.getOrderStatus() == Order.ORDER_STATUS_GET_OFF) {
-                //去设置收款
-                changeOrderStatusSuccess(order.getOrderStatus());
-            } else {
-                finish();
+            }else {
+                //联系按钮显示时机，送你上学单和货单显示，其他订单在去接乘客状态显示。
+                if (order.getOrderType() == Order.ORDER_TYPE_SEND_CHILD || order.getOrderType() == Order.ORDER_TYPE_CARGO
+                        || order.getOrderStatus() == Order.ORDER_STATUS_WAIT_CAR) {
+                    frContact.setVisibility(View.VISIBLE);
+                }
+                if (order.getOrderType() == Order.ORDER_TYPE_CARGO) {
+                    //货单，底部按钮隐藏
+                    slideview.setVisibility(View.GONE);
+                }
+
+                //进入此页面的正确状态是，接乘客和送乘客,其他情况当做异常处理
+                if (order.getOrderStatus() == Order.ORDER_STATUS_WAIT_CAR ||
+                        order.getOrderStatus() == Order.ORDER_STATUS_GET_ON ||
+
+                        ((order.getOrderType() == Order.ORDER_TYPE_BOOK ||
+                                order.getOrderType() == Order.ORDER_TYPE_ACCESSIBILITY) &&
+                                order.getOrderStatus() == Order.ORDER_STATUS_READY)
+                ) { // 2020.2.16，ready状态为预约单添加
+
+                    if (order.getOrderType() == Order.ORDER_TYPE_CARGO_PASSENGER) {
+                        presenter.getCargoOrderSendDeadTime(order.getCargoOrderId());
+                    } else if (order.getOrderType() == Order.ORDER_TYPE_CARGO) {
+                        getCargoRestTimeSuccess(order.getEstimateArriveTime());
+                    }
+                    changeOrderStatusSuccess(order.getOrderStatus());
+                    //订单信息
+                    updateOrderInfoCardView();
+                    //地图信息
+                    showOrderInfoInMap();
+                } else if (order.getOrderStatus() == Order.ORDER_STATUS_GET_OFF) {
+                    //去设置收款
+                    changeOrderStatusSuccess(order.getOrderStatus());
+                } else {
+                    finish();
+                }
             }
         }
     }
@@ -522,12 +555,18 @@ public class AMapNaviViewActivity extends BaseMapNaviActivity<OrderDetailContrac
         } else if (order.getOrderStatus() == Order.ORDER_STATUS_GET_ON) { //去送乘客
             destAddr = order.getEndAddr();
             mStartPoi = new NaviPoi(order.getStartAddr().getName(), order.getStartAddr().getLatLng(), "");
+        }else if (orderType == -1){
+            mStartPoi = new NaviPoi(order.getStartAddr().getName(), order.getStartAddr().getLatLng(), "");
+            destAddr = order.getEndAddr();
         }
 
         //设定终点坐标
         mEndPoi = new NaviPoi(destAddr.getName(), destAddr.getLatLng(), "");
         eList.clear();
-        eList.add(new NaviLatLng(mEndPoi.getCoordinate().latitude, mEndPoi.getCoordinate().longitude));
+        LatLng coordinate = mEndPoi.getCoordinate();
+        if (coordinate != null){
+            eList.add(new NaviLatLng(coordinate.latitude, coordinate.longitude));
+        }
         calculateDriveRoute();
     }
 
@@ -590,6 +629,11 @@ public class AMapNaviViewActivity extends BaseMapNaviActivity<OrderDetailContrac
             }
         }
         slideview.reset();
+    }
+
+    @Override
+    public void changeShunFengOrderStatusSuccess(int status) {
+
     }
 
     /**

@@ -10,6 +10,7 @@ buildscript {
         google()
         jcenter()
         maven { url 'https://developer.huawei.com/repo/'}
+        maven { url 'https://dl.bintray.com/jenly/maven' }
 //        maven { url 'https://dl.bintray.com/umsdk/release' }
     }
     dependencies {
@@ -47,7 +48,7 @@ ext {
     // Android版本相关
     android = [
             minSdkVersion    : 21, // 5.0
-            targetSdkVersion : 26, // 8.0  目前设置成28以上会导致导航没有声音
+            targetSdkVersion : 25, // 8.0  目前设置成28以上会导致导航没有声音
             compileSdkVersion: 28, // 9.0
             buildToolsVersion: '28.0.3',
 

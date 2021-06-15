@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.haylion.android.Constants;
 import com.haylion.android.R;
+import com.haylion.android.data.bean.ShunfengWaitBean;
 import com.haylion.android.data.model.AddressForSuggestLine;
 import com.haylion.android.data.model.AmapTrack;
 import com.haylion.android.data.model.Driver;
@@ -564,6 +565,12 @@ public class MainPresenter extends BasePresenter<MainContract.View, OrderReposit
         });
     }
 
+    @Override
+    public void queryShunfengOrder() {
+        Log.d("aaa","123");
+        getShunfengWaitList();
+    }
+
     /**
      * 查询送你上学订单
      */
@@ -579,6 +586,32 @@ public class MainPresenter extends BasePresenter<MainContract.View, OrderReposit
             public void onError(int code, String msg) {
                 LogUtils.e("轮询送你上学订单出错：" + code + ", " + msg);
                 queryAccessibilityOrder(orders);
+            }
+        });
+    }
+
+    /**
+     * 查询顺丰听单列表
+     */
+    public void getShunfengWaitList() {
+        repo.getShunfengWaitList(new ApiSubscriber<List<ShunfengWaitBean>>() {
+            @Override
+            public void onSuccess(List<ShunfengWaitBean> data) {
+                Log.d("aaa","456  data = " + data);
+                if (data != null && data.size() > 0) {
+                    Log.d("aaa","000  data.size = " + data.size());
+                    List<Order> orders = new ArrayList<>();
+                    for (ShunfengWaitBean bean : data) {
+                        Order order = OrderConvert.shufengConvertToOrder(bean);
+                        orders.add(order);
+                    }
+                    view.onShunfengOrders(orders);
+                }
+            }
+
+            @Override
+            public void onError(int code, String msg) {
+                Log.d("aaa","789  msg = " + msg);
             }
         });
     }

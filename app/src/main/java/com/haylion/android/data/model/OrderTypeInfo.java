@@ -64,6 +64,8 @@ public enum OrderTypeInfo {
                 return "送你上学";
             case ORDER_TYPE_ACCESSIBILITY:
                 return "无障碍";
+            case UNKNOWN:
+                return "顺丰订单";
         }
         return ResourceUtil.getString(R.string.order_status_unknown);
     }
@@ -92,6 +94,8 @@ public enum OrderTypeInfo {
                 return "送你上学";
             case ORDER_TYPE_ACCESSIBILITY:
                 return "无障碍";
+            case UNKNOWN:
+                return "抢单";//顺丰订单
         }
         return ResourceUtil.getString(R.string.order_status_unknown);
     }

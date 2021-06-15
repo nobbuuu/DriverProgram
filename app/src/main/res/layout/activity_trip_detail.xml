@@ -176,13 +176,13 @@
 
             <!--费用总计-->
             <!--<include
-                layout="@layout/layout_trip_detail_cost_card"
+                rvitem_goods="@rvitem_goods/layout_trip_detail_cost_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             &lt;!&ndash;取消原因&ndash;&gt;
             <include
-                layout="@layout/layout_trip_detail_cancel_card"
+                rvitem_goods="@rvitem_goods/layout_trip_detail_cancel_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>-->
 

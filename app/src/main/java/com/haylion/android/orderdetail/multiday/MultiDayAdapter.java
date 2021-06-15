@@ -50,7 +50,7 @@ public class MultiDayAdapter extends RecyclerView.Adapter<MultiDayAdapter.MyView
      * <p>
      * This new MyViewHolder should be constructed with a new View that can represent the items
      * of the given type. You can either create a new View manually or inflate it from an XML
-     * layout file.
+     * rvitem_goods file.
      * <p>
      * The new MyViewHolder will be used to display items of the adapter using
      * {@link #onBindViewHolder(ViewHolder, int, List)}. Since it will be re-used to display

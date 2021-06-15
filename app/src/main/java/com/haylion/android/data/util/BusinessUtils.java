@@ -90,9 +90,9 @@ public class BusinessUtils {
      */
     public static String formatDistance(double distance) {
         if (distance > 1000) {
-            return String.format(Locale.getDefault(), "%.1f 公里", distance / 1000);
+            return String.format(Locale.getDefault(), "%.1f km", distance / 1000);
         } else {
-            return String.format(Locale.getDefault(), "%.0f 米", distance);
+            return String.format(Locale.getDefault(), "%.0f m", distance);
         }
     }
 
@@ -103,9 +103,9 @@ public class BusinessUtils {
      */
     public static String formatDistanceForVoice(double distance) {
         if (distance > 1000) {
-            return String.format(Locale.getDefault(), "%.1f公里", distance / 1000);
+            return String.format(Locale.getDefault(), "%.1fkm", distance / 1000);
         } else {
-            return String.format(Locale.getDefault(), "%.0f米", distance);
+            return String.format(Locale.getDefault(), "%.0fm", distance);
         }
     }
 

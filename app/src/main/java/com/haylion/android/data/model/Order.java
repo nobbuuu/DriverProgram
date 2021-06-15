@@ -69,7 +69,8 @@ public class Order {
     private int totalTime;    //总耗时
     private int passengerNum;  //乘客数量
     private double totalMoney;  //拼车单-总价格
-    private long distance;      //全程距离
+    private double distance;      //全程距离
+    private long costTime;      //行程时间
     private long distanceFromCar;  //距离车的距离
     private String orderCancellerMsg;  //订单取消原因
     private int orderCancellerType;    //订单取消类型
@@ -80,7 +81,12 @@ public class Order {
 
     private String sfOrderId;
     private String pickupContactName;   //取货人姓名 (司机去此人处取货)
+    private String pickupContactName1;   //取货人姓名 (司机去此人处取货)
+    private String pickupContactName2;   //取货人姓名 (司机去此人处取货)
     private String pickupContactMobile;  //取货人手机号
+    private String pickupContactMobile1;  //取货人手机号
+    private String pickupContactMobile2;  //取货人手机号
+    private String pickupCode;  //取货码
     private String dropOffContactName;    //送货人姓名（司机把货物送到此人手上）
     private String dropOffContactMobile;  //送货人手机号
     private String goodsDescription;       //货物描述
@@ -133,6 +139,38 @@ public class Order {
         this.boardingPlaceArriveTime = boardingPlaceArriveTime;
     }
 
+    public String getPickupContactMobile1() {
+        return pickupContactMobile1;
+    }
+
+    public void setPickupContactMobile1(String pickupContactMobile1) {
+        this.pickupContactMobile1 = pickupContactMobile1;
+    }
+
+    public String getPickupContactMobile2() {
+        return pickupContactMobile2;
+    }
+
+    public void setPickupContactMobile2(String pickupContactMobile2) {
+        this.pickupContactMobile2 = pickupContactMobile2;
+    }
+
+    public String getPickupContactName1() {
+        return pickupContactName1;
+    }
+
+    public void setPickupContactName1(String pickupContactName1) {
+        this.pickupContactName1 = pickupContactName1;
+    }
+
+    public String getPickupContactName2() {
+        return pickupContactName2;
+    }
+
+    public void setPickupContactName2(String pickupContactName2) {
+        this.pickupContactName2 = pickupContactName2;
+    }
+
     public int getRoadLevel() {
         return roadLevel;
     }
@@ -169,8 +207,24 @@ public class Order {
         return estimatePickUpTime;
     }
 
+    public String getPickupCode() {
+        return pickupCode;
+    }
+
+    public void setPickupCode(String pickupCode) {
+        this.pickupCode = pickupCode;
+    }
+
     public void setEstimatePickUpTime(String estimatePickUpTime) {
         this.estimatePickUpTime = estimatePickUpTime;
+    }
+
+    public long getCostTime() {
+        return costTime;
+    }
+
+    public void setCostTime(long costTime) {
+        this.costTime = costTime;
     }
 
     public int getCargoOrderId() {
@@ -382,11 +436,11 @@ public class Order {
         this.distanceFromCar = distanceFromCar;
     }
 
-    public long getDistance() {
+    public double getDistance() {
         return distance;
     }
 
-    public void setDistance(long distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 

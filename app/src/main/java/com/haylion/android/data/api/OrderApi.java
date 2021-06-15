@@ -1,7 +1,15 @@
 package com.haylion.android.data.api;
 
 
+import com.haylion.android.data.bean.ChangeOrderStatusBean;
+import com.haylion.android.data.bean.ClaimBean;
+import com.haylion.android.data.bean.ClaimResult;
+import com.haylion.android.data.bean.OrderDetailBean;
+import com.haylion.android.data.bean.OrderIdBean;
+import com.haylion.android.data.bean.PhoneBean;
+import com.haylion.android.data.bean.ShunfengWaitBean;
 import com.haylion.android.data.dto.OrderDto;
+import com.haylion.android.data.model.HistoryOrderBean;
 import com.haylion.android.data.model.ListenOrderSetting;
 import com.haylion.android.data.model.OrderDetail;
 import com.haylion.android.data.model.OrderForMainActivity;
@@ -18,8 +26,10 @@ import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
+import retrofit2.http.Url;
 
 public interface OrderApi {
 
@@ -30,6 +40,14 @@ public interface OrderApi {
     //订单列表
     @GET("/driver/personal/historyOrders")
     Observable<OrderDto.OrderListResponse> getOrderList(@QueryMap Map<String, Object> map);
+
+    /*
+     * 	历史订单
+     * @return
+     */
+    //订单列表
+    @GET("/driver/freight-order/history")
+    Observable<BaseResponse<HistoryOrderBean>> getHistoryOrderList(@QueryMap Map<String, Object> map);
 
 
     //历史成就 显示数目（0表示当天，1表示当前30天内，2表示60天，3表示90天，以此类推）
@@ -74,6 +92,11 @@ public interface OrderApi {
     @GET("/driver/waitingOrders/getOrderDetails")
     Observable<OrderDto.OrderDetailResponse> getWorkOrderDetail(@Query("orderId") int orderId);
 
+    //获取顺丰订单详情
+    //todo
+    @POST("/driver/freight-order/detail")
+    Observable<BaseResponse<OrderDetailBean>> getOrderDetail(@Body OrderIdBean orderIdBean);
+
     //获取听单设置
     @GET("/driver/waitingOrders/getDriverSettings")
     Observable<OrderDto.OrderListenSettingResponse> getOrderSetting();
@@ -97,6 +120,11 @@ public interface OrderApi {
     //订单状态的改变  变更状态类型 1：到达乘车点；2：接到乘客；3：到达目的地
     @POST("/driver/travelling-order/update-order")
     Observable<OrderDto.BooleanResponse> updateOrderStatus(@Body OrderDto.OrderStatusRequest request);
+
+    //todo
+    //订单状态的改变  变更状态类型 1：到达乘车点；2：接到乘客；3：到达目的地
+    @POST("/driver/freight-order/update-order")
+    Observable<OrderDto.BooleanResponse> updateOrderStatus(@Body ChangeOrderStatusBean request);
 
     //todo
     //取消订单
@@ -155,10 +183,24 @@ public interface OrderApi {
     Observable<BaseResponse<Boolean>> grabAppointment(@Body OrderDto.GrabAppointmentRequest request);
 
     /**
+     * 抢预约顺丰订单
+     *
+     * @param request 请求
+     */
+    @POST("/driver/freight-order/claim")
+    Observable<BaseResponse<ClaimResult>> grabShunfeng(@Body ClaimBean request);
+
+    /**
      * 抢单池 - 送小孩单
      */
     @GET("/driver/waitingOrders/ChildrenCenter")
     Observable<BaseResponse<List<OrderForMainActivity>>> childrenOrderCenter();
+
+    /**
+     * 顺丰听单
+     */
+    @GET("/driver/freight-order/list")
+    Observable<BaseResponse<List<ShunfengWaitBean>>> getShunfengWaitList();
 
     /**
      * 抢送小孩单
@@ -202,5 +244,11 @@ public interface OrderApi {
      */
     @POST("/driver/travelling-order/carpool-payment-request")
     Observable<BaseResponse<List<PaymentResult>>> paymentRequestCarpool(@Body PayInfo payInfo);
+
+    /**
+     * 获取客服电话
+     */
+    @GET("/driver/travelling-order/service-phone")
+    Observable<BaseResponse<PhoneBean>> getServicePhoneNum();
 
 }

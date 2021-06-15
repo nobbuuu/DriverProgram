@@ -11,7 +11,9 @@ import android.util.Log;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
 import com.haylion.android.R;
+import com.haylion.android.common.Const;
 import com.haylion.android.common.aibus_location.data.GpsData;
+import com.haylion.android.utils.SpUtils;
 
 /**
  * 封装高德地图的位置服务，对外提供统一的接口
@@ -102,7 +104,8 @@ public class DeviceLocationManager implements AMapLocationListener {
                 locationGps.setLatitude(aMapLocation.getLatitude());
                 locationGps.setLongitude(aMapLocation.getLongitude());
                 locationGps.setBearing(aMapLocation.getBearing());
-
+                SpUtils.savaUserInfo(Const.CUR_LATITUTE, aMapLocation.getLatitude() + "");
+                SpUtils.savaUserInfo(Const.CUR_LONGITUDE, aMapLocation.getLongitude() + "");
                 /*if(aMapLocation.getSpeed() > 0){
                     locationGps.setBearing(aMapLocation.getBearing());
                 }else{
