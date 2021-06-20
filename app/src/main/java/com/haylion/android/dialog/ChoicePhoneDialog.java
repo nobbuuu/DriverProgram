@@ -42,6 +42,15 @@ public class ChoicePhoneDialog extends Dialog {
         phone1_tv.setText(order.getPickupContactName() + "  " + order.getPickupContactMobile());
         phone2_tv.setText(order.getPickupContactName1() + "  " + order.getPickupContactMobile1());
         phone3_tv.setText(order.getPickupContactName2() + "  " + order.getPickupContactMobile2());
+        if (phone1_tv.getText().toString().isEmpty()){
+            phone1_tv.setVisibility(View.GONE);
+        }
+        if (phone2_tv.getText().toString().isEmpty()){
+            phone2_tv.setVisibility(View.GONE);
+        }
+        if (phone3_tv.getText().toString().isEmpty()){
+            phone3_tv.setVisibility(View.GONE);
+        }
         phone1_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

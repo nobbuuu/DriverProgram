@@ -252,6 +252,7 @@ public class PreScanActivity extends BaseActivity<PreSignContract.Presenter> imp
                 startScanner();
                 break;
             case R.id.viewmap_tv:
+                OrderDetailActivity.go(getContext(),mOrderId,true);
                 break;
             case R.id.phone_take:
                 if (mOrder != null) {
