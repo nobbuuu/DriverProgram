@@ -25,6 +25,7 @@ import com.haylion.android.data.model.Order;
 import com.haylion.android.data.util.OrderConvert;
 import com.haylion.android.data.widgt.SlideView;
 import com.haylion.android.dialog.ChoicePhoneDialog;
+import com.haylion.android.mvp.util.ToastUtils;
 import com.haylion.android.orderdetail.OrderDetailActivity;
 import com.haylion.android.presenter.PreSignPresenter;
 import com.haylion.android.utils.AmapUtils;
@@ -149,6 +150,13 @@ public class OrderPreSignActivity extends BaseActivity<PreSignContract.Presenter
                 break;
             case R.id.phone_take:
                 if (mOrder != null) {
+                    String mobile = mOrder.getPickupContactMobile();
+                    String mobile1 = mOrder.getPickupContactMobile1();
+                    String mobile2 = mOrder.getPickupContactMobile2();
+                    if (mobile.isEmpty() && mobile1.isEmpty() && mobile2.isEmpty()){
+                        ToastUtils.showLong(getContext(),"暂无电话数据");
+                        return;
+                    }
                     new ChoicePhoneDialog(getContext(), mOrder).show();
                 }
                 break;

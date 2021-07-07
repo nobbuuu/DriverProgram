@@ -60,12 +60,8 @@ public class BookOrderListItemView extends BaseItemView<Order> {
 
     @BindView(R.id.tv_get_on_addr)
     TextView tvOrderGetOn;
-    @BindView(R.id.tv_get_on_desc)
-    TextView tvGetOnDesc;
     @BindView(R.id.tv_get_off_addr)
     TextView tvOrderGetOff;
-    @BindView(R.id.tv_get_off_desc)
-    TextView tvGetOffDesc;
     @BindView(R.id.order_money)
     TextView order_money;
 
@@ -88,8 +84,8 @@ public class BookOrderListItemView extends BaseItemView<Order> {
     @BindView(R.id.instance_fromme)
     TextView instance_fromme;
 
-    @BindView(R.id.show_map)
-    View tvShowMap;
+    @BindView(R.id.viewmap_tv)
+    TextView tvShowMap;
     @BindView(R.id.grab_order)
     TextView grabOrder;
 
@@ -126,7 +122,7 @@ public class BookOrderListItemView extends BaseItemView<Order> {
             carpoolingOrder.setVisibility(GONE);
         }
 //        }
-        setOnClickListener(view -> notifyItemAction(OrderClickArea.ORDER_DETAILS));
+//        setOnClickListener(view -> notifyItemAction(OrderClickArea.ORDER_DETAILS));
 
         tvShowMap.setOnClickListener(v -> notifyItemAction(OrderClickArea.SHOW_IN_MAP));
 
@@ -146,8 +142,6 @@ public class BookOrderListItemView extends BaseItemView<Order> {
         //地址信息
         tvOrderGetOn.setText(order.getStartAddr().getName());
         tvOrderGetOff.setText(order.getEndAddr().getName());
-        tvGetOnDesc.setText(order.getStartAddr().getAddressDetail());
-        tvGetOffDesc.setText(order.getEndAddr().getAddressDetail());
 
         //订单时间信息
         //时间展示日期和小时信息
@@ -222,7 +216,7 @@ public class BookOrderListItemView extends BaseItemView<Order> {
         if (order.getOrderStatus() == OrderStatus.ORDER_STATUS_INIT.getStatus()) {
             tvShowMap.setVisibility(VISIBLE);
         } else {
-            tvShowMap.setVisibility(GONE);
+//            tvShowMap.setVisibility(GONE);
         }
 
 /*        //订单类型展示
