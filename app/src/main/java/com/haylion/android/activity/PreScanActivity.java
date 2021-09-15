@@ -28,6 +28,7 @@ import com.haylion.android.constract.PreSignContract;
 import com.haylion.android.data.base.BaseActivity;
 import com.haylion.android.data.bean.OrderDetailBean;
 import com.haylion.android.data.bean.PhoneBean;
+import com.haylion.android.data.model.AddressInfo;
 import com.haylion.android.data.model.Order;
 import com.haylion.android.data.util.BusinessUtils;
 import com.haylion.android.data.util.OrderConvert;
@@ -35,6 +36,7 @@ import com.haylion.android.data.widgt.SlideView;
 import com.haylion.android.dialog.ChoicePhoneDialog;
 import com.haylion.android.mvp.util.ToastUtils;
 import com.haylion.android.orderdetail.OrderDetailActivity;
+import com.haylion.android.orderdetail.map.ShowInMapNewActivity;
 import com.haylion.android.permissions.OnPermission;
 import com.haylion.android.permissions.Permission;
 import com.haylion.android.permissions.XXPermissions;
@@ -252,9 +254,25 @@ public class PreScanActivity extends BaseActivity<PreSignContract.Presenter> imp
                 startScanner();
                 break;
             case R.id.viewmap_tv:
+                if (mOrder != null){
+                    Intent intent = new Intent(getContext(), ShowInMapNewActivity.class);
+                    intent.putExtra(ShowInMapNewActivity.EXTRA_GRAB_ENABLED, false);
+                    AddressInfo start = mOrder.getStartAddr();
+                    intent.putExtra(ShowInMapNewActivity.ORDER_START_ADDR, start);
+                    AddressInfo end = mOrder.getEndAddr();
+                    intent.putExtra(ShowInMapNewActivity.ORDER_END_ADDR, end);
+                    startActivity(intent);
+                }
                 break;
             case R.id.phone_take:
                 if (mOrder != null) {
+                    String mobile = mOrder.getPickupContactMobile();
+                    String mobile1 = mOrder.getPickupContactMobile1();
+                    String mobile2 = mOrder.getPickupContactMobile2();
+                    if (mobile.isEmpty() && mobile1.isEmpty() && mobile2.isEmpty()){
+                        ToastUtils.showLong(getContext(),"暂无电话数据");
+                        return;
+                    }
                     new ChoicePhoneDialog(getContext(), mOrder).show();
                 }
                 break;

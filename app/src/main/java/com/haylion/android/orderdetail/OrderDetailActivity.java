@@ -125,6 +125,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
     public final static String ORDER_STATUS = "EXTRA_ORDER_STATUS";
     public final static String ORDER_TYPE = "EXTRA_ORDER_TYPE";
     public final static String CARGO_ORDER_ID = "EXTRA_CARGO_ORDER_ID";
+    public final static String IS_VIEW = "EXTRA_IS_VIEW";
     public final static String ORDER_IS_NEW = "EXTRA_ORDER_IS_NEW";
     public final static String ORDER_START_ADDR = "EXTRA_ORDER_START_ADDR";
     public final static String ORDER_END_ADDR = "EXTRA_ORDER_END_ADDR";
@@ -321,6 +322,8 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
     private boolean isOnResume;
     private boolean isNeedHandlerFromNotification; //是否已处理从通知进来的判断，从通知过来置为true，判断过后置为false
 
+    private boolean isView;
+
     /**
      * 拼车码
      */
@@ -341,6 +344,19 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
     public static void go(Context context, int orderId) {
         Intent intent = new Intent(context, OrderDetailActivity.class);
         intent.putExtra(ORDER_ID, orderId);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 跳转
+     *
+     * @param context
+     * @param orderId 订单id
+     */
+    public static void go(Context context, int orderId,boolean isView) {
+        Intent intent = new Intent(context, OrderDetailActivity.class);
+        intent.putExtra(ORDER_ID, orderId);
+        intent.putExtra(IS_VIEW, isView);
         context.startActivity(intent);
     }
 
@@ -391,6 +407,10 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
             }
         } else {
             orderId = getIntent().getIntExtra(ORDER_ID, 0);
+            isView = getIntent().getBooleanExtra(IS_VIEW,false);
+            if (isView){
+                slideview.setVisibility(View.GONE);
+            }
             Log.d(TAG, "orderId = " + orderId);
             orderType = getIntent().getIntExtra(ORDER_TYPE, 0);
             cargoOrderId = getIntent().getIntExtra(CARGO_ORDER_ID, 0);

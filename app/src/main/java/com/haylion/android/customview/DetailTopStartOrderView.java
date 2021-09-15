@@ -30,6 +30,7 @@ import com.haylion.android.data.model.Order;
 import com.haylion.android.data.util.BusinessUtils;
 import com.haylion.android.data.util.StringUtil;
 import com.haylion.android.dialog.ChoicePhoneDialog;
+import com.haylion.android.mvp.util.ToastUtils;
 import com.haylion.android.utils.AmapUtils;
 import com.haylion.android.utils.SpUtils;
 
@@ -160,6 +161,13 @@ public class DetailTopStartOrderView extends RelativeLayout {
         tvContactPassenger.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                String mobile = order.getPickupContactMobile();
+                String mobile1 = order.getPickupContactMobile1();
+                String mobile2 = order.getPickupContactMobile2();
+                if (mobile.isEmpty() && mobile1.isEmpty() && mobile2.isEmpty()){
+                    ToastUtils.showLong(getContext(),"暂无电话数据");
+                    return;
+                }
                 new ChoicePhoneDialog(getContext(),order).show();
             }
         });
