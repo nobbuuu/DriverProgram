@@ -215,7 +215,7 @@ public class PayMainActivity extends BaseActivity<PayMainContract.Presenter> imp
             case Order.ORDER_TYPE_REALTIME://实时订单
             case Order.ORDER_TYPE_CARGO_PASSENGER: //货拼客单
             case Order.ORDER_TYPE_BOOK: // 预约订单
-            case Order.ORDER_TYPE_ACCESSIBILITY: // 无障碍订单
+            case Order.ORDER_TYPE_ACCESSIBILITY: // 女性专车订单
                 rlOtherCost.setVisibility(View.VISIBLE);
                 divideLineOther.setVisibility(View.VISIBLE);
 

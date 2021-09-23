@@ -90,7 +90,8 @@ android {
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //外网地址
-            buildConfigField "String", "API_URL", '"https://47.112.172.118:6663/"'
+//            buildConfigField "String", "API_URL", '"https://47.112.172.118:6663/"'
+            buildConfigField "String", "API_URL", '"http://www.pcdd-maas.com/"'
             buildConfigField "String", "API_WEBSOCKET_URL", '"wss://47.112.172.118:6663/ws/"'
             buildConfigField "String", "BUGLY_APP_ID", '"63d85b1dfe"'
             //友盟推送

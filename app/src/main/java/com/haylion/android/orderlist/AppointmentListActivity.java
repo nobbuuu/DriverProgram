@@ -132,7 +132,7 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
             } else if (checkedId == R.id.tab_children) {
                 presenter.childrenOrderCenter();
                 // 新迭代后，标签提示信息不再显示
-            } else if (checkedId == R.id.tab_accessibility) { // 无障碍订单
+            } else if (checkedId == R.id.tab_accessibility) { // 女性专车订单
                 presenter.getAccessibilityOrder();
 
             } else {
@@ -195,7 +195,7 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
                 } else if (orderTab == R.id.tab_children) {
                     mNoOrders.setText("没有送你上学订单");
                 } else if (orderTab == R.id.tab_accessibility) {
-                    mNoOrders.setText("没有无障碍订单");
+                    mNoOrders.setText("没有女性专车订单");
                 }
                 noOrders = true;
             }

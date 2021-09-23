@@ -38,7 +38,7 @@ public class AppointmentListPresenter extends BasePresenter<AppointmentListContr
     private List<Order> mChildrenOrders = null;
 
     /**
-     * 无障碍订单
+     * 女性专车订单
      */
     private List<Order> mAccessibilityOrders = null;
 
@@ -261,7 +261,7 @@ public class AppointmentListPresenter extends BasePresenter<AppointmentListContr
         public void onError(int code, String msg) {
             view.dismissGrabDialog();
             if (code == Constants.ErrorCode.ACCESSIBILITY_SERVICE_IS_DISABLED) {
-                toast("未开通无障碍订单功能");
+                toast("未开通女性专车订单功能");
             } else {
                 toast("抢单出错");
             }
@@ -339,8 +339,8 @@ public class AppointmentListPresenter extends BasePresenter<AppointmentListContr
 
             @Override
             public void onError(int code, String msg) {
-                toast("获取无障碍订单失败");
-                LogUtils.e("获取无障碍订单出错：" + code + ", " + msg);
+                toast("获取女性专车订单失败");
+                LogUtils.e("获取女性专车订单出错：" + code + ", " + msg);
                 view.showAccessibilityOrders(mAccessibilityOrders);
             }
         });

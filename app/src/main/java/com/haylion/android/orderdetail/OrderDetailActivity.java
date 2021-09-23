@@ -1902,7 +1902,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
             if (!TextUtils.isEmpty(order.getEstimatePickUpTime()) && order.getEstimatePickUpTime().length() > 11) {
                 String time;
                 if (order.getOrderType() == Order.ORDER_TYPE_BOOK ||
-                        order.getOrderType() == Order.ORDER_TYPE_ACCESSIBILITY) { // 增加无障碍订单
+                        order.getOrderType() == Order.ORDER_TYPE_ACCESSIBILITY) { // 增加女性专车订单
                     time = order.getOrderTime().split(" ")[1];
                 } else {
                     time = order.getEstimatePickUpTime().substring(11);
