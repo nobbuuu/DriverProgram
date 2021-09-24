@@ -47,7 +47,7 @@ public class NetWorkUtils {
                     .newBuilder()
                     .scheme("http")//更换网络协议
                     .host(oldHttpUrl.host())//更换主机名
-                    .port(port)//更换端口
+//                    .port(port)//更换端口
 //                    .removePathSegment(0)//移除第一个参数
                     .build();
             // 然后返回一个response至此结束修改

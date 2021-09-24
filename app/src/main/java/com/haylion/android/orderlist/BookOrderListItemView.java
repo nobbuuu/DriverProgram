@@ -163,7 +163,7 @@ public class BookOrderListItemView extends BaseItemView<Order> {
 
         String startTime = order.getStartTime();
         String endTime = order.getEndTime();
-        if (startTime.equals(endTime)) {
+        if (startTime!= null && startTime.equals(endTime)) {
             startTime = "今日";
         }
         List<String> orderDates = order.getOrderDates();
