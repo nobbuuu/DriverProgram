@@ -106,6 +106,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 
+import static com.haylion.android.data.model.Order.ORDER_TYPE_SHUNFENG;
+
 /**
  * 订单详情页
  */
@@ -460,7 +462,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
                         || order.getOrderType() == Order.ORDER_TYPE_CARGO_PASSENGER) {
                     //实时订单 or 货拼客单
                     handleRealTimeOrderSlide();
-                } else if (order.getOrderType() == -1) {//顺丰单
+                } else if (order.getOrderType() == ORDER_TYPE_SHUNFENG) {//顺丰单
                     slideview.reset();
                     int orderStatus = order.getOrderStatus();
                     Log.d("aaa", "addSlideListener orderStatus = " + orderStatus);
@@ -748,7 +750,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
 
         //地址信息卡片的展示
         refreshTitleright();
-        if (orderType == -1) {
+        if (orderType == ORDER_TYPE_SHUNFENG) {
             refreshTopView();
         } else {
             updateAddrInfoCardView();
@@ -1821,7 +1823,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
         if (carpoolFlag) {
             presenter.getCarpoolOrderDetails(carpoolCode);
         } else {
-            if (orderType == -1) {
+            if (orderType == ORDER_TYPE_SHUNFENG) {
                 presenter.getShunfengOrderDetail(orderId);
             } else {
                 presenter.getOrderDetail(orderId);
@@ -1890,9 +1892,6 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
      * 处理 实时订单/货拼客单 的显示
      */
     private void updateRealTimeOrderView() {
-        if (orderType == -1) {
-
-        }
         handler.removeMessages(HANDLER_MSG_WAITING_PASSENGER_COUNTING_TIME);
         refreshTitleright();
         //实时订单tips View
@@ -1932,7 +1931,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
             llOrderTips.setVisibility(View.GONE);
         }
         //联系电话
-        if (orderType == -1) {
+        if (orderType == ORDER_TYPE_SHUNFENG) {
             rlRealtimeContact.setVisibility(View.GONE);
             top_fra.setVisibility(View.VISIBLE);
         } else {
@@ -1952,7 +1951,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
     }
 
     private void refreshTitleright() {
-        if (orderType == -1) {
+        if (orderType == ORDER_TYPE_SHUNFENG) {
             tvTitleRight.setVisibility(View.GONE);
         } else {
             tvTitleRight.setVisibility(View.VISIBLE);

@@ -131,6 +131,7 @@ import zhy.com.highlight.position.OnLeftPosCallback;
 import zhy.com.highlight.shape.RectLightShape;
 
 import static com.haylion.android.BuildConfig.APPLICATION_ID;
+import static com.haylion.android.data.model.Order.ORDER_TYPE_SHUNFENG;
 import static com.haylion.android.orderdetail.OrderDetailActivity.ORDER_ID;
 
 
@@ -1395,7 +1396,7 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
 
     @Override
     public void itemClick(Order order) {
-        if (order.isParentOrder() || order.getOrderType() == -1) {
+        if (order.isParentOrder() || order.getOrderType() == ORDER_TYPE_SHUNFENG) {
             Intent intent = new Intent(MainActivity.this, MultiDayDetailActivity.class);
             intent.putExtra(MultiDayDetailActivity.ORDER_ID, order.getOrderCode());
             startActivity(intent);

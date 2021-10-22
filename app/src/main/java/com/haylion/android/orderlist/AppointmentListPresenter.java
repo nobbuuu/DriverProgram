@@ -23,6 +23,8 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.haylion.android.data.model.Order.ORDER_TYPE_SHUNFENG;
+
 public class AppointmentListPresenter extends BasePresenter<AppointmentListContract.View,
         OrderRepository> implements AppointmentListContract.Presenter {
 
@@ -201,7 +203,7 @@ public class AppointmentListPresenter extends BasePresenter<AppointmentListContr
         } else if (orderType == Order.ORDER_TYPE_ACCESSIBILITY) {
             repo.grabAccessibilityOrder(orderCode,
                     order.isParentOrder(), new GrabOrderCallback(orderType));
-        } else if (orderType == -1){
+        } else if (orderType == ORDER_TYPE_SHUNFENG){
             ClaimBean claimBean = new ClaimBean(order.getOrderId(), chosedDates);
             String paramJson = new Gson().toJson(claimBean);
             Log.d("aaa","paramJson = " + paramJson);

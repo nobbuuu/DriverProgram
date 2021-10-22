@@ -74,6 +74,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.haylion.android.data.model.Order.ORDER_TYPE_SHUNFENG;
 import static com.haylion.android.orderdetail.OrderDetailActivity.ORDER_ID;
 import static com.haylion.android.orderdetail.OrderDetailActivity.ORDER_TYPE;
 
@@ -209,7 +210,7 @@ public class AMapNaviViewActivity extends BaseMapNaviActivity<OrderDetailContrac
                 } else if (order.getOrderType() == Order.ORDER_TYPE_REALTIME || order.getOrderType() == Order.ORDER_TYPE_CARGO_PASSENGER) {
                     //实时订单 or 货拼客
                     handleRealTimeOrderSlide();
-                } else if (orderType == -1){
+                } else if (orderType == ORDER_TYPE_SHUNFENG){
                     OrderPreSignActivity.go(getContext(),orderId);
                     finish();
                 }else {
@@ -228,7 +229,7 @@ public class AMapNaviViewActivity extends BaseMapNaviActivity<OrderDetailContrac
     private void refreshOrderDetails() {
         if (carpoolFlag) {
             presenter.getCarpoolOrderDetails(carpoolCode);
-        } else if (orderType == -1){
+        } else if (orderType == ORDER_TYPE_SHUNFENG){
             presenter.getShunfengOrderDetail(orderId);
         }else {
             presenter.getOrderDetail(orderId);
@@ -463,7 +464,7 @@ public class AMapNaviViewActivity extends BaseMapNaviActivity<OrderDetailContrac
             order = orderInfo;
             isDataLoaded = true;
 
-            if (orderType == -1){//顺丰单
+            if (orderType == ORDER_TYPE_SHUNFENG){//顺丰单
                 changeOrderStatusSuccess(order.getOrderStatus());
                 //订单信息
                 updateOrderInfoCardView();
@@ -555,7 +556,7 @@ public class AMapNaviViewActivity extends BaseMapNaviActivity<OrderDetailContrac
         } else if (order.getOrderStatus() == Order.ORDER_STATUS_GET_ON) { //去送乘客
             destAddr = order.getEndAddr();
             mStartPoi = new NaviPoi(order.getStartAddr().getName(), order.getStartAddr().getLatLng(), "");
-        }else if (orderType == -1){
+        }else if (orderType == ORDER_TYPE_SHUNFENG){
             mStartPoi = new NaviPoi(order.getStartAddr().getName(), order.getStartAddr().getLatLng(), "");
             destAddr = order.getEndAddr();
         }

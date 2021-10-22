@@ -175,7 +175,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.jcodecraeer.xrecyclerview.XRecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/appointment_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -187,7 +187,7 @@
             android:paddingBottom="@dimen/dp_10"
             android:visibility="visible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/book_order_list_item" />
+            tools:listitem="@layout/shunfeng_order_list_item" />
 
         <TextView
             android:id="@+id/no_orders"

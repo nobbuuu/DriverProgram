@@ -2,11 +2,9 @@ package com.haylion.android.orderlist;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -16,8 +14,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.ListPopupWindow;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.haylion.android.R;
 import com.haylion.android.calendar.DateFormatUtil;
@@ -27,29 +25,23 @@ import com.haylion.android.constract.ChoseDateCallBack;
 import com.haylion.android.constract.ClaimActionListener;
 import com.haylion.android.data.base.BaseActivity;
 import com.haylion.android.data.base.BaseDialog;
-import com.haylion.android.data.model.AddressInfo;
 import com.haylion.android.data.model.Order;
 import com.haylion.android.data.model.OrderPayInfo;
 import com.haylion.android.data.model.OrderStatus;
 import com.haylion.android.dialog.ChoseDateDialog;
 import com.haylion.android.dialog.ClaimDialog;
-import com.haylion.android.mvp.util.LogUtils;
 import com.haylion.android.mvp.util.ToastUtils;
 import com.haylion.android.orderdetail.OrderDetailActivity;
-import com.haylion.android.orderdetail.map.ShowInMapNewActivity;
 import com.haylion.android.orderdetail.trip.TripDetailActivity;
+import com.haylion.android.orderlist.achievement.AppointMentAdapter;
 import com.haylion.android.pay.PayMainActivity;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindFont;
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.nlopez.smartadapters.SmartAdapter;
-import io.nlopez.smartadapters.adapters.RecyclerMultiAdapter;
 import io.nlopez.smartadapters.utils.ViewEventListener;
 
 /**
@@ -59,8 +51,8 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
         implements AppointmentListContract.View, ViewEventListener<Order> {
 
     @BindView(R.id.appointment_list)
-    XRecyclerView mAppointmentList;
-    private RecyclerMultiAdapter mAppointmentAdapter;
+    RecyclerView mAppointmentList;
+    private AppointMentAdapter mApppointAdapter;
 
     @BindView(R.id.tab_tips)
     TextView mTabTips;
@@ -87,13 +79,9 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment_list);
-        mAppointmentAdapter = SmartAdapter.empty()
-                .map(Order.class, BookOrderListItemView.class)
-                .listener(this)
-                .into(mAppointmentList);
-        mAppointmentList.setPullRefreshEnabled(true);
-        mAppointmentList.setLoadingMoreEnabled(false);
-        mAppointmentList.setLoadingListener(new XRecyclerView.LoadingListener() {
+        mApppointAdapter = new AppointMentAdapter();
+        mAppointmentList.setAdapter(mApppointAdapter);
+        /*mAppointmentList.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
                 int checkedRadioButtonId = mTabIndicator.getCheckedRadioButtonId();
@@ -113,7 +101,7 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
             @Override
             public void onLoadMore() {
             }
-        });
+        });*/
         //订单tab切换
         mTabIndicator.setOnCheckedChangeListener((radioGroup, checkedId) -> {
             for (int i = 0; i < radioGroup.getChildCount(); i++) {
@@ -123,7 +111,7 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
                     changeTabStyle(checkedId, tab);
                 }
             }
-            mAppointmentList.refreshComplete();
+//            mAppointmentList.refreshComplete();
             if (checkedId == R.id.tab_shunfeng) {
                 presenter.getShunfengOrder();
             } else if (checkedId == R.id.tab_hall) {
@@ -140,7 +128,55 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
                 mTabTips.setText(R.string.tips_appointment_unfinished);
             }
         });
+        onevent();
         presenter.getShunfengOrder(); // 初始显示预约大厅
+    }
+
+    private void onevent() {
+        mApppointAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            Order order = (Order) adapter.getData().get(position);
+            if (view.getId() == R.id.grab_order) {
+                List<String> orderDates = order.getOrderDates();
+                if (orderDates != null && orderDates.size() > 0) {
+                    ChoseDateDialog choseDateDialog = new ChoseDateDialog(this, orderDates);
+                    choseDateDialog.setCallBack(new ChoseDateCallBack() {
+                        @Override
+                        public void callBack(Map<Long, Boolean> map) {
+                            List<String> list = new ArrayList<>();
+                            for (Map.Entry<Long, Boolean> ma : map.entrySet()) {
+                                if (ma.getValue()) {
+                                    String ymd = DateFormatUtil.getTime(ma.getKey(), DateStyle.YYYY_MM_DD.getValue());
+                                    list.add(ymd + " 00:00:00");
+                                }
+                            }
+                            if (list.size() > 0) {
+                                choseDateDialog.dismiss();
+                                ClaimDialog dialog = new ClaimDialog(getContext(), order, map);
+                                dialog.setClaimListaner(new ClaimActionListener() {
+                                    @Override
+                                    public void onClaim() {
+                                        presenter.grabOrder(order, list);
+                                    }
+                                });
+                                dialog.showDialog();
+                            } else {
+                                ToastUtils.showLong(getContext(), "请选择送货日期");
+                            }
+                        }
+                    });
+                    choseDateDialog.show();
+                } else {
+                    ClaimDialog dialog = new ClaimDialog(this, order, null);
+                    dialog.setClaimListaner(new ClaimActionListener() {
+                        @Override
+                        public void onClaim() {
+                            presenter.grabOrder(order, new ArrayList<>());
+                        }
+                    });
+                    dialog.showDialog();
+                }
+            }
+        });
     }
 
     private void changeTabStyle(int checkedTabId, RadioButton tab) {
@@ -168,15 +204,14 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
     public void showAppointmentList(List<Order> unfinished, List<Order> finished) {
         int checkedTab = mTabIndicator.getCheckedRadioButtonId();
         if (checkedTab == R.id.tab_unfinished) {
-            mAppointmentAdapter.setItems(unfinished);
+            mApppointAdapter.setList(unfinished);
             checkOrdersEmpty(unfinished, R.id.tab_unfinished);
         } else if (checkedTab == R.id.tab_finished) {
-            mAppointmentAdapter.setItems(finished);
+            mApppointAdapter.setList(finished);
             checkOrdersEmpty(finished, R.id.tab_finished);
         } else {
             return;
         }
-        mAppointmentList.refreshComplete();
         scrollListToTop();
     }
 
@@ -212,9 +247,8 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
         if (mTabIndicator.getCheckedRadioButtonId() != R.id.tab_hall) {
             return;
         }
-        mAppointmentAdapter.setItems(orders);
+        mApppointAdapter.setList(orders);
         checkOrdersEmpty(orders, R.id.tab_hall);
-        mAppointmentList.refreshComplete();
         scrollListToTop();
     }
 
@@ -223,9 +257,8 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
         if (mTabIndicator.getCheckedRadioButtonId() != R.id.tab_children) {
             return;
         }
-        mAppointmentAdapter.setItems(childrenOrders);
+        mApppointAdapter.setList(childrenOrders);
         checkOrdersEmpty(childrenOrders, R.id.tab_children);
-        mAppointmentList.refreshComplete();
         scrollListToTop();
     }
 
@@ -234,9 +267,8 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
         if (mTabIndicator.getCheckedRadioButtonId() != R.id.tab_accessibility) {
             return;
         }
-        mAppointmentAdapter.setItems(accessibilityOrders);
+        mApppointAdapter.setList(accessibilityOrders);
         checkOrdersEmpty(accessibilityOrders, R.id.tab_accessibility);
-        mAppointmentList.refreshComplete();
         scrollListToTop();
     }
 
@@ -245,9 +277,8 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
         if (mTabIndicator.getCheckedRadioButtonId() != R.id.tab_shunfeng) {
             return;
         }
-        mAppointmentAdapter.setItems(shunfengOrders);
+        mApppointAdapter.setList(shunfengOrders);
         checkOrdersEmpty(shunfengOrders, R.id.tab_shunfeng);
-        mAppointmentList.refreshComplete();
         scrollListToTop();
     }
 
@@ -263,11 +294,9 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
 
     @Override
     public void onViewEvent(int actionType, Order order, int pos, View view) {
-        if (actionType == OrderClickArea.CONTACT_PASSENGER
-                || actionType == OrderClickArea.CONTACT_SEND_PASSENGER
+        if (actionType == OrderClickArea.CONTACT_SEND_PASSENGER
                 || actionType == OrderClickArea.CONTACT_RECEIVE_PASSENGER) {
             DialogUtils.showRealCallDialog(this, order.getUserInfo().getPhoneNum());
-
         } else if (actionType == OrderClickArea.ORDER_DETAILS) {
             OrderStatus status = OrderStatus.forStatus(order.getOrderStatus());
             if (status == OrderStatus.ORDER_STATUS_INIT) {
@@ -292,67 +321,9 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
                 OrderDetailActivity.go(getContext(), order.getOrderId());
             }
 
-        } else if (actionType == OrderClickArea.SHOW_IN_MAP) {
-            Intent intent = new Intent(getContext(), ShowInMapNewActivity.class);
-            intent.putExtra(ShowInMapNewActivity.EXTRA_GRAB_ENABLED, false);
-            AddressInfo start = order.getStartAddr();
-            intent.putExtra(ShowInMapNewActivity.ORDER_START_ADDR, start);
-            AddressInfo end = order.getEndAddr();
-            intent.putExtra(ShowInMapNewActivity.ORDER_END_ADDR, end);
-            startActivity(intent);
-
         } else if (actionType == BookOrderListItemView.ACTION_ORDER_DATES) {
 //            showOrderDates(order.getOrderDates());
 
-        } else if (actionType == BookOrderListItemView.ACTION_GRAB_ORDER) {
-           /* if (mGrabDialog == null) {
-                mGrabDialog = new GrabAppointmentDialog(getContext());
-            }
-            mGrabDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                @Override
-                public void onShow(DialogInterface dialog) {
-                    presenter.grabOrder(order);
-                }
-            });*/
-            List<String> orderDates = order.getOrderDates();
-            if (orderDates != null && orderDates.size() > 0) {
-                ChoseDateDialog choseDateDialog = new ChoseDateDialog(this, orderDates);
-                choseDateDialog.setCallBack(new ChoseDateCallBack() {
-                    @Override
-                    public void callBack(Map<Long, Boolean> map) {
-                        List<String> list = new ArrayList<>();
-                        for (Map.Entry<Long, Boolean> ma : map.entrySet()) {
-                            if (ma.getValue()) {
-                                String ymd = DateFormatUtil.getTime(ma.getKey(), DateStyle.YYYY_MM_DD.getValue());
-                                list.add(ymd + " 00:00:00");
-                            }
-                        }
-                        if (list.size()>0){
-                            choseDateDialog.dismiss();
-                            ClaimDialog dialog = new ClaimDialog(getContext(), order, map);
-                            dialog.setClaimListaner(new ClaimActionListener() {
-                                @Override
-                                public void onClaim() {
-                                    presenter.grabOrder(order, list);
-                                }
-                            });
-                            dialog.showDialog();
-                        }else {
-                            ToastUtils.showLong(getContext(), "请选择送货日期");
-                        }
-                    }
-                });
-                choseDateDialog.show();
-            } else {
-                ClaimDialog dialog = new ClaimDialog(this, order, null);
-                dialog.setClaimListaner(new ClaimActionListener() {
-                    @Override
-                    public void onClaim() {
-                        presenter.grabOrder(order, new ArrayList<>());
-                    }
-                });
-                dialog.showDialog();
-            }
         }
     }
 
@@ -389,7 +360,6 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
     protected void onDestroy() {
         super.onDestroy();
         if (mAppointmentList != null) {
-            mAppointmentList.destroy();
             mAppointmentList = null;
         }
         dismissGrabDialog();
