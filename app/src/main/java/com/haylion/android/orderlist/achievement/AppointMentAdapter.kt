@@ -82,30 +82,37 @@ class AppointMentAdapter : BaseQuickAdapter<Order, BaseViewHolder>(R.layout.book
         val tvOrderGetOn = holder.getView<TextView>(R.id.tv_get_on_addr)
         tvOrderGetOn.text = order.startAddr?.name
         val tvOrderGetOff = holder.getView<TextView>(R.id.tv_get_off_addr)
-        tvOrderGetOff.text = order.endAddr.name
+        tvOrderGetOff.text = order.endAddr?.name
 
-        var timeFormat: String = order.estimateArriveTime
+        val orderTimeTv = holder.getView<TextView>(R.id.tv_order_time)
+        var timeFormat: String ? = ""
+        if (order.orderType == Order.ORDER_TYPE_SHUNFENG){
+            timeFormat = order.estimateArriveTime
+        }else{
+            timeFormat = order.orderTime
+        }
         if (!TextUtils.isEmpty(timeFormat)) {
             if (order.isParentOrder) {
                 timeFormat = formatParentOrderDate(order.startTime, order.endTime)
             } else {
                 try {
-                    val milliSecond =
-                        BusinessUtils.stringToLong(order.orderTime, "yyyy-MM-dd HH:mm")
-                    timeFormat =
-                        BusinessUtils.getDateToStringIncludeYearWhenCrossYear(milliSecond, "")
+                    val milliSecond = BusinessUtils.stringToLong(order.orderTime, "yyyy-MM-dd HH:mm")
+                    timeFormat = BusinessUtils.getDateToStringIncludeYearWhenCrossYear(milliSecond, "")
                     Log.d("AppointAdapter", "order time, timeFormat: $timeFormat")
                 } catch (e: ParseException) {
                     e.printStackTrace()
                 }
             }
-            val orderTime = holder.getView<TextView>(R.id.tv_order_time)
-            orderTime?.text = "预约" + timeFormat + "送达"
+            if (order.orderType == Order.ORDER_TYPE_SHUNFENG){
+                orderTimeTv?.text = "预约" + timeFormat + "送达"
+            }else{
+                orderTimeTv?.text = timeFormat
+            }
         }
 
-        var startTime: String = order.startTime
-        val endTime: String = order.endTime
-        if (startTime != null && startTime == endTime) {
+        var startTime: String = order.startTime ?: ""
+        val endTime: String = order.endTime ?: ""
+        if (!startTime.isNullOrEmpty() && !endTime.isNullOrEmpty() && startTime == endTime) {
             startTime = "今日"
         }
         val orderStatus = holder.getView<TextView>(R.id.order_status)
@@ -123,20 +130,18 @@ class AppointMentAdapter : BaseQuickAdapter<Order, BaseViewHolder>(R.layout.book
         } else {
             val takeSpan = StringUtil.setTextPartSizeColor(
                 if (startTime == null) "" else "$startTime ",
-                order.getOrderTime(),
+                order.orderTime,
                 " 取货",
                 R.color.part_text_bg
             )
             orderStatus.text = takeSpan
             grabOrder.text = "抢单"
         }
-        orderStatus.visibility = View.VISIBLE
-        orderStatus.isClickable = false
         grabOrder.visibility = View.VISIBLE
 
         // 只有预约单大厅才显示“查看地图”
-        if (order.getOrderStatus() == OrderStatus.ORDER_STATUS_INIT.status) {
-            tvShowMap.setVisibility(View.VISIBLE)
+        if (order.orderStatus == OrderStatus.ORDER_STATUS_INIT.status) {
+            tvShowMap.visibility = View.VISIBLE
         } else {
 //            tvShowMap.setVisibility(GONE);
         }
@@ -162,6 +167,7 @@ class AppointMentAdapter : BaseQuickAdapter<Order, BaseViewHolder>(R.layout.book
                 override fun onRideRouteSearched(rideRouteResult: RideRouteResult, i: Int) {}
             })
         if (order.orderType == Order.ORDER_TYPE_SHUNFENG) {
+            orderStatus.visibility = View.VISIBLE
             val locationLat = SpUtils.getParam(Const.CUR_LATITUTE, "0") as String
             val locationLong = SpUtils.getParam(Const.CUR_LONGITUDE, "0") as String
             if (locationLat != "0" && locationLong != "0") {
@@ -198,6 +204,12 @@ class AppointMentAdapter : BaseQuickAdapter<Order, BaseViewHolder>(R.layout.book
             }
             val orderMoney = holder.getView<TextView>(R.id.order_money)
             orderMoney.text = (order.totalMoney / 100).toString()
+        }else{
+            orderStatus.visibility = View.GONE
+            val addressFromeTv = holder.getView<TextView>(R.id.tv_get_on_desc)
+            val addressDesTv = holder.getView<TextView>(R.id.tv_get_off_desc)
+            addressFromeTv.text = order.startAddr?.addressDetail
+            addressDesTv.text = order.endAddr?.addressDetail
         }
     }
 

@@ -2,6 +2,7 @@ package com.haylion.android.orderlist;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -81,27 +82,6 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
         setContentView(R.layout.activity_appointment_list);
         mApppointAdapter = new AppointMentAdapter();
         mAppointmentList.setAdapter(mApppointAdapter);
-        /*mAppointmentList.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
-                int checkedRadioButtonId = mTabIndicator.getCheckedRadioButtonId();
-                if (checkedRadioButtonId == R.id.tab_hall) {
-                    presenter.refreshAppointmentHall();
-                } else if (checkedRadioButtonId == R.id.tab_children) {
-                    presenter.refreshChildrenOrderCenter();
-                } else if (checkedRadioButtonId == R.id.tab_accessibility) {
-                    presenter.refreshAccessibilityOrder();
-                } else if (checkedRadioButtonId == R.id.tab_shunfeng) {
-                    presenter.refreshShunfengList();
-                } else {
-                    presenter.refreshAppointmentList();
-                }
-            }
-
-            @Override
-            public void onLoadMore() {
-            }
-        });*/
         //订单tab切换
         mTabIndicator.setOnCheckedChangeListener((radioGroup, checkedId) -> {
             for (int i = 0; i < radioGroup.getChildCount(); i++) {
@@ -136,44 +116,57 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
         mApppointAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             Order order = (Order) adapter.getData().get(position);
             if (view.getId() == R.id.grab_order) {
-                List<String> orderDates = order.getOrderDates();
-                if (orderDates != null && orderDates.size() > 0) {
-                    ChoseDateDialog choseDateDialog = new ChoseDateDialog(this, orderDates);
-                    choseDateDialog.setCallBack(new ChoseDateCallBack() {
-                        @Override
-                        public void callBack(Map<Long, Boolean> map) {
-                            List<String> list = new ArrayList<>();
-                            for (Map.Entry<Long, Boolean> ma : map.entrySet()) {
-                                if (ma.getValue()) {
-                                    String ymd = DateFormatUtil.getTime(ma.getKey(), DateStyle.YYYY_MM_DD.getValue());
-                                    list.add(ymd + " 00:00:00");
+                if (order.getOrderType() == Order.ORDER_TYPE_SHUNFENG){
+                    List<String> orderDates = order.getOrderDates();
+                    if (orderDates != null && orderDates.size() > 0) {
+                        ChoseDateDialog choseDateDialog = new ChoseDateDialog(this, orderDates);
+                        choseDateDialog.setCallBack(new ChoseDateCallBack() {
+                            @Override
+                            public void callBack(Map<Long, Boolean> map) {
+                                List<String> list = new ArrayList<>();
+                                for (Map.Entry<Long, Boolean> ma : map.entrySet()) {
+                                    if (ma.getValue()) {
+                                        String ymd = DateFormatUtil.getTime(ma.getKey(), DateStyle.YYYY_MM_DD.getValue());
+                                        list.add(ymd + " 00:00:00");
+                                    }
+                                }
+                                if (list.size() > 0) {
+                                    choseDateDialog.dismiss();
+                                    ClaimDialog dialog = new ClaimDialog(getContext(), order, map);
+                                    dialog.setClaimListaner(new ClaimActionListener() {
+                                        @Override
+                                        public void onClaim() {
+                                            presenter.grabOrder(order, list);
+                                        }
+                                    });
+                                    dialog.showDialog();
+                                } else {
+                                    ToastUtils.showLong(getContext(), "请选择送货日期");
                                 }
                             }
-                            if (list.size() > 0) {
-                                choseDateDialog.dismiss();
-                                ClaimDialog dialog = new ClaimDialog(getContext(), order, map);
-                                dialog.setClaimListaner(new ClaimActionListener() {
-                                    @Override
-                                    public void onClaim() {
-                                        presenter.grabOrder(order, list);
-                                    }
-                                });
-                                dialog.showDialog();
-                            } else {
-                                ToastUtils.showLong(getContext(), "请选择送货日期");
+                        });
+                        choseDateDialog.show();
+                    } else {
+                        ClaimDialog dialog = new ClaimDialog(this, order, null);
+                        dialog.setClaimListaner(new ClaimActionListener() {
+                            @Override
+                            public void onClaim() {
+                                presenter.grabOrder(order, new ArrayList<>());
                             }
-                        }
-                    });
-                    choseDateDialog.show();
-                } else {
-                    ClaimDialog dialog = new ClaimDialog(this, order, null);
-                    dialog.setClaimListaner(new ClaimActionListener() {
+                        });
+                        dialog.showDialog();
+                    }
+                }else {
+                    if (mGrabDialog == null) {
+                        mGrabDialog = new GrabAppointmentDialog(getContext());
+                    }
+                    mGrabDialog.setOnShowListener(new DialogInterface.OnShowListener() {
                         @Override
-                        public void onClaim() {
-                            presenter.grabOrder(order, new ArrayList<>());
+                        public void onShow(DialogInterface dialog) {
+                            presenter.grabOrder(order,new ArrayList<>());
                         }
                     });
-                    dialog.showDialog();
+                    mGrabDialog.show();
                 }
             }
         });
