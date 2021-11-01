@@ -131,6 +131,7 @@ import zhy.com.highlight.position.OnLeftPosCallback;
 import zhy.com.highlight.shape.RectLightShape;
 
 import static com.haylion.android.BuildConfig.APPLICATION_ID;
+import static com.haylion.android.data.model.Order.ORDER_TYPE_SHUNFENG;
 import static com.haylion.android.orderdetail.OrderDetailActivity.ORDER_ID;
 
 
@@ -1395,7 +1396,7 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
 
     @Override
     public void itemClick(Order order) {
-        if (order.isParentOrder() || order.getOrderType() == -1) {
+        if (order.isParentOrder() || order.getOrderType() == ORDER_TYPE_SHUNFENG) {
             Intent intent = new Intent(MainActivity.this, MultiDayDetailActivity.class);
             intent.putExtra(MultiDayDetailActivity.ORDER_ID, order.getOrderCode());
             startActivity(intent);
@@ -1690,7 +1691,8 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
                             ",朝向=" + var1.getBearing() + ",速度=" + var1.getSpeed());
                     EventBus.getDefault().post(var1);
                     OrderRepository repository = new OrderRepository();
-                    repository.gpsDriverUpdata(var1, new ApiSubscriber<Boolean>() {
+                    //上报司机位置
+                    /*repository.gpsDriverUpdata(var1, new ApiSubscriber<Boolean>() {
                         @Override
                         public void onSuccess(Boolean aBoolean) {
                             LogUtils.d(TAG, "上报位置成功");
@@ -1701,7 +1703,7 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
                             LogUtils.d(TAG, "上报位置失败,code = " + code + ",msg = " + msg);
 //                            toast("上报位置失败");
                         }
-                    });
+                    });*/
                 }
             });
         }

@@ -106,6 +106,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 
+import static com.haylion.android.data.model.Order.ORDER_TYPE_SHUNFENG;
+
 /**
  * 订单详情页
  */
@@ -460,7 +462,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
                         || order.getOrderType() == Order.ORDER_TYPE_CARGO_PASSENGER) {
                     //实时订单 or 货拼客单
                     handleRealTimeOrderSlide();
-                } else if (order.getOrderType() == -1) {//顺丰单
+                } else if (order.getOrderType() == ORDER_TYPE_SHUNFENG) {//顺丰单
                     slideview.reset();
                     int orderStatus = order.getOrderStatus();
                     Log.d("aaa", "addSlideListener orderStatus = " + orderStatus);
@@ -748,7 +750,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
 
         //地址信息卡片的展示
         refreshTitleright();
-        if (orderType == -1) {
+        if (orderType == ORDER_TYPE_SHUNFENG) {
             refreshTopView();
         } else {
             updateAddrInfoCardView();
@@ -1822,7 +1824,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
         if (carpoolFlag) {
             presenter.getCarpoolOrderDetails(carpoolCode);
         } else {
-            if (orderType == -1) {
+            if (orderType == ORDER_TYPE_SHUNFENG) {
                 presenter.getShunfengOrderDetail(orderId);
             } else {
                 presenter.getOrderDetail(orderId);
@@ -1900,7 +1902,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
             if (!TextUtils.isEmpty(order.getEstimatePickUpTime()) && order.getEstimatePickUpTime().length() > 11) {
                 String time;
                 if (order.getOrderType() == Order.ORDER_TYPE_BOOK ||
-                        order.getOrderType() == Order.ORDER_TYPE_ACCESSIBILITY) { // 增加无障碍订单
+                        order.getOrderType() == Order.ORDER_TYPE_ACCESSIBILITY) { // 增加女性专车订单
                     time = order.getOrderTime().split(" ")[1];
                 } else {
                     time = order.getEstimatePickUpTime().substring(11);
@@ -1929,7 +1931,6 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
         } else {
             llOrderTips.setVisibility(View.GONE);
         }
-        //联系电话
         if (!TextUtils.isEmpty(order.getUserInfo().getPhoneNum())) {
             if (order.getUserInfo().getPhoneNum().length() > 7) {
                 tvRealtimeContactNumber.setText(order.getUserInfo().getPhoneNum().substring(7));
@@ -1940,7 +1941,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
     }
 
     private void refreshTitleright() {
-        if (orderType == -1) {
+        if (orderType == ORDER_TYPE_SHUNFENG) {
             tvTitleRight.setVisibility(View.GONE);
         } else {
             tvTitleRight.setVisibility(View.VISIBLE);

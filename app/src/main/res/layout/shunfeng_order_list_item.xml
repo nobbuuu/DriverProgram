@@ -6,18 +6,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardElevation="4dp"
+    android:background="@drawable/bg_white_r6"
+    android:layout_marginLeft="@dimen/dp_10"
+    android:layout_marginRight="@dimen/dp_10"
+    android:layout_marginTop="@dimen/dp_10"
     app:cardUseCompatPadding="true">
 
     <TextView
         android:id="@+id/order_status_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/dp_6"
-        android:paddingTop="@dimen/dp_8"
-        android:paddingBottom="@dimen/dp_8"
-        android:text="标题"
-        android:textColor="@color/maas_text_light_blue"
-        android:textSize="@dimen/sp_16" />
+        android:text="顺丰订单"
+        android:textColor="@color/color333"
+        android:layout_marginLeft="@dimen/dp_14"
+        android:layout_marginTop="@dimen/dp_19"
+        android:textStyle="bold"
+        android:textSize="@dimen/sp_14" />
 
     <RelativeLayout
         android:id="@+id/rl_order_content"
@@ -28,8 +32,7 @@
         <RelativeLayout
             android:id="@+id/rl_info_top"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/bg_shang">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/tv_order_time"
@@ -41,9 +44,9 @@
                 android:layout_toStartOf="@id/order_status"
                 android:drawableLeft="@mipmap/ic_time"
                 android:drawablePadding="@dimen/dp_6"
-                tools:text="今天 00:00"
+                android:text="预约00:00送达"
                 android:textColor="@color/maas_text_primary"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/sp_12" />
 
             <TextView
                 android:id="@+id/carpooling_order"
@@ -66,16 +69,14 @@
                 android:id="@+id/order_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="今日 14:30 取货"
+                android:textColor="#ff333333"
                 android:layout_alignBaseline="@+id/tv_order_time"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="16dp"
-                android:drawableEnd="@mipmap/arrow_huise"
-                android:drawablePadding="@dimen/dp_6"
                 android:gravity="center"
-                android:textColor="@color/maas_text_deep_gray"
-                android:textSize="@dimen/sp_14"
-                android:visibility="visible"
-                tools:text="订单状态" />
+                android:textSize="@dimen/sp_11"
+                />
 
             <TextView
                 android:id="@+id/tv_child_names"
@@ -93,7 +94,7 @@
                 android:textStyle="bold"
                 android:visibility="gone" />
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/rl_address_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -102,69 +103,71 @@
                 android:layout_marginTop="@dimen/dp_15">
 
                 <TextView
-                    android:id="@+id/tv_get_on_addr"
-                    style="@style/text_bold_font_family"
-                    android:layout_width="match_parent"
+                    android:id="@+id/instance_fromme"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_toStartOf="@id/viewmap_tv"
-                    android:drawableLeft="@mipmap/ic_get_on"
-                    android:drawablePadding="@dimen/dp_6"
-                    android:text="出发地址"
-                    android:textColor="@color/maas_text_primary"
-                    android:textSize="@dimen/sp_16"
-                    android:textStyle="bold" />
+                    android:text="距你0km"
+                    android:textColor="#ff333333"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/dp_14"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:textSize="@dimen/sp_11"
+                    app:layout_constraintTop_toTopOf="@+id/tv_get_on_addr"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_get_on_addr"
+                    />
 
                 <TextView
-                    android:id="@+id/tv_get_on_desc"
-                    android:layout_width="match_parent"
+                    android:id="@+id/tv_get_on_addr"
+                    style="@style/text_bold_font_family"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_get_on_addr"
-                    android:layout_alignStart="@+id/tv_get_on_addr"
-                    android:layout_marginLeft="@dimen/dp_4"
-                    android:layout_marginTop="@dimen/dp_6"
-                    android:layout_toStartOf="@id/viewmap_tv"
-                    android:maxLines="2"
-                    android:paddingHorizontal="@dimen/dp_8"
-                    android:text="地址描述"
-                    android:textColor="@color/maas_text_gray"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@id/show_map"
+                    android:drawableLeft="@mipmap/ic_get_on"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/instance_fromme"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:drawablePadding="@dimen/dp_6"
+                    android:text="出发地址"
+                    android:textColor="@color/color333"
+                    android:layout_marginEnd="@dimen/dp_3"
                     android:textSize="@dimen/sp_14"
-                    android:visibility="visible" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_get_off_addr"
                     style="@style/text_bold_font_family"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_get_on_desc"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginTop="@dimen/dp_8"
-                    android:layout_toStartOf="@id/viewmap_tv"
+                    android:layout_marginTop="@dimen/dp_14"
                     android:drawableLeft="@mipmap/ic_get_off"
+                    app:layout_constraintTop_toBottomOf="@+id/instance_fromme"
+                    app:layout_constraintEnd_toStartOf="@+id/viewmap_tv"
                     android:drawablePadding="@dimen/dp_6"
+                    android:layout_marginEnd="@dimen/dp_3"
+                    app:layout_constraintStart_toStartOf="@+id/tv_get_on_addr"
                     android:text="到达地址"
                     android:textSize="@dimen/sp_16"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_get_off_desc"
-                    android:layout_width="match_parent"
+                    android:id="@+id/viewmap_tv"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_get_off_addr"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginLeft="@dimen/dp_4"
-                    android:layout_marginTop="@dimen/dp_6"
-                    android:layout_toStartOf="@id/viewmap_tv"
-                    android:maxLines="2"
-                    android:paddingHorizontal="@dimen/dp_8"
-                    android:paddingLeft="@dimen/dp_14"
-                    android:text="地址描述"
-                    android:textColor="@color/maas_text_gray"
-                    android:textSize="@dimen/sp_14"
-                    android:visibility="visible" />
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:drawableTop="@mipmap/viewmap"
+                    android:drawablePadding="@dimen/dp_3"
+                    android:text="查看地图"
+                    android:textColor="@color/color333"
+                    android:textSize="@dimen/sp_10"
+                    android:layout_marginEnd="@dimen/dp_14"
+                    android:clickable="true"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/instance_fromme" />
 
                 <TextView
-                    android:id="@+id/viewmap_tv"
+                    android:id="@+id/show_map"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -175,11 +178,14 @@
                     android:paddingTop="@dimen/dp_12"
                     android:paddingRight="@dimen/dp_8"
                     android:paddingBottom="@dimen/dp_12"
-                    android:text="查\n看\n地\n图"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/instance_fromme"
+                    android:text="查看地图"
                     android:textColor="@color/maas_text_blue"
                     android:textSize="@dimen/sp_14" />
 
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </RelativeLayout>
 
@@ -189,7 +195,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl_info_top"
             android:background="@mipmap/bg_middle"
-            android:visibility="visible">
+            android:visibility="gone">
 
         </RelativeLayout>
 
@@ -197,11 +203,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl_middle"
-            android:background="@mipmap/bg_bottom"
             android:orientation="vertical"
             android:paddingLeft="@dimen/dp_18"
             android:paddingRight="@dimen/dp_18"
-            android:paddingBottom="@dimen/dp_15">
+            android:paddingBottom="@dimen/dp_14">
 
             <RelativeLayout
                 android:id="@+id/rl_order_type"
@@ -296,6 +301,12 @@
             <!--                    android:textSize="@dimen/sp_14" />-->
             <!--            </RelativeLayout>-->
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/dp_19"
+                android:background="@color/color_divider"
+                android:layout_height="@dimen/dp_0_5"></View>
+
             <LinearLayout
                 android:id="@+id/ll_contact_info"
                 android:layout_width="match_parent"
@@ -303,27 +314,17 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLength="20"
-                    android:maxLines="2"
-                    android:text="行程预估"
-                    android:textColor="@color/maas_text_primary"
-                    android:textSize="@dimen/sp_14" />
-
-                <TextView
                     android:id="@+id/tv_total_distance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_toRightOf="@+id/tv_total_distance_fixed"
                     android:ellipsize="end"
-                    android:gravity="right"
                     android:maxLength="20"
                     android:maxLines="2"
-                    android:text="0.0公里"
-                    android:textColor="@color/maas_text_primary"
+                    android:text="取送距离0.0km"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:layout_marginBottom="@dimen/dp_15"
+                    android:textColor="@color/color333"
+                    android:textStyle="bold"
                     android:textSize="@dimen/sp_14" />
 
                 <Space
@@ -345,14 +346,13 @@
                     android:id="@+id/tv_contact_passenger"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/kuang_blue_round_2dp"
-                    android:drawableStart="@mipmap/ic_phone_blue"
+                    android:drawableStart="@mipmap/phone_ic"
                     android:drawablePadding="@dimen/dp_4"
                     android:paddingLeft="@dimen/dp_10"
                     android:paddingTop="@dimen/dp_2"
                     android:paddingRight="@dimen/dp_10"
                     android:paddingBottom="@dimen/dp_2"
-                    android:text="@string/order_contact_passenger"
+                    android:layout_gravity="center_vertical"
                     android:textColor="@color/maas_bg_blue"
                     android:textSize="@dimen/sp_14"
                     android:visibility="visible" />
@@ -407,16 +407,63 @@
                     android:visibility="gone" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/color_divider"
+                android:layout_height="@dimen/dp_0_5"></View>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/order_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="订单价格"
+                    android:textColor="@color/color333"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="@dimen/dp_18"
+                    android:textSize="@dimen/sp_14"
+                    />
+
+                <TextView
+                    android:id="@+id/price_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="元"
+                    android:textColor="@color/color333"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/order_price"
+                    app:layout_constraintBottom_toBottomOf="@+id/order_price"
+                    android:layout_alignParentRight="true"
+                    />
+
+                <TextView
+                    android:id="@+id/order_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="130.00"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintEnd_toStartOf="@+id/price_unit"
+                    app:layout_constraintTop_toTopOf="@+id/order_price"
+                    app:layout_constraintBottom_toBottomOf="@+id/order_price"
+                    android:layout_marginEnd="@dimen/dp_4"
+                    android:textStyle="bold"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
             <TextView
                 android:id="@+id/grab_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="8dp"
                 android:background="@drawable/button_selector"
                 android:gravity="center_horizontal"
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_14"
                 android:text="@string/action_grab_order"
                 android:textColor="@color/white"
                 android:textSize="18sp"

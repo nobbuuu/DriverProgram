@@ -18,7 +18,8 @@ public class Order {
     public static final int ORDER_TYPE_CARGO = 4; //货单
     public static final int ORDER_TYPE_CARGO_PASSENGER = 5; //货拼客中的客单
     public static final int ORDER_TYPE_SEND_CHILD = 6; // 送小孩上学单
-    public static final int ORDER_TYPE_ACCESSIBILITY = 7; // 无障碍订单
+    public static final int ORDER_TYPE_ACCESSIBILITY = 7; // 女性专车订单
+    public static final int ORDER_TYPE_SHUNFENG = 8; // 顺丰订单
     public static final int ORDER_TYPE_BOOK_CARPOOL = 99; //预约拼车，预留，暂时未用到
 
     //订单状态

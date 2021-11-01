@@ -230,7 +230,7 @@ public class MainPresenter extends BasePresenter<MainContract.View, OrderReposit
                 boolean firstRealTimeOrder = false;
                 boolean firstRealTimeCarpoolOrder = false;
                 boolean firstSendChildOrder = false;
-                boolean firstAccessibilityOrder = false; // 第一个无障碍订单标记
+                boolean firstAccessibilityOrder = false; // 第一个女性专车订单标记
                 orderForMainActivityList = orderForCargoAndPassenger.getPassengerList();
 
                 List<Order> orderList = new ArrayList<>();
@@ -626,7 +626,7 @@ public class MainPresenter extends BasePresenter<MainContract.View, OrderReposit
 
             @Override
             public void onError(int code, String msg) {
-                LogUtils.e("轮询无障碍订单出错：" + code + ", " + msg);
+                LogUtils.e("轮询女性专车订单出错：" + code + ", " + msg);
                 handleNewOrders(orders);
             }
         });
@@ -655,7 +655,7 @@ public class MainPresenter extends BasePresenter<MainContract.View, OrderReposit
                 if (firstNewOrder.getOrderType() == Order.ORDER_TYPE_SEND_CHILD) {
                     voiceContent = "有新的送你上学订单，请尽快到抢单池中抢单";
                 } else if (firstNewOrder.getOrderType() == Order.ORDER_TYPE_ACCESSIBILITY) {
-                    voiceContent = "有新的无障碍订单，请尽快到抢单池中抢单";
+                    voiceContent = "有新的女性专车订单，请尽快到抢单池中抢单";
                 } else {
                     voiceContent = "有新的预约单，请尽快到抢单池中抢单";
                 }

@@ -337,7 +337,7 @@
     <string name="tab_children_order">送你上学订单</string>
     <string name="tips_appointment_hall">所有的预约单都会显示在预约单大厅，需要您自行抢单</string>
     <string name="tab_appointment_unfinished">已抢预约单</string>
-    <string name="tab_accessibility">无障碍订单</string>
+    <string name="tab_accessibility">女性专车订单</string>
     <string name="tips_appointment_unfinished">已完成的预约单请到历史订单中查看，当日的预约单会显示在听单页</string>
     <string name="tab_appointment_finished">已完成</string>
 

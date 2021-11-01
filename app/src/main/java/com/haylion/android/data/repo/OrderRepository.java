@@ -477,7 +477,7 @@ public class OrderRepository extends BaseRepository {
     }
 
     /**
-     * 抢单池 - 无障碍订单
+     * 抢单池 - 女性专车订单
      *
      * @param callback 回调
      */
@@ -503,7 +503,7 @@ public class OrderRepository extends BaseRepository {
     }
 
     /**
-     * 抢无障碍订单
+     * 抢女性专车订单
      */
     public void grabAccessibilityOrder(String orderCode, boolean parentOrder, ApiSubscriber<Boolean> callback) {
         addDisposable(RetrofitHelper.getApi(OrderApi.class)

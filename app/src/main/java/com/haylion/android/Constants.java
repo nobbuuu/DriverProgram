@@ -74,7 +74,7 @@ public final class Constants {
         public final static int PHONE_NUMBER_EXISTS = 400320; // 已有其他司机使用该手机号
         public final static int PHONE_NUMBER_NO_CHANGE = 400319; // 新手机号和自己已有的手机号相同
 
-        public final static int ACCESSIBILITY_SERVICE_IS_DISABLED = 400324; // 未开通无障碍订单服务
+        public final static int ACCESSIBILITY_SERVICE_IS_DISABLED = 400324; // 未开通女性专车订单服务
 
     }
 

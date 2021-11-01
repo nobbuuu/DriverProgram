@@ -25,6 +25,8 @@ import java.text.ParseException;
 
 import butterknife.BindView;
 
+import static com.haylion.android.data.model.Order.ORDER_TYPE_SHUNFENG;
+
 public class OrderListItemView extends BaseItemView<Order> {
     private static final String TAG = "OrderListItemView";
 
@@ -103,7 +105,7 @@ public class OrderListItemView extends BaseItemView<Order> {
 
         //订单状态
         orderStatus.setText(OrderStatus.getOrderStatusText(order));
-        if (order.getOrderType() == -1){
+        if (order.getOrderType() == ORDER_TYPE_SHUNFENG){
             switch (order.getOrderStatus()){
 //                        待开始 = 0、待到店 = 1、待扫描=2、待取货签名=3、送货中=4、已完成=5
                 case 0:

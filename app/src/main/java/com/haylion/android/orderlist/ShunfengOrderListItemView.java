@@ -38,7 +38,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 
-public class BookOrderListItemView extends BaseItemView<Order> {
+public class ShunfengOrderListItemView extends BaseItemView<Order> {
     private static final String TAG = "OrderListItemView";
 
     @BindView(R.id.order_status)
@@ -58,6 +58,8 @@ public class BookOrderListItemView extends BaseItemView<Order> {
     TextView tvOrderGetOn;
     @BindView(R.id.tv_get_off_addr)
     TextView tvOrderGetOff;
+    @BindView(R.id.order_money)
+    TextView order_money;
 
     //预约订单的，为预约时间； 实时订单的，为下单时间
     @BindView(R.id.tv_order_time)
@@ -75,12 +77,15 @@ public class BookOrderListItemView extends BaseItemView<Order> {
     @BindView(R.id.tv_total_distance)
     TextView tvTotalDistance;
 
+    @BindView(R.id.instance_fromme)
+    TextView instance_fromme;
+
     @BindView(R.id.viewmap_tv)
     TextView tvShowMap;
     @BindView(R.id.grab_order)
     TextView grabOrder;
 
-    public BookOrderListItemView(Context context) {
+    public ShunfengOrderListItemView(Context context) {
         super(context);
     }
 
@@ -91,7 +96,7 @@ public class BookOrderListItemView extends BaseItemView<Order> {
 
     @Override
     public int getLayoutId() {
-        return R.layout.book_order_list_item;
+        return R.layout.shunfeng_order_list_item;
     }
 
     @Override
@@ -136,7 +141,7 @@ public class BookOrderListItemView extends BaseItemView<Order> {
 
         //订单时间信息
         //时间展示日期和小时信息
-        String timeFormat = order.getOrderTime();
+        String timeFormat = order.getEstimateArriveTime();
         if (!TextUtils.isEmpty(timeFormat)) {
             if (order.isParentOrder()) {
                 timeFormat = formatParentOrderDate(order.getStartTime(), order.getEndTime());
@@ -159,7 +164,7 @@ public class BookOrderListItemView extends BaseItemView<Order> {
         }
         List<String> orderDates = order.getOrderDates();
         if (orderDates != null && orderDates.size() > 0) {
-            SpannableString takeSpan = StringUtil.setTextPartSizeColor("每日 ", order.getEstimateArriveTime(), " 取货", R.color.part_text_bg);
+            SpannableString takeSpan = StringUtil.setTextPartSizeColor("每日 ", order.getOrderTime(), " 取货", R.color.part_text_bg);
             orderStatus.setText(takeSpan);
             grabOrder.setText("选择抢单日期");
         } else {
@@ -227,7 +232,7 @@ public class BookOrderListItemView extends BaseItemView<Order> {
             @Override
             public void onDriveRouteSearched(DriveRouteResult driveRouteResult, int i) {
                 float distance = driveRouteResult.getPaths().get(0).getDistance();
-                tvTotalDistance.setText(BusinessUtils.formatDistance(distance));
+                tvTotalDistance.setText("取送距离" + BusinessUtils.formatDistance(distance));
             }
 
             @Override
@@ -240,6 +245,35 @@ public class BookOrderListItemView extends BaseItemView<Order> {
 
             }
         });
+        String location_lat = (String) SpUtils.getParam(Const.CUR_LATITUTE, "0");
+        String location_long = (String) SpUtils.getParam(Const.CUR_LONGITUDE, "0");
+        if (!location_lat.equals("0") && !location_long.equals("0")) {
+            AmapUtils.caculateDistance(new LatLng(Double.valueOf(location_lat), Double.valueOf(location_long)), order.getStartAddr().getLatLng(), new RouteSearch.OnRouteSearchListener() {
+                @Override
+                public void onBusRouteSearched(BusRouteResult busRouteResult, int i) {
+
+                }
+
+                @Override
+                public void onDriveRouteSearched(DriveRouteResult driveRouteResult, int i) {
+                    float distance = driveRouteResult.getPaths().get(0).getDistance();
+                    if (instance_fromme != null){
+                        instance_fromme.setText("距你" + BusinessUtils.formatDistance(distance));
+                    }
+                }
+
+                @Override
+                public void onWalkRouteSearched(WalkRouteResult walkRouteResult, int i) {
+
+                }
+
+                @Override
+                public void onRideRouteSearched(RideRouteResult rideRouteResult, int i) {
+
+                }
+            });
+        }
+        order_money.setText(order.getTotalMoney() / 100 + "");
     }
 
     private void showOrderDates(List<String> orderDates) {

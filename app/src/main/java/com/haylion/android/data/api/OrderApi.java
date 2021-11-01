@@ -209,7 +209,7 @@ public interface OrderApi {
     Observable<BaseResponse<Boolean>> grabChildrenOrder(@Body OrderDto.GrabAppointmentRequest request);
 
     /**
-     * 抢单池 - 无障碍订单
+     * 抢单池 - 女性专车订单
      */
     @GET("/driver/waitingOrders/BarrierFreeCenter")
     Observable<BaseResponse<List<OrderForMainActivity>>> accessibilityOrderCenter();
@@ -221,7 +221,7 @@ public interface OrderApi {
     Observable<BaseResponse<List<ShunfengBean>>> getShunfengOrders();
 
     /**
-     * 抢无障碍订单
+     * 抢女性专车订单
      */
     @POST("/driver/get-barrier-free-order")
     Observable<BaseResponse<Boolean>> grabAccessibilityOrder(@Body OrderDto.GrabAppointmentRequest request);

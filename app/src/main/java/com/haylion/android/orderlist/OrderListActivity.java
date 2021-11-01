@@ -42,6 +42,8 @@ import io.nlopez.smartadapters.SmartAdapter;
 import io.nlopez.smartadapters.adapters.RecyclerMultiAdapter;
 import io.nlopez.smartadapters.utils.ViewEventListener;
 
+import static com.haylion.android.data.model.Order.ORDER_TYPE_SHUNFENG;
+
 
 /**
  * 订单列表页面
@@ -291,7 +293,7 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
 
     @Override
     public void onViewEvent(int actionType, Order order, int position, View view) {
-        if (order.getOrderType() == -1){
+        if (order.getOrderType() == ORDER_TYPE_SHUNFENG){
             switch (order.getOrderStatus()){
 //                        待开始 = 0、待到店 = 1、待扫描=2、待取货签名=3、送货中=4、已完成=5
                 case 0:

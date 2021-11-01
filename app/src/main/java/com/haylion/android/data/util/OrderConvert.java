@@ -52,18 +52,15 @@ public class OrderConvert {
         order.setOrderCode(orderForMainActivity.getOrderCode());
         //起点和终点
         AddressInfo start = new AddressInfo();
-        start.setLatLng(new LatLng(
-                orderForMainActivity.getOnLat(), orderForMainActivity.getOnLng()));
+        start.setLatLng(new LatLng(orderForMainActivity.getOnLat(), orderForMainActivity.getOnLng()));
         start.setName(orderForMainActivity.getOnLocation());
         start.setAddressDetail(orderForMainActivity.getOnLocationDescription());
 
         AddressInfo end = new AddressInfo();
-        end.setLatLng(new LatLng(
-                orderForMainActivity.getOffLat(), orderForMainActivity.getOffLng()));
+        end.setLatLng(new LatLng(orderForMainActivity.getOffLat(), orderForMainActivity.getOffLng()));
         end.setName(orderForMainActivity.getOffLocation());
         end.setAddressDetail(orderForMainActivity.getOffLocationDescription());
-        end.setLatLng(new LatLng(orderForMainActivity.getOffLat(),
-                orderForMainActivity.getOffLng()));
+        end.setLatLng(new LatLng(orderForMainActivity.getOffLat(), orderForMainActivity.getOffLng()));
 
         order.setStartAddr(start);
         order.setEndAddr(end);

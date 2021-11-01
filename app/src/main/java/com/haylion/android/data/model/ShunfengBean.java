@@ -2,6 +2,8 @@ package com.haylion.android.data.model;
 
 import java.util.List;
 
+import static com.haylion.android.data.model.Order.ORDER_TYPE_SHUNFENG;
+
 public class ShunfengBean {
 
     /**
@@ -58,7 +60,7 @@ public class ShunfengBean {
     private String startDate;
     private String endDate;
     private int price;
-    private int orderType = -1;
+    private int orderType = ORDER_TYPE_SHUNFENG;
     private List<GrabDateListBean> grabDateList;
 
     public int getDriverStatus() {

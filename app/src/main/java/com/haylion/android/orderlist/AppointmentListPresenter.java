@@ -23,6 +23,8 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.haylion.android.data.model.Order.ORDER_TYPE_SHUNFENG;
+
 public class AppointmentListPresenter extends BasePresenter<AppointmentListContract.View,
         OrderRepository> implements AppointmentListContract.Presenter {
 
@@ -38,7 +40,7 @@ public class AppointmentListPresenter extends BasePresenter<AppointmentListContr
     private List<Order> mChildrenOrders = null;
 
     /**
-     * 无障碍订单
+     * 女性专车订单
      */
     private List<Order> mAccessibilityOrders = null;
 
@@ -201,7 +203,7 @@ public class AppointmentListPresenter extends BasePresenter<AppointmentListContr
         } else if (orderType == Order.ORDER_TYPE_ACCESSIBILITY) {
             repo.grabAccessibilityOrder(orderCode,
                     order.isParentOrder(), new GrabOrderCallback(orderType));
-        } else if (orderType == -1){
+        } else if (orderType == ORDER_TYPE_SHUNFENG){
             ClaimBean claimBean = new ClaimBean(order.getOrderId(), chosedDates);
             String paramJson = new Gson().toJson(claimBean);
             Log.d("aaa","paramJson = " + paramJson);
@@ -261,7 +263,7 @@ public class AppointmentListPresenter extends BasePresenter<AppointmentListContr
         public void onError(int code, String msg) {
             view.dismissGrabDialog();
             if (code == Constants.ErrorCode.ACCESSIBILITY_SERVICE_IS_DISABLED) {
-                toast("未开通无障碍订单功能");
+                toast("未开通女性专车订单功能");
             } else {
                 toast("抢单出错");
             }
@@ -339,8 +341,8 @@ public class AppointmentListPresenter extends BasePresenter<AppointmentListContr
 
             @Override
             public void onError(int code, String msg) {
-                toast("获取无障碍订单失败");
-                LogUtils.e("获取无障碍订单出错：" + code + ", " + msg);
+                toast("获取女性专车订单失败");
+                LogUtils.e("获取女性专车订单出错：" + code + ", " + msg);
                 view.showAccessibilityOrders(mAccessibilityOrders);
             }
         });
