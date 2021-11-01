@@ -1213,6 +1213,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
                 || (status == Order.ORDER_STATUS_WAIT_PAY)
                 || (status == Order.ORDER_STATUS_CLOSED)
                 || (status == Order.ORDER_STATUS_READY)
+                || (status == Order.ORDER_STATUS_UNSTART)
                 || (status == Order.ORDER_STATUS_INIT)) {
             if (carpoolFlag) { // 拼车单需设置途径点
                 if (presenter.isCarpoolOrderStared()) {
@@ -1890,9 +1891,6 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
      * 处理 实时订单/货拼客单 的显示
      */
     private void updateRealTimeOrderView() {
-        if (orderType == -1) {
-
-        }
         handler.removeMessages(HANDLER_MSG_WAITING_PASSENGER_COUNTING_TIME);
         refreshTitleright();
         //实时订单tips View
@@ -1932,16 +1930,6 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
             llOrderTips.setVisibility(View.GONE);
         }
         //联系电话
-        if (orderType == -1) {
-            rlRealtimeContact.setVisibility(View.GONE);
-            top_fra.setVisibility(View.VISIBLE);
-        } else {
-            rlRealtimeContact.setVisibility(View.VISIBLE);
-            top_fra.setVisibility(View.GONE);
-        }
-        if (order.getOrderStatus() == Order.ORDER_STATUS_GET_ON) {
-            rlRealtimeContact.setVisibility(View.GONE);
-        }
         if (!TextUtils.isEmpty(order.getUserInfo().getPhoneNum())) {
             if (order.getUserInfo().getPhoneNum().length() > 7) {
                 tvRealtimeContactNumber.setText(order.getUserInfo().getPhoneNum().substring(7));

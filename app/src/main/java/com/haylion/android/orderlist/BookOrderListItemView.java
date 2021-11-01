@@ -145,7 +145,7 @@ public class BookOrderListItemView extends BaseItemView<Order> {
 
         //订单时间信息
         //时间展示日期和小时信息
-        String timeFormat = order.getEstimateArriveTime();
+        String timeFormat = order.getOrderTime();
         if (!TextUtils.isEmpty(timeFormat)) {
             if (order.isParentOrder()) {
                 timeFormat = formatParentOrderDate(order.getStartTime(), order.getEndTime());
@@ -168,11 +168,11 @@ public class BookOrderListItemView extends BaseItemView<Order> {
         }
         List<String> orderDates = order.getOrderDates();
         if (orderDates != null && orderDates.size() > 0) {
-            SpannableString takeSpan = StringUtil.setTextPartSizeColor("每日 ", order.getOrderTime(), " 取货", R.color.part_text_bg);
+            SpannableString takeSpan = StringUtil.setTextPartSizeColor("每日 ", order.getEstimateArriveTime(), " 取货", R.color.part_text_bg);
             orderStatus.setText(takeSpan);
             grabOrder.setText("选择抢单日期");
         } else {
-            SpannableString takeSpan = StringUtil.setTextPartSizeColor(startTime + " ", order.getOrderTime(), " 取货", R.color.part_text_bg);
+            SpannableString takeSpan = StringUtil.setTextPartSizeColor(startTime + " ", order.getEstimateArriveTime(), " 取货", R.color.part_text_bg);
             orderStatus.setText(takeSpan);
             grabOrder.setText("抢单");
         }

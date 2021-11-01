@@ -225,7 +225,7 @@
                         android:ellipsize="end"
                         android:maxLength="20"
                         android:maxLines="2"
-                        android:text="取货电话（3位联系人）"
+                        android:text="取货电话"
                         android:textColor="@color/color333"
                         android:textSize="@dimen/sp_14"
                         android:textStyle="bold" />

@@ -46,6 +46,9 @@ public class ChoseDateDialog extends Dialog {
         ImageView pre_iv = findViewById(R.id.pre_iv);
         ImageView next_iv = findViewById(R.id.next_iv);
         calendar_view.setMarkDates(orderDates);
+        int curYear = Calendar.getInstance().get(Calendar.YEAR);
+        int curMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
+        date_title.setText(curYear + "-" + curMonth);
         calendar_view.setTitle(new CalendarView.TitleListener() {
             @Override
             public void setTitle(String titleStr, Calendar calendar) {
@@ -74,7 +77,7 @@ public class ChoseDateDialog extends Dialog {
         sure_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mCallBack != null){
+                if (mCallBack != null) {
                     mCallBack.callBack(calendar_view.getSelectMap());
                 }
             }

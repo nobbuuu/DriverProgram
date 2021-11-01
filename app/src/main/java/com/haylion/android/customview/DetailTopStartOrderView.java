@@ -117,6 +117,22 @@ public class DetailTopStartOrderView extends RelativeLayout {
             if (!TextUtils.isEmpty(pickupCode)) {
                 takecodeTv.setText("取货码：" + pickupCode);
             }
+            String mobile = order.getPickupContactMobile();
+            String mobile1 = order.getPickupContactMobile1();
+            String mobile2 = order.getPickupContactMobile2();
+            int sumBobile = 0;
+            if (mobile != null && !mobile.isEmpty()){
+                sumBobile++;
+            }
+            if (mobile1 != null && !mobile1.isEmpty()){
+                sumBobile++;
+            }
+            if (mobile2 != null && !mobile2.isEmpty()){
+                sumBobile++;
+            }
+            if (sumBobile != 0){
+                tvPhones.setText("取货电话（"+sumBobile+"位联系人）");
+            }
             String location_lat = (String) SpUtils.getParam(Const.CUR_LATITUTE, "0");
             String location_long = (String) SpUtils.getParam(Const.CUR_LONGITUDE, "0");
             if (!location_lat.equals("0") && !location_long.equals("0")) {

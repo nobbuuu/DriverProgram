@@ -230,10 +230,27 @@ public class PreScanActivity extends BaseActivity<PreSignContract.Presenter> imp
             });
             tvArriveAddr.setText(data.getDepotEndAddress());
             List<String> cargoList = data.getCargoList();
-            if (cargoList != null && cargoList.size()>0){
+            if (cargoList != null && cargoList.size() > 0) {
                 mGoodsList.addAll(cargoList);
                 mGoodsAdapter.notifyDataSetChanged();
                 goods_num.setText("货物列表（" + mGoodsList.size() + "）");
+            }
+            String mobile = mOrder.getPickupContactMobile();
+            String mobile1 = mOrder.getPickupContactMobile1();
+            String mobile2 = mOrder.getPickupContactMobile2();
+            int sumMobile = 0;
+            if (mobile != null && !mobile.isEmpty()) {
+                sumMobile++;
+            }
+            if (mobile1 != null && !mobile1.isEmpty()) {
+                sumMobile++;
+            }
+            if (mobile2 != null && !mobile2.isEmpty()) {
+                sumMobile++;
+            }
+
+            if (sumMobile != 0) {
+                phoneNumber1.setText("取货电话（" + sumMobile + "位联系人)");
             }
         }
     }
@@ -254,7 +271,7 @@ public class PreScanActivity extends BaseActivity<PreSignContract.Presenter> imp
                 startScanner();
                 break;
             case R.id.viewmap_tv:
-                if (mOrder != null){
+                if (mOrder != null) {
                     Intent intent = new Intent(getContext(), ShowInMapNewActivity.class);
                     intent.putExtra(ShowInMapNewActivity.EXTRA_GRAB_ENABLED, false);
                     AddressInfo start = mOrder.getStartAddr();
@@ -269,8 +286,8 @@ public class PreScanActivity extends BaseActivity<PreSignContract.Presenter> imp
                     String mobile = mOrder.getPickupContactMobile();
                     String mobile1 = mOrder.getPickupContactMobile1();
                     String mobile2 = mOrder.getPickupContactMobile2();
-                    if (mobile.isEmpty() && mobile1.isEmpty() && mobile2.isEmpty()){
-                        ToastUtils.showLong(getContext(),"暂无电话数据");
+                    if (mobile.isEmpty() && mobile1.isEmpty() && mobile2.isEmpty()) {
+                        ToastUtils.showLong(getContext(), "暂无电话数据");
                         return;
                     }
                     new ChoicePhoneDialog(getContext(), mOrder).show();

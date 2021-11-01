@@ -53,7 +53,7 @@ import io.nlopez.smartadapters.adapters.RecyclerMultiAdapter;
 import io.nlopez.smartadapters.utils.ViewEventListener;
 
 /**
- * 预约订单列表页面
+ * 抢单池页面
  */
 public class AppointmentListActivity extends BaseActivity<AppointmentListContract.Presenter>
         implements AppointmentListContract.View, ViewEventListener<Order> {

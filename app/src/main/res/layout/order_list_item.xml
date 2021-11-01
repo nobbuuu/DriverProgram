@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -40,7 +41,7 @@
                 android:drawableLeft="@mipmap/ic_time"
                 android:layout_marginTop="@dimen/dp_12"
                 android:drawablePadding="@dimen/dp_6"
-                android:text="今天 00:00"
+                tools:text="今天 00:00"
                 android:textColor="@color/maas_text_primary"
                 android:textSize="@dimen/sp_14" />
 

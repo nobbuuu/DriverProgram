@@ -98,15 +98,8 @@ public class OrderListItemView extends BaseItemView<Order> {
         //订单时间信息
         //时间展示日期和小时信息
         String time = order.getOrderTime();
-        String timeFormat;
-        try {
-            long milliSecond = BusinessUtils.stringToLong(time, "yyyy-MM-dd HH:mm");
-            timeFormat = BusinessUtils.getDateToStringIncludeYear(milliSecond, null);
-            Log.d(TAG, "" + "order time, timeFormat: " + timeFormat);
-            orderTime.setText(timeFormat);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Log.d(TAG,"orderTime = " + time);
+        orderTime.setText(time);
 
         //订单状态
         orderStatus.setText(OrderStatus.getOrderStatusText(order));

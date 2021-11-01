@@ -806,7 +806,7 @@ public class OrderConvert {
 //        order.setChannel(orderHistory.getChannel());
         if (orderHistory.getOrderType() == Order.ORDER_TYPE_BOOK
                 || orderHistory.getOrderType() == Order.ORDER_TYPE_SEND_CHILD) {
-//            order.setOrderTime(orderHistory.getAppointmentDate());
+            order.setOrderTime(orderHistory.getEndDate());
         } else {
             order.setOrderTime(orderHistory.getTakeTime());
         }

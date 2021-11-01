@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dp_22"
-                android:text="取货电话（3位联系人）"
+                android:text="取货电话"
                 android:textColor="@color/color333"
                 android:textSize="@dimen/sp_14" />
 

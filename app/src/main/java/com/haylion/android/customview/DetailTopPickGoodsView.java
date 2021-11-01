@@ -91,7 +91,7 @@ public class DetailTopPickGoodsView extends RelativeLayout {
         navTv.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                AMapNaviViewActivity.go(context, order.getOrderId());
+                AMapNaviViewActivity.go(context, order.getOrderId(),-1);
             }
         });
     }

@@ -29,6 +29,7 @@ public class Order {
     public static final int ORDER_STATUS_GET_ON = 4; //乘客已上车
     public static final int ORDER_STATUS_GET_OFF = 9; //乘客已下车
     public static final int ORDER_STATUS_WAIT_PAY = 2; // 待支付
+    public static final int ORDER_STATUS_UNSTART = 0; // 顺丰单未开始
 
     public static final int ORDER_STATUS_CLOSED = 1; //订单已完成
     public static final int ORDER_STATUS_CANCELED = 5; //订单已取消

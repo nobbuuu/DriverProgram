@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/bg_white_r13"
     android:gravity="center_horizontal"
     android:layout_marginLeft="@dimen/dp_14"
@@ -36,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_27"
             android:layout_marginRight="@dimen/dp_27"
-            android:text="2021-06"
+            tools:text="2021-06"
             android:textColor="@color/color333"
             android:textSize="@dimen/sp_17" />
 
