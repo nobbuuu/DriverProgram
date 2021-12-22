@@ -111,6 +111,8 @@
                     android:drawableLeft="@mipmap/ic_get_on"
                     android:drawablePadding="@dimen/dp_6"
                     android:text="出发地址"
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     android:textColor="@color/maas_text_primary"
                     android:textSize="@dimen/sp_16"
                     android:textStyle="bold" />
@@ -143,6 +145,8 @@
                     android:drawableLeft="@mipmap/ic_get_off"
                     android:drawablePadding="@dimen/dp_6"
                     android:text="到达地址"
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     android:textSize="@dimen/sp_16"
                     android:textStyle="bold" />
 

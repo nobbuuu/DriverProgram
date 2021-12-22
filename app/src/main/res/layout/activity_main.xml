@@ -193,7 +193,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
                             android:layout_marginLeft="@dimen/dp_2"
-                            android:text="小时"
+                            android:text="单"
                             android:textColor="#ff4b7efb"
                             android:textSize="11sp" />
                     </LinearLayout>

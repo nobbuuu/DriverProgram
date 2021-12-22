@@ -267,20 +267,17 @@ public class CalendarView extends LinearLayout implements OnTouchListener,
         gView1 = new CalendarGridView(mContext);
         tempSelected1.add(Calendar.MONTH, -1);
         gAdapter1 = new CalendarGridViewAdapter(mContext, tempSelected1, markDates, mSelectMap);
-        gAdapter1.setCurrentMonth(iMonthViewCurrentMonth-1);
         gView1.setAdapter(gAdapter1);// 设置菜单Adapter
         gView1.setId(calLayoutID);
 
         gView2 = new CalendarGridView(mContext);
         gAdapter = new CalendarGridViewAdapter(mContext, tempSelected2, markDates, mSelectMap);
-        gAdapter1.setCurrentMonth(iMonthViewCurrentMonth);
         gView2.setAdapter(gAdapter);// 设置菜单Adapter
         gView2.setId(calLayoutID);
 
         gView3 = new CalendarGridView(mContext);
         tempSelected3.add(Calendar.MONTH, 1);
         gAdapter3 = new CalendarGridViewAdapter(mContext, tempSelected3, markDates, mSelectMap);
-        gAdapter1.setCurrentMonth(iMonthViewCurrentMonth+1);
         gView3.setAdapter(gAdapter3);// 设置菜单Adapter
         gView3.setId(calLayoutID);
 

@@ -1700,7 +1700,7 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
                     EventBus.getDefault().post(var1);
                     OrderRepository repository = new OrderRepository();
                     //上报司机位置
-                    /*repository.gpsDriverUpdata(var1, new ApiSubscriber<Boolean>() {
+                    repository.gpsDriverUpdata(var1, new ApiSubscriber<Boolean>() {
                         @Override
                         public void onSuccess(Boolean aBoolean) {
                             LogUtils.d(TAG, "上报位置成功");
@@ -1711,7 +1711,7 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
                             LogUtils.d(TAG, "上报位置失败,code = " + code + ",msg = " + msg);
 //                            toast("上报位置失败");
                         }
-                    });*/
+                    });
                 }
             });
         }

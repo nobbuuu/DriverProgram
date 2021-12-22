@@ -61,7 +61,7 @@ public class IncomeListItemView extends BaseItemView<IncomeDetail> {
 
             if (income.getPaymentMode() != 3) {
                 //收入
-                tvType.setText("线上收益");
+                tvType.setText("线下收益");
                 tvIncome.setText("" + BusinessUtils.moneySpec(income.getAmount()) + "元");
                 tvIncome.setTextColor(getResources().getColor(R.color.text_blue));
             } else {

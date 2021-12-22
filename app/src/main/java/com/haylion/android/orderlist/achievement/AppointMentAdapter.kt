@@ -161,8 +161,7 @@ class AppointMentAdapter : BaseQuickAdapter<Order, BaseViewHolder>(R.layout.book
                             val distance = driveRouteResult.paths[0].distance
                             val instanceFromme = holder.getView<TextView>(R.id.instance_fromme)
                             instanceFromme?.let {
-                                instanceFromme.text =
-                                    "距你" + BusinessUtils.formatDistance(distance.toDouble())
+                                instanceFromme.text = "距你" + BusinessUtils.formatDistance(distance.toDouble())
                             }
                         }
 

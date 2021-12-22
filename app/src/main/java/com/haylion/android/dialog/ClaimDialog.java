@@ -41,10 +41,12 @@ import java.util.Map;
 
 public class ClaimDialog extends Dialog {
 
+    private TextView sureTv;
+
     public ClaimDialog(@NonNull Context context, Order order, Map<Long, Boolean> selectMap) {
         super(context, R.style.ActionSheetDialogStyle);
         setContentView(R.layout.dialog_claimorder);
-        TextView sureTv = findViewById(R.id.sure_tv);
+        sureTv = findViewById(R.id.sure_tv);
         TextView cancelTv = findViewById(R.id.cancel_tv);
         TextView tv_arrive = findViewById(R.id.tv_arrive);
         TextView taketime_tv = findViewById(R.id.taketime_tv);
@@ -105,7 +107,7 @@ public class ClaimDialog extends Dialog {
                     SpannableString takeSpan = StringUtil.setTextPartSizeColor("今日 ", order.getTakeTime(), " 取货", R.color.part_text_bg);
                     taketime_tv.setText(takeSpan);
                 } else {
-                    SpannableString takeSpan = StringUtil.setTextPartSizeColor(startTime+ " ", order.getTakeTime(), " 取货", R.color.part_text_bg);
+                    SpannableString takeSpan = StringUtil.setTextPartSizeColor(startTime + " ", order.getTakeTime(), " 取货", R.color.part_text_bg);
                     taketime_tv.setText(takeSpan);
                 }
             }
@@ -154,6 +156,7 @@ public class ClaimDialog extends Dialog {
         @Override
         public void run() {
             if (time > 0) {
+                sureTv.setText("确认抢单(" + time + "秒)");
                 time--;
                 mHandler.postDelayed(this, 1000);
             } else {

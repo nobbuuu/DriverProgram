@@ -99,14 +99,14 @@ public class OrderListItemView extends BaseItemView<Order> {
 
         //订单时间信息
         //时间展示日期和小时信息
-        String time = order.getOrderTime();
-        Log.d(TAG,"orderTime = " + time);
-        orderTime.setText(time);
+        String time = order.getDeliveryTime();
+        Log.d(TAG, "orderTime = " + time);
+        orderTime.setText(time + "送达");
 
         //订单状态
         orderStatus.setText(OrderStatus.getOrderStatusText(order));
-        if (order.getOrderType() == ORDER_TYPE_SHUNFENG){
-            switch (order.getOrderStatus()){
+        if (order.getOrderType() == ORDER_TYPE_SHUNFENG) {
+            switch (order.getOrderStatus()) {
 //                        待开始 = 0、待到店 = 1、待扫描=2、待取货签名=3、送货中=4、已完成=5
                 case 0:
                     orderStatus.setText("待开始");
@@ -127,7 +127,7 @@ public class OrderListItemView extends BaseItemView<Order> {
         //订单类型展示
         String orderTypeText;
         int orderType = order.getOrderType();
-        Log.d("aaa","orderType = " + orderType);
+        Log.d("aaa", "orderType = " + orderType);
         orderTypeText = OrderTypeInfo.getStatusText(order.getOrderType(), order.getChannel());
         this.orderType.setText(orderTypeText);
         this.orderType.setVisibility(VISIBLE);

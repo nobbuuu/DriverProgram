@@ -129,6 +129,7 @@
             android:button="@null"
             android:drawablePadding="5dp"
             android:gravity="center"
+            android:visibility="gone"
             android:text="@string/tab_accessibility"
             android:textColor="@color/tab_text"
             android:textSize="@dimen/sp_16" />

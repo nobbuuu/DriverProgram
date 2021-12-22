@@ -31,7 +31,7 @@ public class CalendarGridViewAdapter extends BaseAdapter {
     private final static int DEFAULT_ID = 0xff0000;
     private Calendar calStartDate = Calendar.getInstance();// 当前显示的日历
     private Calendar calSelected = Calendar.getInstance(); // 选择的日历
-    private int currentMonth = 0;
+    private String currentMonth = "";
     private int firstDays;
     private Map<Long, Boolean> mMap;
     /**
@@ -100,10 +100,6 @@ public class CalendarGridViewAdapter extends BaseAdapter {
 //        calenderMainPresenter.getCalenders(userId, starDate + Const.startTime, endDate + Const.endTime);
     }
 
-    public void setCurrentMonth(int curMonth){
-        currentMonth = curMonth;
-    }
-
     public CalendarGridViewAdapter(Context context) {
         this.mContext = context;
     }
@@ -155,7 +151,11 @@ public class CalendarGridViewAdapter extends BaseAdapter {
         textDay.setGravity(Gravity.CENTER);
         int day = myDate.getDate(); // 日期
 
-        int month = calCalendar.get(Calendar.MONTH);
+        if (day == 1 && currentMonth.isEmpty()) {
+            long time = calCalendar.getTime().getTime();
+            String mm = DateFormatUtil.getTime(time, "MM");
+            currentMonth = mm;
+        }
         long time = calCalendar.getTime().getTime();
         /*if (mm.equals(currentMonth)) {
             textDay.setTextColor(Color.BLACK);
@@ -170,13 +170,14 @@ public class CalendarGridViewAdapter extends BaseAdapter {
                 if (date.contains(" ")) {
                     String[] tempArry = date.split(" ");
                     Log.d("aaa", "net_date = " + tempArry[0]);
-                    if (tempArry[0].equals(curDate)) {
+                    String[] ymd = tempArry[0].split("-");
+                    if (tempArry[0].equals(curDate) && currentMonth.equals(ymd[1])) {
                         dataBean.setBlack(true);
                         break;
                     }
                 }
             }
-            if (dataBean.isBlack() && month == currentMonth) {
+            if (dataBean.isBlack()) {
                 textDay.setTextColor(Color.BLACK);
             } else {
                 textDay.setTextColor(ResourcesUtils.getColor(R.color.cldcontent));
