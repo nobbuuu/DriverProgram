@@ -154,8 +154,8 @@ public class OrderConvert {
         order.setOrderStatus(shunfengOrder.getDriverStatus());
 //        order.setOrderSubStatus(shunfengOrder.getOrderSubStatus());
 //        order.setEstimateArriveTime(shunfengOrder.getEstimateArriveTime());
-        order.setOrderTime(shunfengOrder.getTakeTime());
-        order.setEstimateArriveTime(shunfengOrder.getDeliveryTime());//订单送达时间
+        order.setTakeTime(shunfengOrder.getTakeTime());
+        order.setDeliveryTime(shunfengOrder.getDeliveryTime());
 
         //费用
         order.setTotalMoney(shunfengOrder.getPrice());
@@ -326,11 +326,12 @@ public class OrderConvert {
 //        order.setCargoOrderId(orderDetail.getCargoOrderId());
 
         //订单类型和时间
-        order.setOrderType(-1);
+        order.setOrderType(Order.ORDER_TYPE_SHUNFENG);
 //        order.setChannel(orderDetail.getChannel());
         order.setOrderStatus(orderDetail.getDriverStatus());
 //        order.setOrderSubStatus(orderDetail.getOrderSubStatus());
-        order.setOrderTime(orderDetail.getTakeTime());
+        order.setTakeTime(orderDetail.getTakeTime());
+        order.setDeliveryTime(orderDetail.getDeliveryTime());
 
         //起点和终点
         AddressInfo start = new AddressInfo();
@@ -355,6 +356,9 @@ public class OrderConvert {
         userInfo.setPhoneNum(orderDetail.getDepotStartPhone1());
         userInfo.setPhoneNum2(orderDetail.getDepotStartPhone2());
         userInfo.setPhoneNum3(orderDetail.getDepotStartPhone3());
+        userInfo.setReceivePhone1(orderDetail.getDepotEndPhone1());
+        userInfo.setReceivePhone2(orderDetail.getDepotEndPhone2());
+        userInfo.setReceivePhone3(orderDetail.getDepotEndPhone3());
         order.setUserInfo(userInfo);
 //        order.setPassengerNum(orderDetail.getPassengerNum());
 
@@ -659,8 +663,8 @@ public class OrderConvert {
         //订单类型和时间
         order.setOrderType(newOrder.getOrderType());
 //        order.setChannel(newOrder.getChannel());
-        order.setEstimateArriveTime(newOrder.getDeliveryTime());
-        order.setOrderTime(newOrder.getTakeTime());
+        order.setTakeTime(newOrder.getTakeTime());
+        order.setDeliveryTime(newOrder.getDeliveryTime());
 //        order.setDistance(newOrder.getTotalDistance());
 
         //货单，预计剩余时间
@@ -799,13 +803,15 @@ public class OrderConvert {
 //        order.setOrderSubStatus(orderHistory.getOrderSubStatus());
 
         //订单类型和时间
-        order.setOrderType(-1);
+        order.setOrderType(Order.ORDER_TYPE_SHUNFENG);
 //        order.setChannel(orderHistory.getChannel());
         if (orderHistory.getOrderType() == Order.ORDER_TYPE_BOOK
                 || orderHistory.getOrderType() == Order.ORDER_TYPE_SEND_CHILD) {
-            order.setOrderTime(orderHistory.getEndDate());
+            order.setDeliveryTime(orderHistory.getEndDate());
+            order.setTakeTime(orderHistory.getStartDate());
         } else {
-            order.setOrderTime(orderHistory.getTakeTime());
+            order.setDeliveryTime(orderHistory.getDeliveryTime());
+            order.setTakeTime(orderHistory.getTakeTime());
         }
 //        order.setTotalTime(orderHistory.get());
 

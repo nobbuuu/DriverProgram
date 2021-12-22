@@ -54,7 +54,7 @@ public class ClaimDialog extends Dialog {
         GridView claimdate_gv = findViewById(R.id.claimdate_gv);
         View line2 = findViewById(R.id.line2);
         if (order != null) {
-            tv_arrive.setText("预约" + order.getEstimateArriveTime() + "送达");
+            tv_arrive.setText("预约" + order.getDeliveryTime() + "送达");
             tv_start_address.setText(order.getStartAddr().getName());
             tv_end_address.setText(order.getEndAddr().getName());
             AmapUtils.caculateDistance(order.getStartAddr().getLatLng(), order.getEndAddr().getLatLng(), new RouteSearch.OnRouteSearchListener() {
@@ -94,7 +94,7 @@ public class ClaimDialog extends Dialog {
                     }
                     claimdate_gv.setAdapter(new ChosedDateAdapter(getContext(), dates, R.layout.gvitem_claimdate));
                 }
-                SpannableString takeSpan = StringUtil.setTextPartSizeColor("每日 ", order.getOrderTime(), " 取货", R.color.part_text_bg);
+                SpannableString takeSpan = StringUtil.setTextPartSizeColor("每日 ", order.getTakeTime(), " 取货", R.color.part_text_bg);
                 taketime_tv.setText(takeSpan);
             } else {
                 line2.setVisibility(View.GONE);
@@ -102,10 +102,10 @@ public class ClaimDialog extends Dialog {
                 String startTime = order.getStartTime();
                 String endTime = order.getEndTime();
                 if (startTime.equals(endTime)) {
-                    SpannableString takeSpan = StringUtil.setTextPartSizeColor("今日 ", order.getOrderTime(), " 取货", R.color.part_text_bg);
+                    SpannableString takeSpan = StringUtil.setTextPartSizeColor("今日 ", order.getTakeTime(), " 取货", R.color.part_text_bg);
                     taketime_tv.setText(takeSpan);
                 } else {
-                    SpannableString takeSpan = StringUtil.setTextPartSizeColor(startTime+ " ", order.getOrderTime(), " 取货", R.color.part_text_bg);
+                    SpannableString takeSpan = StringUtil.setTextPartSizeColor(startTime+ " ", order.getTakeTime(), " 取货", R.color.part_text_bg);
                     taketime_tv.setText(takeSpan);
                 }
             }

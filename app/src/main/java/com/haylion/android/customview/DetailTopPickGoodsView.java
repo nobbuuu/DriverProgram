@@ -1,6 +1,7 @@
 package com.haylion.android.customview;
 
 import android.content.Context;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.services.route.BusRouteResult;
@@ -21,8 +23,10 @@ import com.haylion.android.R;
 import com.haylion.android.common.Const;
 import com.haylion.android.data.model.Order;
 import com.haylion.android.data.util.BusinessUtils;
+import com.haylion.android.data.util.StringUtil;
 import com.haylion.android.orderdetail.amapNavi.AMapNaviViewActivity;
 import com.haylion.android.utils.AmapUtils;
+import com.haylion.android.utils.DateUtils;
 import com.haylion.android.utils.SpUtils;
 
 import butterknife.BindView;
@@ -45,6 +49,10 @@ public class DetailTopPickGoodsView extends RelativeLayout {
     TextView pickcodeTv;
     @BindView(R.id.nav_tv)
     TextView navTv;
+    @BindView(R.id.nav_tv1)
+    TextView navTv1;
+    @BindView(R.id.botLay)
+    ConstraintLayout botLay;
 
     public DetailTopPickGoodsView(Context context, Order order) {
         super(context);
@@ -67,7 +75,7 @@ public class DetailTopPickGoodsView extends RelativeLayout {
                         DrivePath drivePath = driveRouteResult.getPaths().get(0);
                         if (drivePath != null) {
                             float distance = drivePath.getDistance();
-                            remainTv.setText("剩余" + BusinessUtils.formatDistance(distance) + " " + AmapUtils.matchTime(drivePath.getDuration()));
+                            remainTv.setText("剩余" + BusinessUtils.formatDistance(distance) + " " + DateUtils.getTimeLenthStr(drivePath.getDuration() * 1000));
                         }
                     }
 
@@ -82,7 +90,16 @@ public class DetailTopPickGoodsView extends RelativeLayout {
                     }
                 });
             }
-            taketimeTip.setText("请在" + order.getOrderTime() + "前到达取货点");
+            if (order.getOrderStatus() == 1) {
+                SpannableString spannableString = StringUtil.setTextPartSizeColor("请在", order.getTakeTime(), "前到达取货点", R.color.part_text_bg);
+                taketimeTip.setText(spannableString);
+            }
+            if (order.getOrderStatus() == 4) {
+                SpannableString spannableString = StringUtil.setTextPartSizeColor("请在", order.getDeliveryTime(), "前送达", R.color.part_text_bg);
+                taketimeTip.setText(spannableString);
+                navTv.setVisibility(VISIBLE);
+                botLay.setVisibility(GONE);
+            }
             if (!TextUtils.isEmpty(order.getPickupCode())) {
                 pickcodeTv.setText("取货码：" + order.getPickupCode());
             }
@@ -91,7 +108,13 @@ public class DetailTopPickGoodsView extends RelativeLayout {
         navTv.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                AMapNaviViewActivity.go(context, order.getOrderId(),-1);
+                AMapNaviViewActivity.go(context, order.getOrderId(), Order.ORDER_TYPE_SHUNFENG);
+            }
+        });
+        navTv1.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AMapNaviViewActivity.go(context, order.getOrderId(), Order.ORDER_TYPE_SHUNFENG);
             }
         });
     }

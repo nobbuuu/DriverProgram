@@ -3,11 +3,42 @@ package com.haylion.android.data.model;
 public class UserInfo {
     private String name;
     private String nickName;
-    private String phoneNum; //真实的号码
-    private String phoneNum2; //真实的号码
-    private String phoneNum3; //真实的号码
+
+    //取货电话
+    private String phoneNum;
+    private String phoneNum2;
+    private String phoneNum3;
+
+    //收货电话
+    private String receivePhone1;
+    private String receivePhone2;
+    private String receivePhone3;
     private String virtualNum; //虚拟号码
 
+
+    public String getReceivePhone1() {
+        return receivePhone1;
+    }
+
+    public void setReceivePhone1(String receivePhone1) {
+        this.receivePhone1 = receivePhone1;
+    }
+
+    public String getReceivePhone2() {
+        return receivePhone2;
+    }
+
+    public void setReceivePhone2(String receivePhone2) {
+        this.receivePhone2 = receivePhone2;
+    }
+
+    public String getReceivePhone3() {
+        return receivePhone3;
+    }
+
+    public void setReceivePhone3(String receivePhone3) {
+        this.receivePhone3 = receivePhone3;
+    }
 
     public String getPhoneNum2() {
         return phoneNum2;

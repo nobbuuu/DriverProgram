@@ -100,15 +100,18 @@ public class DetailTopStartOrderView extends RelativeLayout {
         View view = inflate(context, R.layout.view_detail_top_startorder, this);
         ButterKnife.bind(this, view);
         if (order != null) {
-            tvArriveTime.setText("预约" + order.getEstimateArriveTime() + "送达");
+            tvArriveTime.setText("预约" + order.getDeliveryTime() + "送达");
             String startTime = order.getStartTime();
             String endTime = order.getEndTime();
             long l = System.currentTimeMillis();
             String curTime = DateFormatUtil.getTime(l, DateStyle.YYYY_MM_DD.getValue());
             if (startTime.equals(curTime)){
                 startTime = "今日";
+            }else {
+                String[] split = startTime.split(" ");
+                startTime = split[0];
             }
-            SpannableString takeSpan = StringUtil.setTextPartSizeColor(startTime + " ", order.getOrderTime() + " ", " 取货", R.color.part_text_bg);
+            SpannableString takeSpan = StringUtil.setTextPartSizeColor(startTime + " ", order.getTakeTime() + " ", " 取货", R.color.part_text_bg);
             taketimeTv.setText(takeSpan);
             tvStartAddr.setText(order.getStartAddr().getName());
             tvArriveAddr.setText(order.getEndAddr().getName());

@@ -35,14 +35,17 @@ public class MainShunfengAdapter extends RVBaseAdapter<Order> {
 
     @Override
     public void onBind(RVBaseHolder holder, Order order, int position) {
-        holder.setText(R.id.tv_order_time, "预约" + order.getEstimateArriveTime() + "送达");
+        holder.setText(R.id.tv_order_time, "预约" + order.getDeliveryTime() + "送达");
         String startTime = order.getStartTime();
         long l = System.currentTimeMillis();
         String curTime = DateFormatUtil.getTime(l, DateStyle.YYYY_MM_DD.getValue());
         if (startTime.equals(curTime)) {
             startTime = "今日";
+        }else {
+            String[] startSplit = startTime.split(" ");
+            startTime = startSplit[0];
         }
-        SpannableString takeSpan = StringUtil.setTextPartSizeColor(startTime + " ", order.getOrderTime(), " 取货", R.color.part_text_bg);
+        SpannableString takeSpan = StringUtil.setTextPartSizeColor(startTime + " ", order.getTakeTime(), " 取货", R.color.part_text_bg);
         TextView takeTv = holder.getView(R.id.order_status);
         takeTv.setText(takeSpan);
         holder.setText(R.id.tv_get_on_addr, order.getStartAddr().getName());

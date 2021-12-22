@@ -21,6 +21,7 @@ import com.haylion.android.common.aibus_location.data.GpsData;
 import com.haylion.android.common.view.StrokeTextView;
 import com.haylion.android.data.util.BusinessUtils;
 import com.haylion.android.data.util.StringUtil;
+import com.haylion.android.utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,18 +110,9 @@ public class AMapUtil {
             long estimateTime = drivePath.getDuration();
             Log.d("aaa", "duration = " + estimateTime);
             if (estimateTime > 60 * 60) {
-                long hour = estimateTime % (60 * 60);
-                long minutes = (estimateTime % (60 * 60)) / 60;
-                if (minutes == 0) {  //只显示小时
-                    costTime_tv.setText(String.valueOf(hour));
-                    unit_time.setText(" 小时");
-                } else {
-                    //显示小时和分钟
-                    SpannableString h = StringUtil.setTextPartSizeColor("", hour + "", " 小时", R.color.part_text_bg);
-                    SpannableString m = StringUtil.setTextPartSizeColor("", minutes + "", " 分钟", R.color.part_text_bg);
-                    costTime_tv.setText(h + "" + m);
-                    unit_time.setVisibility(View.GONE);
-                }
+                String timeLenthStr = DateUtils.getTimeLenthStr(estimateTime * 1000);
+                costTime_tv.setText(" "+timeLenthStr);
+                unit_time.setVisibility(View.GONE);
             } else if (estimateTime > 60) {  //只显示分钟
                 long minutes = estimateTime / 60;
                 costTime_tv.setText(" " + minutes + "");

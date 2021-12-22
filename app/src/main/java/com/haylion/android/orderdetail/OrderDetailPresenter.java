@@ -106,6 +106,7 @@ public class OrderDetailPresenter extends BasePresenter<OrderDetailContract.View
         });
     }
 
+    //获取顺丰订单详情
     @Override
     public void getShunfengOrderDetail(int orderId) {
         this.orderId = orderId;
@@ -164,7 +165,7 @@ public class OrderDetailPresenter extends BasePresenter<OrderDetailContract.View
         LogUtils.d(TAG, "changeOrderStatus:" + mOrder.getOrderStatus() + ",mOrder.getOrderType():"
                 + mOrder.getOrderType() + "cargoOrderId:" + cargoOrderId);
         int action;
-        if (mOrder.getOrderType() != -1) {
+        if (mOrder.getOrderType() != Order.ORDER_TYPE_SHUNFENG) {
             currentOrderStatus = mOrder.getOrderStatus();
             if (currentOrderStatus == Order.ORDER_STATUS_READY) { // 订单初始状态
                 if (mOrder.getOrderType() == Order.ORDER_TYPE_SEND_CHILD) {

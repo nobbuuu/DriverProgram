@@ -80,6 +80,7 @@ import com.haylion.android.service.FloatDialogService;
 import com.haylion.android.service.WsCommands;
 import com.haylion.android.uploadPhoto.UploadChildImgActivity;
 import com.haylion.android.utils.AmapUtils;
+import com.haylion.android.utils.PhoneUtils;
 import com.haylion.android.utils.SpUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -355,7 +356,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
      * @param context
      * @param orderId 订单id
      */
-    public static void go(Context context, int orderId,boolean isView) {
+    public static void go(Context context, int orderId, boolean isView) {
         Intent intent = new Intent(context, OrderDetailActivity.class);
         intent.putExtra(ORDER_ID, orderId);
         intent.putExtra(IS_VIEW, isView);
@@ -409,8 +410,8 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
             }
         } else {
             orderId = getIntent().getIntExtra(ORDER_ID, 0);
-            isView = getIntent().getBooleanExtra(IS_VIEW,false);
-            if (isView){
+            isView = getIntent().getBooleanExtra(IS_VIEW, false);
+            if (isView) {
                 slideview.setVisibility(View.GONE);
             }
             Log.d(TAG, "orderId = " + orderId);
@@ -437,6 +438,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
         }
 
         //初始化地图，必须保证有MapView
+        setEndMarkerTitle("取货地址");
         initMap(bundle);
         //设置导航地图样式
         mMapView.getMap().setMapType(AMap.MAP_TYPE_NAVI);
@@ -470,6 +472,10 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
                         case 0://待开始
                         case 1://待到店
                             presenter.changeOrderStatus(orderId, orderStatus + 1);
+                            break;
+                        case 4://送货中
+                            OrderPreSignActivity.go(getContext(), order.getOrderId());
+                            finish();
                             break;
                     }
 
@@ -924,10 +930,33 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
                     slideview.setBackgroundText(getResources().getString(R.string.slide_view_to_shop));
                     tvHeaderName.setText("取货中");
                     rlRealtimeContact.setVisibility(View.VISIBLE);
+                    String phoneNum = order.getUserInfo().getPhoneNum();
+                    if (!TextUtils.isEmpty(phoneNum)) {
+                        if (phoneNum.length() >= 11) {
+                            tvRealtimeContact.setText("取货电话：" + PhoneUtils.desensitizationPhone(phoneNum));
+                        } else {
+                            tvRealtimeContact.setText("取货电话：" + phoneNum);
+                        }
+                    }
                     break;
                 case 2:
                     PreScanActivity.go(getContext(), orderId);
                     finish();
+                    break;
+                case 4://送货中
+                    setEndMarkerTitle("送货地址");
+                    top_fra.addView(new DetailTopPickGoodsView(this, order));
+                    slideview.setBackgroundText(getResources().getString(R.string.slide_view_arrive));
+                    tvHeaderName.setText("送货中");
+                    rlRealtimeContact.setVisibility(View.VISIBLE);
+                    String receivePhone = order.getUserInfo().getReceivePhone1();
+                    if (!TextUtils.isEmpty(receivePhone)) {
+                        if (receivePhone.length() >= 11) {
+                            tvRealtimeContact.setText("收货电话：" + PhoneUtils.desensitizationPhone(receivePhone));
+                        } else {
+                            tvRealtimeContact.setText("收货电话：" + receivePhone);
+                        }
+                    }
                     break;
             }
         }
@@ -1251,7 +1280,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
             LogUtils.e(TAG, "订单状态异常,当前状态：" + status);
             return;
         }
-        if (order.getOrderStatus() == 2) {
+        if (order.getOrderStatus() == 2 || order.getOrderStatus() == 4) {
             mStartPoint = new LatLonPoint(order.getStartAddr().getLatLng().latitude, order.getStartAddr().getLatLng().longitude);
             mEndPoint = new LatLonPoint(endAddr.getLatLng().latitude, endAddr.getLatLng().longitude);
         } else {
@@ -1290,10 +1319,6 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
         Log.d("aaa", "changeShunFengOrderStatusSuccess status = " + status);
         startTime = System.currentTimeMillis();
         if (order != null) {
-            String phoneNum = order.getUserInfo().getPhoneNum();
-            if (!TextUtils.isEmpty(phoneNum) && phoneNum.length() >= 11) {
-                tvRealtimeContact.setText("取货电话：" + phoneNum.substring(0, 3) + "****" + phoneNum.substring(phoneNum.length() - 5, phoneNum.length() - 1));
-            }
             order.setOrderStatus(status);
         }
         refreshTopView();
@@ -1758,7 +1783,9 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
             @Override
             public void run() {
                 // Log.e(TAG, "zoomToSpan:llBottomView.height = " + llBottomView.getHeight() + ",height=" + SizeUtil.getScreenHeight(getContext()));
-                routeOverlay.zoomToSpan(200, 200, 300, llBottomView.getHeight());
+                if (routeOverlay != null){
+                    routeOverlay.zoomToSpan(200, 200, 300, llBottomView.getHeight());
+                }
             }
         });
     }

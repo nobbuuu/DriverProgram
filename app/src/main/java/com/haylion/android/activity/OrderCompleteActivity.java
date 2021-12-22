@@ -22,15 +22,21 @@ import com.amap.api.services.route.RouteSearch;
 import com.amap.api.services.route.WalkRouteResult;
 import com.haylion.android.R;
 import com.haylion.android.adapter.GoodsAdapter;
+import com.haylion.android.calendar.DateFormatUtil;
+import com.haylion.android.calendar.DateStyle;
+import com.haylion.android.calendar.DateUtil;
 import com.haylion.android.constract.PreSignContract;
 import com.haylion.android.data.base.BaseActivity;
+import com.haylion.android.data.bean.DateLenthBean;
 import com.haylion.android.data.bean.OrderDetailBean;
 import com.haylion.android.data.bean.PhoneBean;
 import com.haylion.android.data.util.BusinessUtils;
 import com.haylion.android.main.MainActivity;
 import com.haylion.android.presenter.PreSignPresenter;
 import com.haylion.android.utils.AmapUtils;
+import com.haylion.android.utils.DateUtils;
 
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -110,8 +116,28 @@ public class OrderCompleteActivity extends BaseActivity<PreSignContract.Presente
 
         tvStartAddr.setText(data.getDepotStartAddress());
         tvArriveAddr.setText(data.getDepotEndAddress());
-        tvArriveTime.setText(OrderPreSignActivity.arriveTime);
-        totalCost.setText(OrderPreSignActivity.totalTime);
+        String actualDeliveryTime = data.getActualDeliveryTime();
+        String actualBeginTime = data.getActualTakeTime();
+
+        if (TextUtils.isEmpty(actualDeliveryTime)) {
+            actualDeliveryTime = data.getDeliveryTime();
+        }
+        tvArriveTime.setText("送达时间：" + actualDeliveryTime);
+
+        if (TextUtils.isEmpty(actualBeginTime)) {
+            actualBeginTime = data.getTakeTime();
+        }
+        String startTimeReal = DateFormatUtil.getTime(new Date(), DateStyle.YYYY_MM_DD.getValue()) + " " + actualBeginTime;
+        Date starTime = DateFormatUtil.getTime(startTimeReal, "yyyy-MM-dd HH:mm");
+        String endTimeReal = DateFormatUtil.getTime(new Date(), DateStyle.YYYY_MM_DD.getValue()) + " " + actualDeliveryTime;
+        Date endTime = DateFormatUtil.getTime(endTimeReal, "yyyy-MM-dd HH:mm");
+        if (starTime != null && endTime != null) {
+            long timeCost = endTime.getTime() - starTime.getTime();
+            if (timeCost > 0) {
+                String timeLenth = DateUtils.getTimeLenthStr(timeCost);
+                totalCost.setText("订单耗时：" + timeLenth);
+            }
+        }
         List<String> cargoList = data.getCargoList();
         if (cargoList != null && cargoList.size() > 0) {
             Log.d("aaa", "carGoList.size = " + cargoList.size());

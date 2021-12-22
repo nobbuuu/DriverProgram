@@ -2,7 +2,7 @@ package com.haylion.android.data.model;
 
 public class OrderAbstract {
     private String date;
-    private int onlineTime;
+    private long onlineTime;
     private int orderCompletionCount;
     private double income;
     private boolean showMonthView; //显示用，用来判断是否需要显示header月份
@@ -23,11 +23,11 @@ public class OrderAbstract {
         return date;
     }
 
-    public void setOnlineTime(int onlineTime) {
+    public void setOnlineTime(long onlineTime) {
         this.onlineTime = onlineTime;
     }
 
-    public int getOnlineTime() {
+    public long getOnlineTime() {
         return onlineTime;
     }
 

@@ -3,6 +3,7 @@ package com.haylion.android.common.map;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amap.api.maps.AMap;
@@ -81,6 +82,7 @@ public class MaasTaxiOverlay extends RouteOverlay {
 
     private boolean isUpdateStartMarker = true;  //是否更新起点Marker
     private boolean isUpdateEndMarker = true;    //是否更新终点Marker
+    private String markerTitle = "取货地址";
 
     private List<LatLonPoint> mWayPoints;
     /**
@@ -102,6 +104,10 @@ public class MaasTaxiOverlay extends RouteOverlay {
     public MaasTaxiOverlay setColorFulLine(boolean colorFulLine) {
         isColorFulLine = colorFulLine;
         return this;
+    }
+
+    public void setEndMarkerTitle(String title){
+        markerTitle = title;
     }
 
     /**
@@ -249,6 +255,8 @@ public class MaasTaxiOverlay extends RouteOverlay {
         //终点
         if (isUpdateEndMarker) {
             View endMarkerView = AMapUtil.getEndMarkerView(mContext, resIdEnd, drivePath);
+            TextView titleTv = endMarkerView.findViewById(R.id.tv_marker_title);
+            titleTv.setText(markerTitle);
             if (endMarker != null) {
                 endMarker.remove();
             }

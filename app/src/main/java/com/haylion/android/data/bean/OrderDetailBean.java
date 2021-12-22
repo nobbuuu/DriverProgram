@@ -67,7 +67,7 @@ public class OrderDetailBean {
     private String depotStartConcat3;
     private String depotStartPhone3;
     private String takeTime;
-    private Object actualTakeTime;
+    private String actualTakeTime;
     private String depotEndName;
     private String depotEndAddress;
     private double depotEndLongitude;
@@ -86,8 +86,9 @@ public class OrderDetailBean {
     private double todaySumPrice;
     private String createTime;
     private String claimTime;
-    private Object beginTime;
-    private Object beginDate;
+    private String beginTime;
+    private String actualBeginTime;
+    private String beginDate;
     private int driverId;
     private String driverName;
     private String driverCarNumberStr;
@@ -95,6 +96,22 @@ public class OrderDetailBean {
     private Object complainList;
     private List<String> cargoList;
     private Object detailList;
+
+    public void setBeginTime(String beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    public String getActualBeginTime() {
+        return actualBeginTime;
+    }
+
+    public void setActualBeginTime(String actualBeginTime) {
+        this.actualBeginTime = actualBeginTime;
+    }
+
+    public void setBeginDate(String beginDate) {
+        this.beginDate = beginDate;
+    }
 
     public int getDriverStatus() {
         return driverStatus;
@@ -228,11 +245,11 @@ public class OrderDetailBean {
         this.takeTime = takeTime;
     }
 
-    public Object getActualTakeTime() {
+    public String getActualTakeTime() {
         return actualTakeTime;
     }
 
-    public void setActualTakeTime(Object actualTakeTime) {
+    public void setActualTakeTime(String actualTakeTime) {
         this.actualTakeTime = actualTakeTime;
     }
 
@@ -380,20 +397,12 @@ public class OrderDetailBean {
         this.claimTime = claimTime;
     }
 
-    public Object getBeginTime() {
+    public String getBeginTime() {
         return beginTime;
-    }
-
-    public void setBeginTime(Object beginTime) {
-        this.beginTime = beginTime;
     }
 
     public Object getBeginDate() {
         return beginDate;
-    }
-
-    public void setBeginDate(Object beginDate) {
-        this.beginDate = beginDate;
     }
 
     public int getDriverId() {

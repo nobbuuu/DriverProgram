@@ -152,6 +152,7 @@ public class ShowInMapNewActivity extends BaseMapActivity<ShowInMapContract.Pres
         setContentView(R.layout.show_in_map_act);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
+        setEndMarkerTitle("送货地址");
         initMap(savedInstanceState);
 
         tvTitle.setText(R.string.check_map);

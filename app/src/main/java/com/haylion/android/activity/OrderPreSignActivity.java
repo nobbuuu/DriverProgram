@@ -127,12 +127,28 @@ public class OrderPreSignActivity extends BaseActivity<PreSignContract.Presenter
         ordertimeTv.setText("订单耗时：" + matchTime);
         totalTime = ordertimeTv.getText().toString();
         carGoList = data.getCargoList();
-        Log.d("aaa","carGoList = " + carGoList);
+        Log.d("aaa", "carGoList = " + carGoList);
         if (carGoList != null && carGoList.size() > 0) {
-            Log.d("aaa","carGoList.size = " + carGoList.size());
+            Log.d("aaa", "carGoList.size = " + carGoList.size());
             goods_name.setText("货物列表（" + carGoList.size() + "）");
             GoodsAdapter mGoodsAdapter = new GoodsAdapter(this, carGoList, R.layout.rvitem_goods);
             goodsRv.setAdapter(mGoodsAdapter);
+        }
+        String mobile = mOrder.getPickupContactMobile();
+        String mobile1 = mOrder.getPickupContactMobile1();
+        String mobile2 = mOrder.getPickupContactMobile2();
+        List<String> phoneList = new ArrayList<>();
+        if (mobile != null && !mobile.isEmpty()) {
+            phoneList.add(mobile);
+        }
+        if (mobile1 != null && !mobile1.isEmpty()) {
+            phoneList.add(mobile1);
+        }
+        if (mobile2 != null && !mobile2.isEmpty()) {
+            phoneList.add(mobile2);
+        }
+        if (phoneList.size() > 0) {
+            phoneNumber1.setText("取货电话（" + phoneList.size() + "位联系人）");
         }
     }
 
@@ -153,8 +169,8 @@ public class OrderPreSignActivity extends BaseActivity<PreSignContract.Presenter
                     String mobile = mOrder.getPickupContactMobile();
                     String mobile1 = mOrder.getPickupContactMobile1();
                     String mobile2 = mOrder.getPickupContactMobile2();
-                    if (mobile.isEmpty() && mobile1.isEmpty() && mobile2.isEmpty()){
-                        ToastUtils.showLong(getContext(),"暂无电话数据");
+                    if (mobile.isEmpty() && mobile1.isEmpty() && mobile2.isEmpty()) {
+                        ToastUtils.showLong(getContext(), "暂无电话数据");
                         return;
                     }
                     new ChoicePhoneDialog(getContext(), mOrder).show();

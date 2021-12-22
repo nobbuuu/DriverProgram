@@ -85,30 +85,7 @@ class AppointMentAdapter : BaseQuickAdapter<Order, BaseViewHolder>(R.layout.book
         tvOrderGetOff.text = order.endAddr?.name
 
         val orderTimeTv = holder.getView<TextView>(R.id.tv_order_time)
-        var timeFormat: String ? = ""
-        if (order.orderType == Order.ORDER_TYPE_SHUNFENG){
-            timeFormat = order.estimateArriveTime
-        }else{
-            timeFormat = order.orderTime
-        }
-        if (!TextUtils.isEmpty(timeFormat)) {
-            if (order.isParentOrder) {
-                timeFormat = formatParentOrderDate(order.startTime, order.endTime)
-            } else {
-                try {
-                    val milliSecond = BusinessUtils.stringToLong(order.orderTime, "yyyy-MM-dd HH:mm")
-                    timeFormat = BusinessUtils.getDateToStringIncludeYearWhenCrossYear(milliSecond, "")
-                    Log.d("AppointAdapter", "order time, timeFormat: $timeFormat")
-                } catch (e: ParseException) {
-                    e.printStackTrace()
-                }
-            }
-            if (order.orderType == Order.ORDER_TYPE_SHUNFENG){
-                orderTimeTv?.text = "预约" + timeFormat + "送达"
-            }else{
-                orderTimeTv?.text = timeFormat
-            }
-        }
+        orderTimeTv?.text = "预约" + order.deliveryTime + "送达"
 
         var startTime: String = order.startTime ?: ""
         val endTime: String = order.endTime ?: ""
@@ -121,7 +98,7 @@ class AppointMentAdapter : BaseQuickAdapter<Order, BaseViewHolder>(R.layout.book
         if (orderDates != null && orderDates.size > 0) {
             val takeSpan = StringUtil.setTextPartSizeColor(
                 "每日 ",
-                order.orderTime,
+                order.takeTime,
                 " 取货",
                 R.color.part_text_bg
             )
@@ -130,7 +107,7 @@ class AppointMentAdapter : BaseQuickAdapter<Order, BaseViewHolder>(R.layout.book
         } else {
             val takeSpan = StringUtil.setTextPartSizeColor(
                 if (startTime == null) "" else "$startTime ",
-                order.orderTime,
+                order.takeTime,
                 " 取货",
                 R.color.part_text_bg
             )

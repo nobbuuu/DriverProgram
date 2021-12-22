@@ -298,14 +298,12 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
 //                        待开始 = 0、待到店 = 1、待扫描=2、待取货签名=3、送货中=4、已完成=5
                 case 0:
                 case 1:
-                    OrderDetailActivity.go(getContext(), order.getOrderId(),-1);
+                case 4:
+                    OrderDetailActivity.go(getContext(), order.getOrderId(), ORDER_TYPE_SHUNFENG);
                     break;
                 case 2:
                 case 3:
                     PreScanActivity.go(getContext(),order.getOrderId());
-                    break;
-                case 4:
-                    AMapNaviViewActivity.go(getContext(), order.getOrderId(), -1);
                     break;
                 case 5:
                     OrderCompleteActivity.go(getContext(), order.getOrderId(),2);

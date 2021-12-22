@@ -31,7 +31,7 @@ public class CalendarGridViewAdapter extends BaseAdapter {
     private final static int DEFAULT_ID = 0xff0000;
     private Calendar calStartDate = Calendar.getInstance();// 当前显示的日历
     private Calendar calSelected = Calendar.getInstance(); // 选择的日历
-    private String currentMonth = "";
+    private int currentMonth = 0;
     private int firstDays;
     private Map<Long, Boolean> mMap;
     /**
@@ -100,6 +100,10 @@ public class CalendarGridViewAdapter extends BaseAdapter {
 //        calenderMainPresenter.getCalenders(userId, starDate + Const.startTime, endDate + Const.endTime);
     }
 
+    public void setCurrentMonth(int curMonth){
+        currentMonth = curMonth;
+    }
+
     public CalendarGridViewAdapter(Context context) {
         this.mContext = context;
     }
@@ -151,15 +155,9 @@ public class CalendarGridViewAdapter extends BaseAdapter {
         textDay.setGravity(Gravity.CENTER);
         int day = myDate.getDate(); // 日期
 
-        if (day == 1 && currentMonth.isEmpty()) {
-            long time = calCalendar.getTime().getTime();
-            String mm = DateFormatUtil.getTime(time, "MM");
-            currentMonth = mm;
-        }
-
+        int month = calCalendar.get(Calendar.MONTH);
         long time = calCalendar.getTime().getTime();
-       /* String mm = DateFormatUtil.getTime(time, "MM");
-        if (mm.equals(currentMonth)) {
+        /*if (mm.equals(currentMonth)) {
             textDay.setTextColor(Color.BLACK);
         } else {
             textDay.setTextColor(ResourcesUtils.getColor(R.color.cldcontent));
@@ -178,7 +176,7 @@ public class CalendarGridViewAdapter extends BaseAdapter {
                     }
                 }
             }
-            if (dataBean.isBlack()) {
+            if (dataBean.isBlack() && month == currentMonth) {
                 textDay.setTextColor(Color.BLACK);
             } else {
                 textDay.setTextColor(ResourcesUtils.getColor(R.color.cldcontent));

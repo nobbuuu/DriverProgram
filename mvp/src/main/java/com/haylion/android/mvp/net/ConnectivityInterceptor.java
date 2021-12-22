@@ -12,7 +12,10 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
 import androidx.annotation.NonNull;
+
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
+import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 
@@ -27,8 +30,15 @@ public class ConnectivityInterceptor implements Interceptor {
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
         if (NetworkUtils.isConnected(context)) {
-
-            return chain.proceed(chain.request());
+            Request request = chain.request();
+            HttpUrl url = request.url();
+            if (url.toString().contains("account")) {
+                Request.Builder newBuilder = request.newBuilder();
+                HttpUrl.Builder builder = url.newBuilder();
+                builder.port(6660);
+                return chain.proceed(newBuilder.url(builder.build()).build());
+            }
+            return chain.proceed(request);
         } else {
             throw new NoConnectivityException();
         }
@@ -38,6 +48,7 @@ public class ConnectivityInterceptor implements Interceptor {
      * log拦截器
      */
     public HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(message -> {
+
 
         try {
             String text = URLDecoder.decode(message, "utf-8");

@@ -8,12 +8,16 @@ import com.haylion.android.BuildConfig;
 import com.haylion.android.data.repo.PrefserHelper;
 import com.haylion.android.mvp.net.RetrofitHelper;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class NetWorkUtils {
@@ -53,6 +57,18 @@ public class NetWorkUtils {
             // 然后返回一个response至此结束修改
             Log.e("hostUrl", "hostUrl = " + newFullUrl.toString());
             return chain.proceed(builder.url(newFullUrl).build());
+        }
+    }
+
+    public static RequestBody getRequestBody(File mFile) {
+        if (mFile != null) {
+            MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);//ParamKey.TOKEN 自定义参数key常量类，即参数名
+            RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), mFile);
+            builder.addFormDataPart("file", mFile.getName(), imageBody);//element 后台接收图片流的参数名
+            RequestBody part = builder.build();
+            return part;
+        } else {
+            return null;
         }
     }
 }

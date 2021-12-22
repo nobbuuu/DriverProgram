@@ -9,6 +9,7 @@ import java.util.Date;
  * Created by Administrator on 2017/6/2 0002.
  */
 public class DateFormatUtil {
+    public static final String YMD_HMS = "yyyy-MM-dd HH:mm:ss";
    public static String getTime(long time,String formatStr){
         SimpleDateFormat format=new SimpleDateFormat(formatStr);
         Date d1=new Date(time);

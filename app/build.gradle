@@ -71,9 +71,9 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled false
             pseudoLocalesEnabled true
-            buildConfigField "String", "API_URL", '"https://47.112.172.118:6670/"'
-//            buildConfigField "String", "API_URL", '"http://www.pcdd-maas.com/"'
-            buildConfigField "String", "API_WEBSOCKET_URL", '"wss://47.112.172.118:6670/ws/"'
+            buildConfigField "String", "API_URL", '"https://47.112.172.118:6663/"'
+            buildConfigField "String", "LOGIN_URL", '"https://47.112.172.118:6660/"'
+            buildConfigField "String", "API_WEBSOCKET_URL", '"wss://47.112.172.118:6663/ws/"'
             buildConfigField "String", "BUGLY_APP_ID", '"21c2f9d4b8"'
             //高德key
             manifestPlaceholders = [BAIDU_APPKEY_VALUE : '66b6cb4c82',
@@ -96,9 +96,10 @@ android {
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //外网地址
-//            buildConfigField "String", "API_URL", '"https://47.112.172.118:6663/"'
-            buildConfigField "String", "API_URL", '"http://www.pcdd-maas.com/"'
-            buildConfigField "String", "API_WEBSOCKET_URL", '"wss://47.112.172.118:6663/ws/"'
+            buildConfigField "String", "API_URL", '"https://47.112.172.118:6663/"'
+//            buildConfigField "String", "API_URL", '"http://www.pcdd-maas.com/"'
+            buildConfigField "String", "LOGIN_URL", '"https://47.112.172.118:6660/"'
+            buildConfigField "String", "API_WEBSOCKET_URL", '"wss://www.pcdd-maas.com/ws/"'
             buildConfigField "String", "BUGLY_APP_ID", '"63d85b1dfe"'
             //友盟推送
             buildConfigField "String", "UMENG_PUSH_APP_KEY", '"5de77025570df3004e00044a"'
@@ -262,7 +263,7 @@ dependencies {
 
     //adapter
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.10'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.31'
     implementation 'androidx.core:core-ktx:1.3.2'
 
     //日历

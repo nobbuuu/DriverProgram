@@ -1,5 +1,6 @@
 package com.haylion.android.data.repo;
 
+import com.haylion.android.BuildConfig;
 import com.haylion.android.data.api.OrderApi;
 import com.haylion.android.data.api.UploadApi;
 import com.haylion.android.data.bean.ChangeOrderStatusBean;
@@ -10,14 +11,21 @@ import com.haylion.android.mvp.base.BaseRepository;
 import com.haylion.android.mvp.net.RetrofitHelper;
 import com.haylion.android.mvp.rx.ApiSubscriber;
 import com.haylion.android.mvp.rx.ApiTransformer;
+import com.haylion.android.utils.SpUtils;
 
 import java.io.File;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
 
- /**
+import static com.haylion.android.data.util.NetWorkUtils.getRequestBody;
+
+/**
   * @class  UploadRepository
   * @description 文件上传
   * @date: 2019/9/25 10:11
@@ -42,6 +50,7 @@ public class UploadRepository extends BaseRepository {
                 .compose(new ApiTransformer<>())
                 .subscribeWith(callback));
     }
+
 
     /**
      * 插入小孩照片

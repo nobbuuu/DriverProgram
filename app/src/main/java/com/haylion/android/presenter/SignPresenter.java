@@ -64,7 +64,8 @@ public class SignPresenter extends BasePresenter<SignContract.View, UploadReposi
 
             @Override
             public void onError(int code, String msg) {
-
+                Log.e("netLog", "code = " + code + ";msg = " + msg);
+                toast(msg);
             }
         });
     }

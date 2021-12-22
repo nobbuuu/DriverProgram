@@ -80,6 +80,8 @@ public class Order {
     private String estimateArriveTime;  //预计货物送达时间 时间格式  YYYY-MM-DD hh:mm
     private String estimatePickUpTime;  //司机预计到达上车点时间  时间格式  YYYY-MM-DD hh:mm
     private String boardingPlaceArriveTime;  //司机实际达到上车点时间 时间格式  YYYY-MM-DD hh:mm
+    private String takeTime;  //取货时间
+    private String deliveryTime;  //货物送达时间
 
     private String sfOrderId;
     private String pickupContactName;   //取货人姓名 (司机去此人处取货)
@@ -132,6 +134,22 @@ public class Order {
      * 日期列表，多日预约订单增加字段
      */
     private List<String> orderDates;
+
+    public String getTakeTime() {
+        return takeTime;
+    }
+
+    public void setTakeTime(String takeTime) {
+        this.takeTime = takeTime;
+    }
+
+    public String getDeliveryTime() {
+        return deliveryTime;
+    }
+
+    public void setDeliveryTime(String deliveryTime) {
+        this.deliveryTime = deliveryTime;
+    }
 
     public String getBoardingPlaceArriveTime() {
         return boardingPlaceArriveTime;

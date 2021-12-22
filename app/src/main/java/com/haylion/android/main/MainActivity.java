@@ -54,6 +54,7 @@ import com.haylion.android.constract.ItemClickListener;
 import com.haylion.android.data.base.BaseActivity;
 import com.haylion.android.data.base.BaseDialog;
 import com.haylion.android.data.base.ConfirmDialog;
+import com.haylion.android.data.bean.DateLenthBean;
 import com.haylion.android.data.bean.ShunfengWaitBean;
 import com.haylion.android.data.event.VehicleSyncEvent;
 import com.haylion.android.data.model.AddressForSuggestLine;
@@ -103,6 +104,7 @@ import com.haylion.android.user.shift.ShiftInfoActivity;
 import com.haylion.android.user.vehicle.MyVehicleActivity;
 import com.haylion.android.user.wallet.MyWalletActivity;
 import com.haylion.android.utils.AmapUtils;
+import com.haylion.android.utils.DateUtils;
 import com.haylion.android.utils.SpUtils;
 import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
 import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
@@ -116,6 +118,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -156,6 +159,8 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
      */
     @BindView(R.id.tv_today_time)
     TextView tvTodayTime;
+    @BindView(R.id.unitTd)
+    TextView unitTd;
     @BindView(R.id.tv_today_order_number)
     TextView tvTodayOrderNumber;
     @BindView(R.id.iv_toady_order_detail)
@@ -688,7 +693,7 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
 
     @Override
     public void onShunfengOrders(List<Order> list) {
-        if (list != null && list.size() > 0){
+        if (list != null && list.size() > 0) {
             llOrderListIsNull.setVisibility(View.GONE);
 
             RecyclerView mShunfengListview = findViewById(R.id.myListView_shunfeng_order);
@@ -697,21 +702,21 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
             adapter.setItemClickListener(new ItemClickListener() {
                 @Override
                 public void onItemClick(Order order) {
-                    switch (order.getOrderStatus()){
+                    switch (order.getOrderStatus()) {
 //                        待开始 = 0、待到店 = 1、待扫描=2、待取货签名=3、送货中=4、已完成=5
                         case 0:
                         case 1:
-                            OrderDetailActivity.go(getContext(), order.getOrderId(),-1);
+                            OrderDetailActivity.go(getContext(), order.getOrderId(), ORDER_TYPE_SHUNFENG);
                             break;
                         case 2:
                         case 3:
-                            PreScanActivity.go(getContext(),order.getOrderId());
+                            PreScanActivity.go(getContext(), order.getOrderId());
                             break;
                         case 4:
-                            AMapNaviViewActivity.go(getContext(), order.getOrderId(), -1);
+                            AMapNaviViewActivity.go(getContext(), order.getOrderId(), ORDER_TYPE_SHUNFENG);
                             break;
                         case 5:
-                            OrderCompleteActivity.go(getContext(), order.getOrderId(),2);
+                            OrderCompleteActivity.go(getContext(), order.getOrderId(), 2);
                             break;
                     }
                 }
@@ -866,7 +871,10 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
             tvTodayOrderIncome.setText("0");
             return;
         }
-        tvTodayTime.setText("" + orderAbstract.getOnlineTime() / 3600 + "." + (orderAbstract.getOnlineTime() % 3600) / 60);
+        DateLenthBean timeLenth = DateUtils.getTimeLenth(orderAbstract.getOnlineTime());
+//        tvTodayTime.setText("" + orderAbstract.getOnlineTime() / 3600 + "." + (orderAbstract.getOnlineTime() % 3600) / 60);
+        tvTodayTime.setText(timeLenth.getTime() + "");
+        unitTd.setText(timeLenth.getUnit());
         tvTodayOrderNumber.setText("" + orderAbstract.getOrderCompletionCount());
         if (orderAbstract.getOrderCompletionCount() == 0) {
             ivTodayOrderDetail.setVisibility(View.INVISIBLE);

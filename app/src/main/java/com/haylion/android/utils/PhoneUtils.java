@@ -23,4 +23,35 @@ public class PhoneUtils {
         intent.setData(data);
         mContext.startActivity(intent);
     }
+
+    public static String desensitizationName(String name) {
+
+        if (name != null && !name.isEmpty()) {
+            if (name.length() > 2) {
+                String surnames = name.substring(0, 1);
+                String endWords = name.substring(name.length() - 1);
+                return surnames + "*" + endWords;
+
+            } else {
+                if (name.length() == 2) {
+                    String surnames = name.substring(0, 1);
+                    return surnames + "*";
+                } else {
+                    return name;
+                }
+
+            }
+        }
+
+        return name;
+    }
+
+    public static String desensitizationPhone(String phoneNum) {
+        if (phoneNum != null && phoneNum.length() >= 11) {
+            return phoneNum.substring(0, 3) + "****" + phoneNum.substring(phoneNum.length() - 4, phoneNum.length());
+        } else {
+            return phoneNum;
+        }
+    }
+
 }

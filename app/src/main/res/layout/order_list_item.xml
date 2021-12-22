@@ -212,7 +212,6 @@
                     android:layout_toRightOf="@+id/tv_order_number_fixed"
                     android:ellipsize="end"
                     android:gravity="right"
-                    android:maxLength="20"
                     android:maxLines="2"
                     android:text="0000 0000"
                     android:textSize="@dimen/sp_14" />

@@ -233,6 +233,7 @@ public class TripDetailActivity extends BaseMapActivity<TripContract.Presenter>
         tvTitle.setText(R.string.trip_detail);
         EventBus.getDefault().register(this);
         //初始化地图，此方法必须重写
+        setEndMarkerTitle("送货地址");
         initMap(savedInstanceState);
         initData();
     }

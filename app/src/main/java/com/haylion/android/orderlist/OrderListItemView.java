@@ -81,7 +81,7 @@ public class OrderListItemView extends BaseItemView<Order> {
 //        }
 
         //是否展示listview的头部信息
-        if (order.getOrderType() != -1 && order.getHeaderNameDisplay() != null && !("").equals(order.getHeaderNameDisplay())) {
+        if (order.getOrderType() != ORDER_TYPE_SHUNFENG && order.getHeaderNameDisplay() != null && !("").equals(order.getHeaderNameDisplay())) {
             tvOrderStatusHeader.setText(order.getHeaderNameDisplay());
             tvOrderStatusHeader.setVisibility(VISIBLE);
         } else {
