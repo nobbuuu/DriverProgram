@@ -24,6 +24,7 @@ import com.amap.api.services.route.WalkRouteResult;
 import com.google.zxing.Result;
 import com.haylion.android.R;
 import com.haylion.android.adapter.GoodsAdapter;
+import com.haylion.android.common.Const;
 import com.haylion.android.constract.PreSignContract;
 import com.haylion.android.data.base.BaseActivity;
 import com.haylion.android.data.bean.OrderDetailBean;
@@ -44,6 +45,7 @@ import com.haylion.android.presenter.PreSignPresenter;
 import com.haylion.android.scaner.OnRxScanerListener;
 import com.haylion.android.utils.AmapUtils;
 import com.haylion.android.utils.PhoneUtils;
+import com.haylion.android.utils.SpUtils;
 import com.king.zxing.CameraScan;
 import com.king.zxing.CaptureActivity;
 
@@ -204,7 +206,9 @@ public class PreScanActivity extends BaseActivity<PreSignContract.Presenter> imp
         if (data != null) {
             mOrder = OrderConvert.orderShunfengDetailToOrder(data);
             tvArriveTime.setText("预约" + data.getDeliveryTime() + "送达");
-            LatLng startLatLng = new LatLng(data.getDepotStartLatitude(), data.getDepotStartLongitude());
+            String latitute = (String) SpUtils.getParam(Const.CUR_LATITUTE, "0");
+            String longTitute = (String) SpUtils.getParam(Const.CUR_LONGITUDE, "0");
+            LatLng startLatLng = new LatLng(Double.valueOf(latitute), Double.valueOf(longTitute));
             LatLng endLatLng = new LatLng(data.getDepotEndLatitude(), data.getDepotEndLongitude());
             AmapUtils.caculateDistance(startLatLng, endLatLng, new RouteSearch.OnRouteSearchListener() {
                 @Override

@@ -141,21 +141,8 @@ public class ShunfengOrderListItemView extends BaseItemView<Order> {
 
         //订单时间信息
         //时间展示日期和小时信息
-        String timeFormat = order.getEstimateArriveTime();
-        if (!TextUtils.isEmpty(timeFormat)) {
-            if (order.isParentOrder()) {
-                timeFormat = formatParentOrderDate(order.getStartTime(), order.getEndTime());
-            } else {
-                try {
-                    long milliSecond = BusinessUtils.stringToLong(order.getOrderTime(), "yyyy-MM-dd HH:mm");
-                    timeFormat = BusinessUtils.getDateToStringIncludeYearWhenCrossYear(milliSecond, "");
-                    Log.d(TAG, "" + "order time, timeFormat: " + timeFormat);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-            orderTime.setText("预约" + timeFormat + "送达");
-        }
+        String timeFormat = order.getDeliveryTime();
+        orderTime.setText("预约" + timeFormat + "送达");
 
         String startTime = order.getStartTime();
         String endTime = order.getEndTime();
@@ -164,11 +151,11 @@ public class ShunfengOrderListItemView extends BaseItemView<Order> {
         }
         List<String> orderDates = order.getOrderDates();
         if (orderDates != null && orderDates.size() > 0) {
-            SpannableString takeSpan = StringUtil.setTextPartSizeColor("每日 ", order.getOrderTime(), " 取货", R.color.part_text_bg);
+            SpannableString takeSpan = StringUtil.setTextPartSizeColor("每日 ", order.getTakeTime(), " 取货", R.color.part_text_bg);
             orderStatus.setText(takeSpan);
             grabOrder.setText("选择抢单日期");
         } else {
-            SpannableString takeSpan = StringUtil.setTextPartSizeColor((startTime == null) ? "" : startTime + " ", order.getOrderTime(), " 取货", R.color.part_text_bg);
+            SpannableString takeSpan = StringUtil.setTextPartSizeColor((startTime == null) ? "" : startTime + " ", order.getTakeTime(), " 取货", R.color.part_text_bg);
             orderStatus.setText(takeSpan);
             grabOrder.setText("抢单");
         }
