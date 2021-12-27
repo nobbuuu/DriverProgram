@@ -22,10 +22,9 @@ public class OrderListContract {
         void loadMoreOrders();
 
 
-        void refreshOrderList();
+        void refreshOrderList(int orderType);
 
         void setOrderType(boolean showPassenger);
-        void getShunfengOrders();
 
     }
 

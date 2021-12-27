@@ -117,18 +117,12 @@ public class OrderCompleteActivity extends BaseActivity<PreSignContract.Presente
         tvStartAddr.setText(data.getDepotStartAddress());
         tvArriveAddr.setText(data.getDepotEndAddress());
         String actualDeliveryTime = data.getActualDeliveryTime();
-        String actualBeginTime = data.getActualTakeTime();
-
         if (TextUtils.isEmpty(actualDeliveryTime)) {
             actualDeliveryTime = data.getDeliveryTime();
         }
         tvArriveTime.setText("送达时间：" + actualDeliveryTime);
 
-        if (TextUtils.isEmpty(actualBeginTime)) {
-            actualBeginTime = data.getTakeTime();
-        }
-        String startTimeReal = DateFormatUtil.getTime(new Date(), DateStyle.YYYY_MM_DD.getValue()) + " " + actualBeginTime;
-        Date starTime = DateFormatUtil.getTime(startTimeReal, "yyyy-MM-dd HH:mm");
+        Date starTime = DateFormatUtil.getTime(data.getBeginTime(), "yyyy-MM-dd HH:mm:ss");
         String endTimeReal = DateFormatUtil.getTime(new Date(), DateStyle.YYYY_MM_DD.getValue()) + " " + actualDeliveryTime;
         Date endTime = DateFormatUtil.getTime(endTimeReal, "yyyy-MM-dd HH:mm");
         if (starTime != null && endTime != null) {

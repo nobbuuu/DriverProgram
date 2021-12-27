@@ -46,7 +46,11 @@ public class DateUtils {
             long minute = second / 60;
             if (minute < 60) {
                 long sSecond = second % 60;
-                buffer.append(minute + "分钟" + sSecond + "秒");
+                if (sSecond == 0){
+                    buffer.append(minute + "分钟");
+                }else {
+                    buffer.append(minute + "分钟" + sSecond + "秒");
+                }
             } else {
                 long hour = minute / 60;
                 if (hour < 24) {

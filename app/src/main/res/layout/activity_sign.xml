@@ -42,6 +42,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
+        android:id="@+id/signFra"
         android:layout_width="match_parent"
         android:layout_marginLeft="@dimen/dp_16"
         android:layout_marginRight="@dimen/dp_16"
@@ -58,5 +59,18 @@
             tools:ignore="MissingConstraints"></com.haylion.android.customview.SignatureView>
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/reSignTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_9"
+        android:text="重签"
+        android:textColor="#ff4b7efb"
+        android:textSize="@dimen/sp_15"
+        app:layout_constraintBottom_toBottomOf="@+id/signFra"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/signFra"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -111,7 +111,7 @@ public class AMapUtil {
             Log.d("aaa", "duration = " + estimateTime);
             if (estimateTime > 60 * 60) {
                 String timeLenthStr = DateUtils.getTimeLenthStr(estimateTime * 1000);
-                costTime_tv.setText(" "+timeLenthStr);
+                costTime_tv.setText(" " + timeLenthStr);
                 unit_time.setVisibility(View.GONE);
             } else if (estimateTime > 60) {  //只显示分钟
                 long minutes = estimateTime / 60;
@@ -212,6 +212,9 @@ public class AMapUtil {
      * @return
      */
     public static String getAddress(String address) {
+        if (address == null) {
+            return null;
+        }
         return address.replace("广东省深圳市", "");
     }
 

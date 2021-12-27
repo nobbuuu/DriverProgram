@@ -9,10 +9,10 @@
     android:orientation="vertical">
 
     <com.haylion.android.mvp.widget.TitleBar
-        android:visibility="gone"
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:tb_background="@color/colorPrimary"
         app:tb_left_icon_visible="false"
         app:tb_title="@string/app_name" />
@@ -44,15 +44,15 @@
 
         <TextView
             android:id="@+id/header_name"
+            style="@style/text_bold_font_family"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:text="历史订单"
-            android:textSize="@dimen/sp_18"
             android:textColor="@color/maas_text_primary"
-            android:textStyle="bold"
-            style="@style/text_bold_font_family"/>
+            android:textSize="@dimen/sp_18"
+            android:textStyle="bold" />
 
         <Space
             android:layout_width="40dp"
@@ -63,18 +63,18 @@
 
     <View
         android:id="@+id/temp"
-        android:layout_below="@id/ll_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0_5"
-        android:background="@color/line_e5e5e5"/>
+        android:layout_below="@id/ll_title"
+        android:background="@color/line_e5e5e5" />
 
     <LinearLayout
         android:id="@+id/ll_order_type_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/temp"
         android:background="@color/c_e8eefa"
         android:orientation="horizontal"
-        android:layout_below="@+id/temp"
         android:visibility="gone">
 
         <LinearLayout
@@ -82,28 +82,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_order_type_passenger"
+                style="@style/text_bold_font_family"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/sp_16"
-                android:textStyle="bold"
                 android:layout_marginTop="@dimen/dp_12"
                 android:layout_marginBottom="@dimen/dp_5"
-                style="@style/text_bold_font_family"
+                android:text="客单"
                 android:textColor="@color/maas_text_blue"
-                android:text="客单"/>
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold" />
 
 
             <View
                 android:id="@+id/line_order_type_passenger"
                 android:layout_width="@dimen/dp_21"
                 android:layout_height="@dimen/dp_2"
-                android:background="@color/maas_text_blue"
-                />
+                android:background="@color/maas_text_blue" />
 
         </LinearLayout>
 
@@ -112,26 +111,26 @@
             android:layout_width="@dimen/dp_0_5"
             android:layout_height="@dimen/dp_14"
             android:layout_gravity="center"
-            android:background="@color/c_cccccc"/>
+            android:background="@color/c_cccccc" />
 
         <LinearLayout
             android:id="@+id/ll_order_type_goods"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_order_type_goods"
+                style="@style/text_bold_font_family"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/sp_16"
-                android:textStyle="bold"
                 android:layout_marginTop="@dimen/dp_12"
                 android:layout_marginBottom="@dimen/dp_5"
-                style="@style/text_bold_font_family"
-                android:text="货单"/>
+                android:text="货单"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold" />
 
 
             <View
@@ -139,8 +138,7 @@
                 android:layout_width="@dimen/dp_21"
                 android:layout_height="@dimen/dp_2"
                 android:background="@color/maas_text_blue"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
 
         </LinearLayout>
 
@@ -148,26 +146,26 @@
             android:layout_width="@dimen/dp_0_5"
             android:layout_height="@dimen/dp_14"
             android:layout_gravity="center"
-            android:background="@color/c_cccccc"/>
+            android:background="@color/c_cccccc" />
 
         <LinearLayout
             android:id="@+id/ll_order_type_shunfeng"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_order_type_shunfeng"
+                style="@style/text_bold_font_family"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/sp_16"
-                android:textStyle="bold"
                 android:layout_marginTop="@dimen/dp_12"
                 android:layout_marginBottom="@dimen/dp_5"
-                style="@style/text_bold_font_family"
-                android:text="顺丰单"/>
+                android:text="顺丰单"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold" />
 
 
             <View
@@ -175,24 +173,35 @@
                 android:layout_width="@dimen/dp_21"
                 android:layout_height="@dimen/dp_2"
                 android:background="@color/maas_text_blue"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
 
         </LinearLayout>
     </LinearLayout>
 
-    <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/order_list"
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/smartRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:layout_below="@id/ll_order_type_header"
-        android:clipToPadding="false"
-        android:paddingLeft="@dimen/dp_10"
-        android:paddingRight="@dimen/dp_10"
-        android:visibility="visible"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:paddingTop="@dimen/dp_10"
-        tools:listitem="@layout/order_list_item" />
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.jcodecraeer.xrecyclerview.XRecyclerView
+                android:id="@+id/order_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:visibility="visible"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/order_list_item" />
+        </FrameLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
 
     <TextView
         android:id="@+id/empty_view"
@@ -200,11 +209,11 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:drawableTop="@mipmap/order_list_empty"
-        android:gravity="center_horizontal"
         android:drawablePadding="@dimen/dp_17"
-        android:textSize="@dimen/sp_16"
+        android:gravity="center_horizontal"
         android:textColor="@color/maas_text_deep_gray"
-        android:visibility="gone"/>
+        android:textSize="@dimen/sp_16"
+        android:visibility="gone" />
 
 
 </RelativeLayout>

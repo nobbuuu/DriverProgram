@@ -36,6 +36,9 @@ import com.haylion.android.orderdetail.OrderDetailActivity;
 import com.haylion.android.orderdetail.trip.TripDetailActivity;
 import com.haylion.android.orderlist.achievement.AppointMentAdapter;
 import com.haylion.android.pay.PayMainActivity;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +71,8 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
 
     @BindView(R.id.no_orders)
     TextView mNoOrders;
+    @BindView(R.id.smartRefresh)
+    SmartRefreshLayout smartRefresh;
 
     private GrabAppointmentDialog mGrabDialog;
 
@@ -118,7 +123,7 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
             if (view.getId() == R.id.grab_order) {
                 if (order.getOrderType() == Order.ORDER_TYPE_SHUNFENG){
                     List<String> orderDates = order.getOrderDates();
-                    if (orderDates != null && orderDates.size() > 0) {
+                    if (orderDates != null && orderDates.size() > 1) {
                         ChoseDateDialog choseDateDialog = new ChoseDateDialog(this, orderDates);
                         choseDateDialog.setCallBack(new ChoseDateCallBack() {
                             @Override
@@ -168,6 +173,13 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
                     });
                     mGrabDialog.show();
                 }
+            }
+        });
+
+        smartRefresh.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                presenter.getShunfengOrder();
             }
         });
     }
@@ -267,6 +279,7 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
 
     @Override
     public void showShunfengOrders(List<Order> shunfengOrders) {
+        smartRefresh.finishRefresh();
         if (mTabIndicator.getCheckedRadioButtonId() != R.id.tab_shunfeng) {
             return;
         }

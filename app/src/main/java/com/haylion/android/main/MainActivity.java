@@ -24,6 +24,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -108,6 +109,9 @@ import com.haylion.android.utils.DateUtils;
 import com.haylion.android.utils.SpUtils;
 import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
 import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -183,6 +187,8 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
     MyListView lvCargoPassenger;
     @BindView(R.id.rl_have_wait_pay_order)
     RelativeLayout rlHavaWaitPayOrder;
+    @BindView(R.id.smartRefresh)
+    SmartRefreshLayout smartRefresh;
 
     /**
      * 底部按钮
@@ -328,6 +334,12 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
         });*/
 
         setupGuidePage();
+        smartRefresh.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                presenter.queryShunfengOrder();
+            }
+        });
     }
 
     private void setupGuidePage() {
@@ -693,6 +705,7 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
 
     @Override
     public void onShunfengOrders(List<Order> list) {
+        smartRefresh.finishRefresh();
         if (list != null && list.size() > 0) {
             llOrderListIsNull.setVisibility(View.GONE);
 
@@ -706,14 +719,12 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
 //                        待开始 = 0、待到店 = 1、待扫描=2、待取货签名=3、送货中=4、已完成=5
                         case 0:
                         case 1:
+                        case 4:
                             OrderDetailActivity.go(getContext(), order.getOrderId(), ORDER_TYPE_SHUNFENG);
                             break;
                         case 2:
                         case 3:
                             PreScanActivity.go(getContext(), order.getOrderId());
-                            break;
-                        case 4:
-                            AMapNaviViewActivity.go(getContext(), order.getOrderId(), ORDER_TYPE_SHUNFENG);
                             break;
                         case 5:
                             OrderCompleteActivity.go(getContext(), order.getOrderId(), 2);

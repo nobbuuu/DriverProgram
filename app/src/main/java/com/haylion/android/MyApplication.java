@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.baidu.mobstat.StatService;
 import com.dianping.logan.Logan;
 import com.dianping.logan.LoganConfig;
@@ -19,6 +21,15 @@ import com.haylion.android.mvp.util.BusUtils;
 import com.haylion.android.mvp.util.LogUtils;
 import com.haylion.android.user.account.LoginActivity;
 import com.haylion.android.user.account.MineActivity;
+import com.scwang.smart.refresh.footer.ClassicsFooter;
+import com.scwang.smart.refresh.header.ClassicsHeader;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshFooter;
+import com.scwang.smart.refresh.layout.api.RefreshHeader;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator;
+import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator;
+import com.scwang.smart.refresh.layout.listener.DefaultRefreshInitializer;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 
@@ -102,8 +113,35 @@ public class MyApplication extends BaseApplication {
 
         //消息推送
         MessagePushUtils.umengPushInit(this);
+        initSmartRefresh();
     }
 
+
+    private void initSmartRefresh() {
+        SmartRefreshLayout.setDefaultRefreshInitializer(new DefaultRefreshInitializer() {
+            @Override
+            public void initialize(@NonNull Context context, @NonNull RefreshLayout layout) {
+                layout.setEnableOverScrollDrag(true);
+                layout.setEnableHeaderTranslationContent(true);
+            }
+        });
+
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
+            @NonNull
+            @Override
+            public RefreshHeader createRefreshHeader(@NonNull Context context, @NonNull RefreshLayout layout) {
+                return new ClassicsHeader(context);
+            }
+        });
+
+        SmartRefreshLayout.setDefaultRefreshFooterCreator(new DefaultRefreshFooterCreator() {
+            @NonNull
+            @Override
+            public RefreshFooter createRefreshFooter(@NonNull Context context, @NonNull RefreshLayout layout) {
+                return new ClassicsFooter(context);
+            }
+        });
+    }
     public static Context getContext() {
         return context;
     }

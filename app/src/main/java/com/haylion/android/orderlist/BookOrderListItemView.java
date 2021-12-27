@@ -158,7 +158,7 @@ public class BookOrderListItemView extends BaseItemView<Order> {
             startTime = "今日";
         }
         List<String> orderDates = order.getOrderDates();
-        if (orderDates != null && orderDates.size() > 0) {
+        if (orderDates != null && orderDates.size() > 1) {
             SpannableString takeSpan = StringUtil.setTextPartSizeColor("每日 ", order.getEstimateArriveTime(), " 取货", R.color.part_text_bg);
             orderStatus.setText(takeSpan);
             grabOrder.setText("选择抢单日期");

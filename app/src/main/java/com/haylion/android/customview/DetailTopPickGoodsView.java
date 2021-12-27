@@ -60,7 +60,6 @@ public class DetailTopPickGoodsView extends RelativeLayout {
         ButterKnife.bind(this, view);
 
         if (order != null) {
-            tvStartAddr.setText(order.getStartAddr().getName());
             String location_lat = (String) SpUtils.getParam(Const.CUR_LATITUTE, "0");
             String location_long = (String) SpUtils.getParam(Const.CUR_LONGITUDE, "0");
             if (!location_lat.equals("0") && !location_long.equals("0")) {
@@ -93,12 +92,14 @@ public class DetailTopPickGoodsView extends RelativeLayout {
             if (order.getOrderStatus() == 1) {
                 SpannableString spannableString = StringUtil.setTextPartSizeColor("请在", order.getTakeTime(), "前到达取货点", R.color.part_text_bg);
                 taketimeTip.setText(spannableString);
+                tvStartAddr.setText(order.getStartAddr().getName());
             }
             if (order.getOrderStatus() == 4) {
                 SpannableString spannableString = StringUtil.setTextPartSizeColor("请在", order.getDeliveryTime(), "前送达", R.color.part_text_bg);
                 taketimeTip.setText(spannableString);
                 navTv.setVisibility(VISIBLE);
                 botLay.setVisibility(GONE);
+                tvStartAddr.setText(order.getEndAddr().getName());
             }
             if (!TextUtils.isEmpty(order.getPickupCode())) {
                 pickcodeTv.setText("取货码：" + order.getPickupCode());

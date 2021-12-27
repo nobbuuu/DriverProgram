@@ -100,8 +100,12 @@ public class OrderListItemView extends BaseItemView<Order> {
         //订单时间信息
         //时间展示日期和小时信息
         String time = order.getDeliveryTime();
-        Log.d(TAG, "orderTime = " + time);
-        orderTime.setText(time + "送达");
+        String actualDeliveryTime = order.getActualDeliveryTime();
+        if (actualDeliveryTime != null && !actualDeliveryTime.isEmpty()) {
+            orderTime.setText(time + "送达");
+        } else {
+            orderTime.setText("预约" + time + "送达");
+        }
 
         //订单状态
         orderStatus.setText(OrderStatus.getOrderStatusText(order));

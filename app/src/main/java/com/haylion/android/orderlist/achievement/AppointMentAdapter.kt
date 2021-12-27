@@ -21,6 +21,8 @@ import com.haylion.android.data.model.Order
 import com.haylion.android.data.model.OrderStatus
 import com.haylion.android.data.util.BusinessUtils
 import com.haylion.android.data.util.StringUtil
+import com.haylion.android.dialog.ChoicePhoneDialog
+import com.haylion.android.dialog.ChoseDateDialog
 import com.haylion.android.mvp.util.LogUtils
 import com.haylion.android.orderdetail.map.ShowInMapNewActivity
 import com.haylion.android.utils.AmapUtils
@@ -51,7 +53,8 @@ class AppointMentAdapter : BaseQuickAdapter<Order, BaseViewHolder>(R.layout.book
 
         val tvContactPassenger = holder.getView<TextView>(R.id.tv_contact_passenger)
         tvContactPassenger.setOnClickListener { v: View? ->
-            DialogUtils.showRealCallDialog(context, order.userInfo?.phoneNum)
+//            DialogUtils.showRealCallDialog(context, order.userInfo?.phoneNum)
+            ChoicePhoneDialog(context,order).show()
         }
         val carpoolingOrder = holder.getView<View>(R.id.carpooling_order)
         if (order.orderType == Order.ORDER_TYPE_SEND_CHILD) {
@@ -95,7 +98,7 @@ class AppointMentAdapter : BaseQuickAdapter<Order, BaseViewHolder>(R.layout.book
         val orderStatus = holder.getView<TextView>(R.id.order_status)
         val grabOrder = holder.getView<TextView>(R.id.grab_order)
         val orderDates = order.orderDates
-        if (orderDates != null && orderDates.size > 0) {
+        if (orderDates != null && orderDates.size > 1) {
             val takeSpan = StringUtil.setTextPartSizeColor(
                 "每日 ",
                 order.takeTime,

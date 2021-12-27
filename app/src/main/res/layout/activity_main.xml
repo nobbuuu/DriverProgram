@@ -318,15 +318,26 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/myListView_shunfeng_order"
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/smartRefresh"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_0"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_height="0dp"
+        app:srlEnableLoadMore="false"
         app:layout_constraintBottom_toTopOf="@+id/bottom_shadow"
         app:layout_constraintTop_toBottomOf="@+id/ll_top">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/myListView_shunfeng_order"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
 
     <com.jwenfeng.library.pulltorefresh.PullToRefreshLayout
         android:id="@+id/ptr_order_refresh"

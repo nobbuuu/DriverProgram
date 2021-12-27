@@ -82,6 +82,7 @@ public class Order {
     private String boardingPlaceArriveTime;  //司机实际达到上车点时间 时间格式  YYYY-MM-DD hh:mm
     private String takeTime;  //取货时间
     private String deliveryTime;  //货物送达时间
+    private String actualDeliveryTime;  //货物实际送达时间
 
     private String sfOrderId;
     private String pickupContactName;   //取货人姓名 (司机去此人处取货)
@@ -137,6 +138,15 @@ public class Order {
 
     public String getTakeTime() {
         return takeTime;
+    }
+
+
+    public String getActualDeliveryTime() {
+        return actualDeliveryTime;
+    }
+
+    public void setActualDeliveryTime(String actualDeliveryTime) {
+        this.actualDeliveryTime = actualDeliveryTime;
     }
 
     public void setTakeTime(String takeTime) {

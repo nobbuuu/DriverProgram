@@ -65,4 +65,16 @@ public class Driver {
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
     }
+
+    @Override
+    public String toString() {
+        return "Driver{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", code='" + code + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", plateNumber='" + plateNumber + '\'' +
+                ", photoUrl='" + photoUrl + '\'' +
+                '}';
+    }
 }

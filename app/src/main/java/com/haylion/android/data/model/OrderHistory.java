@@ -38,8 +38,18 @@ public class OrderHistory {
     private String dropOffContactName;
     private String dropOffContactMobile;
     private String goodsDescription;
+    private String actualDeliveryTime;
 
-    //送小孩专用字段
+
+     public String getActualDeliveryTime() {
+         return actualDeliveryTime;
+     }
+
+     public void setActualDeliveryTime(String actualDeliveryTime) {
+         this.actualDeliveryTime = actualDeliveryTime;
+     }
+
+     //送小孩专用字段
     private List<String> childNameList;
     private String parentMessage;
 

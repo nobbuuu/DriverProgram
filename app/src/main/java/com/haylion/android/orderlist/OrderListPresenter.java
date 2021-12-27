@@ -25,6 +25,7 @@ public class OrderListPresenter extends BasePresenter<OrderListContract.View, Or
     private static final String TAG = "OrderListPresenter";
     private OrderTimeType mOrderTimeType;
     private int mCurrPage = 1;
+    private int mOrderType = 1;
 
     private boolean mRefreshing = false;
     private boolean showPassenger = true;
@@ -37,13 +38,13 @@ public class OrderListPresenter extends BasePresenter<OrderListContract.View, Or
     @Override
     public void onViewCreated() {
         super.onViewCreated();
-        getOrderList();
+        loadData();
     }
 
     @Override
     public void loadMoreOrders() {
         mCurrPage++;
-        getOrderList();
+        loadData();
     }
 
 
@@ -115,19 +116,19 @@ public class OrderListPresenter extends BasePresenter<OrderListContract.View, Or
     }
 
     public void getShunfengOrderList() {
-        Log.d("aaa","getShunfengOrderList.........");
+        Log.d("aaa", "getShunfengOrderList.........");
         repo.getHistoryOrder(false, 3, mCurrPage, new ApiSubscriber<HistoryOrderBean>() {
             @Override
             public void onSuccess(HistoryOrderBean list) {
                 List<HistoryOrderBean.ListBean> dataList = list.getList();
-                Log.d("aaa","dataList.size() = " + dataList.size());
+                Log.d("aaa", "dataList.size() = " + dataList.size());
                 List<Order> orderList = new ArrayList<>();
                 for (int i = 0; i < dataList.size(); i++) {
                     Order order;
                     order = OrderConvert.orderHistoryToOrder(dataList.get(i));
                     orderList.add(order);
                 }
-                Log.d("aaa","orderList.size() = " + orderList.size());
+                Log.d("aaa", "orderList.size() = " + orderList.size());
                 if (list.getCurrent() == 1) {
                     view.setOrderList(orderList);
                 } else {
@@ -141,17 +142,18 @@ public class OrderListPresenter extends BasePresenter<OrderListContract.View, Or
 
             @Override
             public void onError(int code, String msg) {
-                Log.d("aaa","获取顺丰订单失败");
+                Log.d("aaa", "获取顺丰订单失败");
             }
         });
     }
 
 
     @Override
-    public void refreshOrderList() {
+    public void refreshOrderList(int orderType) {
+        this.mOrderType = orderType;
         mCurrPage = 1;
         mRefreshing = true;
-        getOrderList();
+        loadData();
     }
 
     @Override
@@ -159,11 +161,14 @@ public class OrderListPresenter extends BasePresenter<OrderListContract.View, Or
         this.showPassenger = showPassenger;
     }
 
-    @Override
-    public void getShunfengOrders() {
-        getShunfengOrderList();
-    }
 
+    public void loadData() {
+        if (mOrderType == 3) {
+            getShunfengOrderList();
+        } else {
+            getOrderList();
+        }
+    }
 
     @Override
     public void onViewDestroy() {

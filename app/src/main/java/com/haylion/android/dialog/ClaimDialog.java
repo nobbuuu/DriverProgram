@@ -83,7 +83,7 @@ public class ClaimDialog extends Dialog {
             });
 
             List<String> orderDates = order.getOrderDates();
-            if (orderDates != null && orderDates.size() > 0) {
+            if (orderDates != null && orderDates.size() > 1) {
                 line2.setVisibility(View.VISIBLE);
                 claimdate_gv.setVisibility(View.VISIBLE);
                 if (selectMap != null) {

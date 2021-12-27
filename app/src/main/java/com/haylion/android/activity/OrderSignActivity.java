@@ -69,7 +69,7 @@ public class OrderSignActivity extends BaseActivity<SignContract.Presenter> impl
     private void onEvent() {
     }
 
-    @OnClick({R.id.iv_back, R.id.sure_tv})
+    @OnClick({R.id.iv_back, R.id.sure_tv,R.id.reSignTv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -86,6 +86,9 @@ public class OrderSignActivity extends BaseActivity<SignContract.Presenter> impl
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                break;
+            case R.id.reSignTv:
+                signatureView.clear();
                 break;
         }
     }

@@ -30,7 +30,12 @@ public class PhoneUtils {
             if (name.length() > 2) {
                 String surnames = name.substring(0, 1);
                 String endWords = name.substring(name.length() - 1);
-                return surnames + "*" + endWords;
+                int size = name.length() - 2;
+                StringBuffer buffer = new StringBuffer();
+                for (int i = 0; i < size; i++) {
+                    buffer.append("*");
+                }
+                return surnames + buffer.toString() + endWords;
 
             } else {
                 if (name.length() == 2) {

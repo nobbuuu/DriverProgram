@@ -47,15 +47,15 @@ public class ChoicePhoneDialog extends Dialog {
         phone1_tv.setText(PhoneUtils.desensitizationName(order.getPickupContactName()) + "  " + PhoneUtils.desensitizationPhone(order.getPickupContactMobile()));
         phone2_tv.setText(PhoneUtils.desensitizationName(order.getPickupContactName1()) + "  " + PhoneUtils.desensitizationPhone(order.getPickupContactMobile1()));
         phone3_tv.setText(PhoneUtils.desensitizationName(order.getPickupContactName2()) + "  " + PhoneUtils.desensitizationPhone(order.getPickupContactMobile2()));
-        if (order.getPickupContactMobile().isEmpty()) {
+        if (order.getPickupContactMobile() == null || order.getPickupContactMobile().isEmpty()) {
             phone1_tv.setVisibility(View.GONE);
             line1.setVisibility(View.GONE);
         }
-        if (order.getPickupContactMobile1().isEmpty()) {
+        if (order.getPickupContactMobile1() == null || order.getPickupContactMobile1().isEmpty()) {
             phone2_tv.setVisibility(View.GONE);
             line2.setVisibility(View.GONE);
         }
-        if (order.getPickupContactMobile2().isEmpty()) {
+        if (order.getPickupContactMobile2() == null || order.getPickupContactMobile2().isEmpty()) {
             phone3_tv.setVisibility(View.GONE);
             line3.setVisibility(View.GONE);
         }

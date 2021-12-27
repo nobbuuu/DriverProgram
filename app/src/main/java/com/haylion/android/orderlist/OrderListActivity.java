@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.haylion.android.R;
@@ -29,6 +30,9 @@ import com.haylion.android.orderdetail.amapNavi.AMapNaviViewActivity;
 import com.haylion.android.orderdetail.trip.TripDetailActivity;
 import com.haylion.android.service.WsCommands;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -81,11 +85,14 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
 
     @BindView(R.id.line_order_type_shunfeng)
     View lineOrderTypeShunfeng;
+    @BindView(R.id.smartRefresh)
+    SmartRefreshLayout smartRefresh;
 
     private static final String EXTRA_ORDER_TYPE = "order_type";
     private static final String IS_FORCE_BACK_TO_MAIN = "isForceBackToMain";
 
     private OrderTimeType mOrderTimeType;   //订单类型
+    private int orderType = 1;   //订单类型
     private RecyclerMultiAdapter mAdapter;
 
     boolean showPassenger = true;
@@ -134,7 +141,18 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
         }
         initFooterView();
         EventBus.getDefault().register(this);
+        initEvent();
     }
+
+    private void initEvent() {
+        smartRefresh.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                presenter.refreshOrderList(orderType);
+            }
+        });
+    }
+
 
     /**
      * 自定义 footerView
@@ -160,6 +178,7 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
                 onBackPressed();
                 break;
             case R.id.ll_order_type_passenger:  //客单
+                orderType = 1;
                 tvTypePassenger.setTextColor(getResources().getColor(R.color.maas_text_blue));
                 tvTypeGoods.setTextColor(getResources().getColor(R.color.maas_text_primary));
                 tvTypeShunfeng.setTextColor(getResources().getColor(R.color.maas_text_primary));
@@ -174,9 +193,10 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
                         .map(Order.class, OrderListItemView.class)
                         .listener(this)
                         .into(mOrderList);
-                presenter.refreshOrderList();
+                presenter.refreshOrderList(orderType);
                 break;
             case R.id.ll_order_type_goods:  //货单
+                orderType = 2;
                 tvTypePassenger.setTextColor(getResources().getColor(R.color.maas_text_primary));
                 tvTypeShunfeng.setTextColor(getResources().getColor(R.color.maas_text_primary));
                 tvTypeGoods.setTextColor(getResources().getColor(R.color.maas_text_blue));
@@ -191,9 +211,10 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
                         .map(Order.class, OrderGoodsListItemView.class)
                         .listener(this)
                         .into(mOrderList);
-                presenter.refreshOrderList();
+                presenter.refreshOrderList(orderType);
                 break;
             case R.id.ll_order_type_shunfeng:  //顺丰单
+                orderType = 3;
                 tvTypePassenger.setTextColor(getResources().getColor(R.color.maas_text_primary));
                 tvTypeGoods.setTextColor(getResources().getColor(R.color.maas_text_primary));
                 tvTypeShunfeng.setTextColor(getResources().getColor(R.color.maas_text_blue));
@@ -202,13 +223,12 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
                 lineOrderTypeShunfeng.setVisibility(View.VISIBLE);
 
                 showPassenger = false;
-
                 presenter.setOrderType(false);
                 mAdapter = SmartAdapter.empty()
                         .map(Order.class, OrderListItemView.class)
                         .listener(this)
                         .into(mOrderList);
-                presenter.getShunfengOrders();
+                presenter.refreshOrderList(orderType);
                 break;
             default:
                 break;
@@ -224,7 +244,7 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
         mOrderList.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-                presenter.refreshOrderList();
+                presenter.refreshOrderList(orderType);
             }
 
             @Override
@@ -247,6 +267,7 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
      */
     @Override
     public void setOrderList(List<Order> list) {
+        smartRefresh.finishRefresh();
         Log.d("aaa","setOrderList list =" + list);
         if (list == null || list.isEmpty()) {
             if (mOrderTimeType == OrderTimeType.HISTORY) {
@@ -256,6 +277,10 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
             } else {
                 mEmptyView.setText(R.string.order_empty);
             }
+        }else {
+            Log.d("aaa","setOrderList  list,size() = " + list.size());
+            mAdapter.setItems(list);
+            mOrderList.refreshComplete();
         }
 
 //        LogUtils.d(TAG, "showPassenger:" + showPassenger + ", orderType:" + list.get(0).getOrderType());
@@ -267,9 +292,6 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
             LogUtils.d(TAG, "return:");
             return;
         }*/
-        Log.d("aaa","setOrderList  list,size() = " + list.size());
-        mAdapter.setItems(list);
-        mOrderList.refreshComplete();
     }
 
     /**
@@ -279,6 +301,7 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
      */
     @Override
     public void addMoreOrders(List<Order> list) {
+        smartRefresh.finishRefresh();
         mAdapter.addItems(list);
         mOrderList.loadMoreComplete();
     }
@@ -288,6 +311,7 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
      */
     @Override
     public void noMoreOrders() {
+        smartRefresh.finishRefresh();
         mOrderList.setNoMore(true);
     }
 
@@ -397,7 +421,7 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
         Log.d(TAG, "on event:" + data.toString());
         if(data.getCmd() == EventMsg.CMD_ORDER_STATUS_TO_CONTROVERSY){
             //争议状态
-            presenter.refreshOrderList();
+            presenter.refreshOrderList(orderType);
         }
     }
 
@@ -406,7 +430,7 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
         Log.d(TAG, "on event:" + websocketData.toString());
         if (websocketData.getCmdSn() == WsCommands.DRIVER_ORDER_PAID.getSn()) {
             //支付完成
-            presenter.refreshOrderList();
+            presenter.refreshOrderList(orderType);
         }
     }
 }

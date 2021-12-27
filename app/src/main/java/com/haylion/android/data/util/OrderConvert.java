@@ -156,6 +156,12 @@ public class OrderConvert {
 //        order.setEstimateArriveTime(shunfengOrder.getEstimateArriveTime());
         order.setTakeTime(shunfengOrder.getTakeTime());
         order.setDeliveryTime(shunfengOrder.getDeliveryTime());
+        order.setPickupContactName(shunfengOrder.getDepotStartConcat1());
+        order.setPickupContactName1(shunfengOrder.getDepotStartConcat2());
+        order.setPickupContactName2(shunfengOrder.getDepotStartConcat3());
+        order.setPickupContactMobile(shunfengOrder.getDepotStartPhone1());
+        order.setPickupContactMobile1(shunfengOrder.getDepotStartPhone2());
+        order.setPickupContactMobile2(shunfengOrder.getDepotStartPhone3());
 
         //费用
         order.setTotalMoney(shunfengOrder.getPrice());
@@ -812,6 +818,7 @@ public class OrderConvert {
         } else {
             order.setDeliveryTime(orderHistory.getDeliveryTime());
             order.setTakeTime(orderHistory.getTakeTime());
+            order.setActualDeliveryTime(orderHistory.getActualDeliveryTime());
         }
 //        order.setTotalTime(orderHistory.get());
 

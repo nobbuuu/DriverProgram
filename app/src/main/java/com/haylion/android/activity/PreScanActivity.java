@@ -208,7 +208,12 @@ public class PreScanActivity extends BaseActivity<PreSignContract.Presenter> imp
             tvArriveTime.setText("预约" + data.getDeliveryTime() + "送达");
             String latitute = (String) SpUtils.getParam(Const.CUR_LATITUTE, "0");
             String longTitute = (String) SpUtils.getParam(Const.CUR_LONGITUDE, "0");
-            LatLng startLatLng = new LatLng(Double.valueOf(latitute), Double.valueOf(longTitute));
+            LatLng startLatLng = null;
+            if (latitute.equals("0") || longTitute.equals("0")){
+                startLatLng = new LatLng(data.getDepotStartLatitude(), data.getDepotStartLongitude());
+            }else {
+                startLatLng = new LatLng(Double.valueOf(latitute), Double.valueOf(longTitute));
+            }
             LatLng endLatLng = new LatLng(data.getDepotEndLatitude(), data.getDepotEndLongitude());
             AmapUtils.caculateDistance(startLatLng, endLatLng, new RouteSearch.OnRouteSearchListener() {
                 @Override

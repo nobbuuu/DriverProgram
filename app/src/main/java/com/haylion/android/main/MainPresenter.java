@@ -292,6 +292,7 @@ public class MainPresenter extends BasePresenter<MainContract.View, OrderReposit
             @Override
             public void onSuccess(Driver driver) {
                 if (driver != null) {
+                    Log.d(TAG,"driver = " + driver.toString());
                     PrefserHelper.saveDriverInfo(driver);
                     view.onGetDriverInfoSuccess(driver);
                 }
