@@ -17,6 +17,7 @@ import com.haylion.android.customview.SignatureView;
 import com.haylion.android.data.base.BaseActivity;
 import com.haylion.android.data.bean.ChangeOrderStatusBean;
 import com.haylion.android.data.model.Order;
+import com.haylion.android.orderdetail.OrderDetailActivity;
 import com.haylion.android.orderdetail.amapNavi.AMapNaviViewActivity;
 import com.haylion.android.presenter.SignPresenter;
 import com.haylion.android.utils.FileUtils;
@@ -69,7 +70,7 @@ public class OrderSignActivity extends BaseActivity<SignContract.Presenter> impl
     private void onEvent() {
     }
 
-    @OnClick({R.id.iv_back, R.id.sure_tv,R.id.reSignTv})
+    @OnClick({R.id.iv_back, R.id.sure_tv, R.id.reSignTv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -104,9 +105,9 @@ public class OrderSignActivity extends BaseActivity<SignContract.Presenter> impl
         Log.d("aaa", "action showUpdateOrder result = " + result);
         if (result) {
             if (mOrderStatus == 4) {//送货中
-                AMapNaviViewActivity.go(getContext(), mOrderId, Order.ORDER_TYPE_SHUNFENG);
+                OrderDetailActivity.go(getContext(), mOrderId, Order.ORDER_TYPE_SHUNFENG);
             } else if (mOrderStatus == 6) {//已完成
-                OrderCompleteActivity.go(getContext(), mOrderId,1);
+                OrderCompleteActivity.go(getContext(), mOrderId, 1);
             }
             finish();
         }

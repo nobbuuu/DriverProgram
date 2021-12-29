@@ -104,161 +104,6 @@
             android:layout_height="@dimen/dp_1"
             android:background="@color/line_color_white" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_77"
-            android:background="@color/white">
-
-            <LinearLayout
-                android:layout_width="@dimen/dp_0"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="听单时长"
-                    android:textColor="#ff9c9c9c"
-                    android:textSize="12sp" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/tv_today_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:text="8.5"
-                        android:textColor="#ff4b7efb"
-                        android:textSize="19sp" />
-
-                    <TextView
-                        android:id="@+id/unitTd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_marginLeft="@dimen/dp_2"
-                        android:text="小时"
-                        android:textColor="#ff4b7efb"
-                        android:textSize="11sp" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="@dimen/dp_0_5"
-                android:layout_height="match_parent"
-                android:background="@color/line_color_white" />
-
-            <RelativeLayout
-                android:id="@+id/rl_today_order_container"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <LinearLayout
-                    android:id="@+id/rl_today_order_info"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="客单"
-                        android:textColor="#ff9c9c9c"
-                        android:textSize="12sp" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/tv_today_order_number"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp_10"
-                            android:text="4"
-                            android:textColor="#ff4b7efb"
-                            android:textSize="19sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:layout_marginLeft="@dimen/dp_2"
-                            android:text="单"
-                            android:textColor="#ff4b7efb"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/iv_toady_order_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/rl_today_order_info"
-                    android:layout_alignBottom="@+id/rl_today_order_info"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:paddingEnd="@dimen/dp_6"
-                    android:src="@mipmap/ic_arrow_white_right"
-                    android:visibility="gone" />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="@dimen/dp_0_5"
-                android:layout_height="match_parent"
-                android:background="@color/line_color_white" />
-
-            <LinearLayout
-                android:layout_width="@dimen/dp_0"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="客单收入"
-                    android:textColor="#ff9c9c9c"
-                    android:textSize="12sp" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/tv_today_order_income"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:text="358.5"
-                        android:textColor="#ff4b7efb"
-                        android:textSize="19sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_marginLeft="@dimen/dp_2"
-                        android:text="元"
-                        android:textColor="#ff4b7efb"
-                        android:textSize="11sp" />
-                </LinearLayout>
-
-            </LinearLayout>
-        </LinearLayout>
-
         <RelativeLayout
             android:id="@+id/rl_tips"
             android:layout_width="match_parent"
@@ -322,19 +167,194 @@
         android:id="@+id/smartRefresh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:srlEnableLoadMore="false"
         app:layout_constraintBottom_toTopOf="@+id/bottom_shadow"
-        app:layout_constraintTop_toBottomOf="@+id/ll_top">
+        app:layout_constraintTop_toBottomOf="@+id/ll_top"
+        app:srlEnableLoadMore="false">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_77"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="听单时长"
+                        android:textColor="#ff9c9c9c"
+                        android:textSize="12sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_today_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:text="0"
+                            android:textColor="#ff4b7efb"
+                            android:textSize="19sp" />
+
+                        <TextView
+                            android:id="@+id/unitTd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginLeft="@dimen/dp_2"
+                            android:text="小时"
+                            android:textColor="#ff4b7efb"
+                            android:textSize="11sp" />
+                        <TextView
+                            android:id="@+id/tv_today_time1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_10"
+                            tools:text="0"
+                            android:layout_marginLeft="@dimen/dp_2"
+                            android:textColor="#ff4b7efb"
+                            android:textSize="19sp" />
+
+                        <TextView
+                            android:id="@+id/unitTd1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginLeft="@dimen/dp_2"
+                            tools:text="分钟"
+                            android:textColor="#ff4b7efb"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="@dimen/dp_0_5"
+                    android:layout_height="match_parent"
+                    android:background="@color/line_color_white" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_today_order_container"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:id="@+id/rl_today_order_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="客单"
+                            android:textColor="#ff9c9c9c"
+                            android:textSize="12sp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/tv_today_order_number"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_10"
+                                android:text="4"
+                                android:textColor="#ff4b7efb"
+                                android:textSize="19sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:layout_marginLeft="@dimen/dp_2"
+                                android:text="单"
+                                android:textColor="#ff4b7efb"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/iv_toady_order_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/rl_today_order_info"
+                        android:layout_alignBottom="@+id/rl_today_order_info"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:paddingEnd="@dimen/dp_6"
+                        android:src="@mipmap/ic_arrow_white_right"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="@dimen/dp_0_5"
+                    android:layout_height="match_parent"
+                    android:background="@color/line_color_white" />
+
+                <LinearLayout
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="客单收入"
+                        android:textColor="#ff9c9c9c"
+                        android:textSize="12sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_today_order_income"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:text="358.5"
+                            android:textColor="#ff4b7efb"
+                            android:textSize="19sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginLeft="@dimen/dp_2"
+                            android:text="元"
+                            android:textColor="#ff4b7efb"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/myListView_shunfeng_order"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 

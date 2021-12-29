@@ -165,6 +165,10 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
     TextView tvTodayTime;
     @BindView(R.id.unitTd)
     TextView unitTd;
+    @BindView(R.id.tv_today_time1)
+    TextView tvTodayTime1;
+    @BindView(R.id.unitTd1)
+    TextView unitTd1;
     @BindView(R.id.tv_today_order_number)
     TextView tvTodayOrderNumber;
     @BindView(R.id.iv_toady_order_detail)
@@ -337,6 +341,7 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
         smartRefresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                presenter.getTodayAchieve();
                 presenter.queryShunfengOrder();
             }
         });
@@ -875,6 +880,7 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
      */
     @Override
     public void showTodayAchieve(OrderAbstract orderAbstract) {
+        smartRefresh.finishRefresh();
         if (orderAbstract == null) {
             tvTodayTime.setText("0");
             tvTodayOrderNumber.setText("0");
@@ -882,10 +888,15 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
             tvTodayOrderIncome.setText("0");
             return;
         }
-        DateLenthBean timeLenth = DateUtils.getTimeLenth(orderAbstract.getOnlineTime());
-//        tvTodayTime.setText("" + orderAbstract.getOnlineTime() / 3600 + "." + (orderAbstract.getOnlineTime() % 3600) / 60);
+        DateLenthBean timeLenth = DateUtils.getTimeLenth(orderAbstract.getOnlineTime() * 1000);
         tvTodayTime.setText(timeLenth.getTime() + "");
         unitTd.setText(timeLenth.getUnit());
+        if (timeLenth.getTime1() != 0) {
+            tvTodayTime1.setText(timeLenth.getTime1() + "");
+            if (timeLenth.getUnit1() != null) {
+                unitTd1.setText(timeLenth.getUnit1() + "");
+            }
+        }
         tvTodayOrderNumber.setText("" + orderAbstract.getOrderCompletionCount());
         if (orderAbstract.getOrderCompletionCount() == 0) {
             ivTodayOrderDetail.setVisibility(View.INVISIBLE);
@@ -1245,6 +1256,7 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
             lp.addRule(RelativeLayout.CENTER_VERTICAL);
             llListenOrder.setLayoutParams(lp);
             llListenOrderStatus.setVisibility(View.GONE);
+            presenter.getTodayAchieve();
         } else if (status == 1) {
             tvListenOrderAction.setText("休息");
             RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);

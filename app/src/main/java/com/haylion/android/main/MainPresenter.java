@@ -163,7 +163,7 @@ public class MainPresenter extends BasePresenter<MainContract.View, OrderReposit
         repo.getAchievementList(1, 0, new ApiSubscriber<ListData<OrderAbstract>>() {
             @Override
             public void onSuccess(ListData<OrderAbstract> orderAbstractListData) {
-                LogUtils.d("getTodayAchievement：");
+                LogUtils.d("getTodayAchievement：orderAbstractListData.size = " + orderAbstractListData.getList().size());
                 view.dismissProgressDialog();
                 if (orderAbstractListData.getList().size() != 0) {
                     view.showTodayAchieve(orderAbstractListData.getList().get(0));
