@@ -83,7 +83,8 @@ public abstract class BaseMapActivity<P extends AbstractPresenter> extends BaseA
     protected int resIdStart = R.mipmap.get_on;
     protected int resIdEnd = R.mipmap.get_off;
     protected int resIdCar = R.mipmap.driving_car;
-    private String markerTitle = "取货地址";
+    private String markerTitle = "送货地址";
+    private String markerStartTitle = "取货地址";
 
 
     /**
@@ -108,6 +109,7 @@ public abstract class BaseMapActivity<P extends AbstractPresenter> extends BaseA
         }
     }
     public void setStartMarkerTitle(String title){
+        markerStartTitle = title;
         if (routeOverlay != null){
             routeOverlay.setStartMarkerTitle(title);
         }
@@ -141,6 +143,7 @@ public abstract class BaseMapActivity<P extends AbstractPresenter> extends BaseA
         mUiSettings.setTiltGesturesEnabled(false);//倾斜手势
 
         routeOverlay = new MaasTaxiOverlay(this, mAMap);
+        routeOverlay.setStartMarkerTitle(markerStartTitle);
         routeOverlay.setEndMarkerTitle(markerTitle);
         //设置自定义地图
         //setMapCustomStyleFile();
