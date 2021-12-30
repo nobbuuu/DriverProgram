@@ -156,7 +156,7 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
                         dialog.setClaimListaner(new ClaimActionListener() {
                             @Override
                             public void onClaim() {
-                                presenter.grabOrder(order, new ArrayList<>());
+                                presenter.grabOrder(order, order.getOrderDates());
                             }
                         });
                         dialog.showDialog();

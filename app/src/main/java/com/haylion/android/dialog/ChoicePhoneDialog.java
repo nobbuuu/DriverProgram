@@ -44,21 +44,40 @@ public class ChoicePhoneDialog extends Dialog {
         TextView phone3_tv = findViewById(R.id.phone3_tv);
         TextView cancel_tv = findViewById(R.id.cancel_tv);
 
-        phone1_tv.setText(PhoneUtils.desensitizationName(order.getPickupContactName()) + "  " + PhoneUtils.desensitizationPhone(order.getPickupContactMobile()));
-        phone2_tv.setText(PhoneUtils.desensitizationName(order.getPickupContactName1()) + "  " + PhoneUtils.desensitizationPhone(order.getPickupContactMobile1()));
-        phone3_tv.setText(PhoneUtils.desensitizationName(order.getPickupContactName2()) + "  " + PhoneUtils.desensitizationPhone(order.getPickupContactMobile2()));
-        if (order.getPickupContactMobile() == null || order.getPickupContactMobile().isEmpty()) {
-            phone1_tv.setVisibility(View.GONE);
-            line1.setVisibility(View.GONE);
+        if (order.getOrderStatus() < 4) {
+            phone1_tv.setText(PhoneUtils.desensitizationName(order.getPickupContactName()) + "  " + PhoneUtils.desensitizationPhone(order.getPickupContactMobile()));
+            phone2_tv.setText(PhoneUtils.desensitizationName(order.getPickupContactName1()) + "  " + PhoneUtils.desensitizationPhone(order.getPickupContactMobile1()));
+            phone3_tv.setText(PhoneUtils.desensitizationName(order.getPickupContactName2()) + "  " + PhoneUtils.desensitizationPhone(order.getPickupContactMobile2()));
+            if (order.getPickupContactMobile() == null || order.getPickupContactMobile().isEmpty()) {
+                phone1_tv.setVisibility(View.GONE);
+                line1.setVisibility(View.GONE);
+            }
+            if (order.getPickupContactMobile1() == null || order.getPickupContactMobile1().isEmpty()) {
+                phone2_tv.setVisibility(View.GONE);
+                line2.setVisibility(View.GONE);
+            }
+            if (order.getPickupContactMobile2() == null || order.getPickupContactMobile2().isEmpty()) {
+                phone3_tv.setVisibility(View.GONE);
+                line3.setVisibility(View.GONE);
+            }
+        } else {
+            phone1_tv.setText(PhoneUtils.desensitizationName(order.getDeliveryContactName()) + "  " + PhoneUtils.desensitizationPhone(order.getDeliveryContactMobile()));
+            phone2_tv.setText(PhoneUtils.desensitizationName(order.getDeliveryContactName1()) + "  " + PhoneUtils.desensitizationPhone(order.getDeliveryContactMobile1()));
+            phone3_tv.setText(PhoneUtils.desensitizationName(order.getDeliveryContactName2()) + "  " + PhoneUtils.desensitizationPhone(order.getDeliveryContactMobile2()));
+            if (order.getDeliveryContactMobile() == null || order.getDeliveryContactMobile().isEmpty()) {
+                phone1_tv.setVisibility(View.GONE);
+                line1.setVisibility(View.GONE);
+            }
+            if (order.getDeliveryContactMobile1() == null || order.getDeliveryContactMobile1().isEmpty()) {
+                phone2_tv.setVisibility(View.GONE);
+                line2.setVisibility(View.GONE);
+            }
+            if (order.getDeliveryContactMobile2() == null || order.getDeliveryContactMobile2().isEmpty()) {
+                phone3_tv.setVisibility(View.GONE);
+                line3.setVisibility(View.GONE);
+            }
         }
-        if (order.getPickupContactMobile1() == null || order.getPickupContactMobile1().isEmpty()) {
-            phone2_tv.setVisibility(View.GONE);
-            line2.setVisibility(View.GONE);
-        }
-        if (order.getPickupContactMobile2() == null || order.getPickupContactMobile2().isEmpty()) {
-            phone3_tv.setVisibility(View.GONE);
-            line3.setVisibility(View.GONE);
-        }
+
         phone1_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

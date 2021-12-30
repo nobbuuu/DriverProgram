@@ -15,6 +15,8 @@ import com.amap.api.services.route.WalkRouteResult
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.haylion.android.R
+import com.haylion.android.calendar.DateFormatUtil
+import com.haylion.android.calendar.DateStyle
 import com.haylion.android.common.Const
 import com.haylion.android.common.view.dialog.DialogUtils
 import com.haylion.android.data.model.Order
@@ -54,7 +56,7 @@ class AppointMentAdapter : BaseQuickAdapter<Order, BaseViewHolder>(R.layout.book
         val tvContactPassenger = holder.getView<TextView>(R.id.tv_contact_passenger)
         tvContactPassenger.setOnClickListener { v: View? ->
 //            DialogUtils.showRealCallDialog(context, order.userInfo?.phoneNum)
-            ChoicePhoneDialog(context,order).show()
+            ChoicePhoneDialog(context, order).show()
         }
         val carpoolingOrder = holder.getView<View>(R.id.carpooling_order)
         if (order.orderType == Order.ORDER_TYPE_SEND_CHILD) {
@@ -92,27 +94,34 @@ class AppointMentAdapter : BaseQuickAdapter<Order, BaseViewHolder>(R.layout.book
 
         var startTime: String = order.startTime ?: ""
         val endTime: String = order.endTime ?: ""
-        if (!startTime.isNullOrEmpty() && !endTime.isNullOrEmpty() && startTime == endTime) {
-            startTime = "今日"
-        }
         val orderStatus = holder.getView<TextView>(R.id.order_status)
         val grabOrder = holder.getView<TextView>(R.id.grab_order)
         val orderDates = order.orderDates
         if (orderDates != null && orderDates.size > 1) {
             val takeSpan = StringUtil.setTextPartSizeColor(
-                "每日 ",
-                order.takeTime,
-                " 取货",
-                R.color.part_text_bg
+                    "每日 ",
+                    order.takeTime,
+                    " 取货",
+                    R.color.part_text_bg
             )
             orderStatus.text = takeSpan
             grabOrder.text = "选择抢单日期"
         } else {
+            val curTime = DateFormatUtil.getTime(System.currentTimeMillis(), DateStyle.YYYY_MM_DD.value)
+            var takeTimeStr = endTime
+            if (curTime == endTime) {
+                takeTimeStr = "今日"
+            } else {
+                val endTimeArrary = endTime?.split("-")
+                if (!endTimeArrary.isNullOrEmpty() && endTimeArrary.size >= 3) {
+                    takeTimeStr = endTimeArrary[1] + "-" + endTimeArrary[2]
+                }
+            }
             val takeSpan = StringUtil.setTextPartSizeColor(
-                if (startTime == null) "" else "$startTime ",
-                order.takeTime,
-                " 取货",
-                R.color.part_text_bg
+                    if (takeTimeStr == null) "" else "$takeTimeStr ",
+                    order.takeTime,
+                    " 取货",
+                    R.color.part_text_bg
             )
             orderStatus.text = takeSpan
             grabOrder.text = "抢单"
@@ -129,61 +138,61 @@ class AppointMentAdapter : BaseQuickAdapter<Order, BaseViewHolder>(R.layout.book
         val tvTotalDistance = holder.getView<TextView>(R.id.tv_total_distance)
         tvTotalDistance.visibility = View.VISIBLE
         AmapUtils.caculateDistance(
-            order.startAddr.latLng,
-            order.endAddr.latLng,
-            object : OnRouteSearchListener {
-                override fun onBusRouteSearched(busRouteResult: BusRouteResult, i: Int) {}
-                override fun onDriveRouteSearched(driveRouteResult: DriveRouteResult, i: Int) {
-                    val distance = driveRouteResult.paths[0].distance
-                    if (order.orderType == Order.ORDER_TYPE_SHUNFENG) {
-                        tvTotalDistance.text =
-                            "取送距离" + BusinessUtils.formatDistance(distance.toDouble())
-                    } else {
-                        tvTotalDistance.text = BusinessUtils.formatDistance(distance.toDouble())
+                order.startAddr.latLng,
+                order.endAddr.latLng,
+                object : OnRouteSearchListener {
+                    override fun onBusRouteSearched(busRouteResult: BusRouteResult, i: Int) {}
+                    override fun onDriveRouteSearched(driveRouteResult: DriveRouteResult, i: Int) {
+                        val distance = driveRouteResult.paths[0].distance
+                        if (order.orderType == Order.ORDER_TYPE_SHUNFENG) {
+                            tvTotalDistance.text =
+                                    "取送距离" + BusinessUtils.formatDistance(distance.toDouble())
+                        } else {
+                            tvTotalDistance.text = BusinessUtils.formatDistance(distance.toDouble())
+                        }
                     }
-                }
 
-                override fun onWalkRouteSearched(walkRouteResult: WalkRouteResult, i: Int) {}
-                override fun onRideRouteSearched(rideRouteResult: RideRouteResult, i: Int) {}
-            })
+                    override fun onWalkRouteSearched(walkRouteResult: WalkRouteResult, i: Int) {}
+                    override fun onRideRouteSearched(rideRouteResult: RideRouteResult, i: Int) {}
+                })
         if (order.orderType == Order.ORDER_TYPE_SHUNFENG) {
             orderStatus.visibility = View.VISIBLE
             val locationLat = SpUtils.getParam(Const.CUR_LATITUTE, "0") as String
             val locationLong = SpUtils.getParam(Const.CUR_LONGITUDE, "0") as String
             if (locationLat != "0" && locationLong != "0") {
                 AmapUtils.caculateDistance(
-                    LatLng(
-                        locationLat.toDouble(),
-                        locationLong.toDouble()
-                    ), order.startAddr.latLng, object : OnRouteSearchListener {
-                        override fun onBusRouteSearched(busRouteResult: BusRouteResult, i: Int) {}
-                        override fun onDriveRouteSearched(
+                        LatLng(
+                                locationLat.toDouble(),
+                                locationLong.toDouble()
+                        ), order.startAddr.latLng, object : OnRouteSearchListener {
+                    override fun onBusRouteSearched(busRouteResult: BusRouteResult, i: Int) {}
+                    override fun onDriveRouteSearched(
                             driveRouteResult: DriveRouteResult,
                             i: Int
-                        ) {
-                            val distance = driveRouteResult.paths[0].distance
-                            val instanceFromme = holder.getView<TextView>(R.id.instance_fromme)
-                            instanceFromme?.let {
-                                instanceFromme.text = "距你" + BusinessUtils.formatDistance(distance.toDouble())
-                            }
+                    ) {
+                        val distance = driveRouteResult.paths[0].distance
+                        val instanceFromme = holder.getView<TextView>(R.id.instance_fromme)
+                        instanceFromme?.let {
+                            instanceFromme.text = "距你" + BusinessUtils.formatDistance(distance.toDouble())
                         }
+                    }
 
-                        override fun onWalkRouteSearched(
+                    override fun onWalkRouteSearched(
                             walkRouteResult: WalkRouteResult,
                             i: Int
-                        ) {
-                        }
+                    ) {
+                    }
 
-                        override fun onRideRouteSearched(
+                    override fun onRideRouteSearched(
                             rideRouteResult: RideRouteResult,
                             i: Int
-                        ) {
-                        }
-                    })
+                    ) {
+                    }
+                })
             }
             val orderMoney = holder.getView<TextView>(R.id.order_money)
             orderMoney.text = (order.totalMoney / 100).toString()
-        }else{
+        } else {
             orderStatus.visibility = View.GONE
             val addressFromeTv = holder.getView<TextView>(R.id.tv_get_on_desc)
             val addressDesTv = holder.getView<TextView>(R.id.tv_get_off_desc)
@@ -194,12 +203,12 @@ class AppointMentAdapter : BaseQuickAdapter<Order, BaseViewHolder>(R.layout.book
 
     private fun formatParentOrderDate(startTimeText: String, endTimeText: String): String {
         if (TextUtils.isEmpty(startTimeText) ||
-            TextUtils.isEmpty(endTimeText)
+                TextUtils.isEmpty(endTimeText)
         ) {
             return ""
         }
         var simpleDateFormat = SimpleDateFormat(
-            "yyyy-MM-dd HH:mm", Locale.getDefault()
+                "yyyy-MM-dd HH:mm", Locale.getDefault()
         )
         var startTime: Date? = Date()
         var endTime: Date? = Date()
@@ -218,18 +227,18 @@ class AppointMentAdapter : BaseQuickAdapter<Order, BaseViewHolder>(R.layout.book
         val endYear = calendar[Calendar.YEAR]
         if (startYear != thisYear || endYear != thisYear) { // 订单跨年了
             simpleDateFormat = SimpleDateFormat(
-                "yyyy年MM月dd日", Locale.getDefault()
+                    "yyyy年MM月dd日", Locale.getDefault()
             )
             val formattedTime =
-                simpleDateFormat.format(startTime) + " - " + simpleDateFormat.format(endTime)
+                    simpleDateFormat.format(startTime) + " - " + simpleDateFormat.format(endTime)
             simpleDateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
             return formattedTime + " " + simpleDateFormat.format(startTime)
         }
         simpleDateFormat = SimpleDateFormat(
-            "MM月dd日", Locale.getDefault()
+                "MM月dd日", Locale.getDefault()
         )
         val formattedTime =
-            simpleDateFormat.format(startTime) + " - " + simpleDateFormat.format(endTime)
+                simpleDateFormat.format(startTime) + " - " + simpleDateFormat.format(endTime)
         simpleDateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
         return formattedTime + " " + simpleDateFormat.format(startTime)
     }

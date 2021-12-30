@@ -82,7 +82,8 @@ public class MaasTaxiOverlay extends RouteOverlay {
 
     private boolean isUpdateStartMarker = true;  //是否更新起点Marker
     private boolean isUpdateEndMarker = true;    //是否更新终点Marker
-    private String markerTitle = "取货地址";
+    private String markerEndTitle = "送货地址";
+    private String markerStartTitle = "";
 
     private List<LatLonPoint> mWayPoints;
     /**
@@ -106,8 +107,11 @@ public class MaasTaxiOverlay extends RouteOverlay {
         return this;
     }
 
+    public void setStartMarkerTitle(String title){
+        markerStartTitle = title;
+    }
     public void setEndMarkerTitle(String title){
-        markerTitle = title;
+        markerEndTitle = title;
     }
 
     /**
@@ -225,6 +229,10 @@ public class MaasTaxiOverlay extends RouteOverlay {
         //起点
         if (isUpdateStartMarker || isCarStart) {
             View startMarkerView = AMapUtil.getCurMarkerView(mContext, resIdStart, startAddress);
+            TextView titleTv = startMarkerView.findViewById(R.id.tv_marker_title);
+            if (markerStartTitle != null && !markerStartTitle.isEmpty()){
+                titleTv.setText(markerStartTitle);
+            }
             if (startMarker != null) {
                 startMarker.remove();
             }
@@ -256,7 +264,9 @@ public class MaasTaxiOverlay extends RouteOverlay {
         if (isUpdateEndMarker) {
             View endMarkerView = AMapUtil.getEndMarkerView(mContext, resIdEnd, drivePath);
             TextView titleTv = endMarkerView.findViewById(R.id.tv_marker_title);
-            titleTv.setText(markerTitle);
+            if (markerEndTitle != null && !markerEndTitle.isEmpty()){
+                titleTv.setText(markerEndTitle);
+            }
             if (endMarker != null) {
                 endMarker.remove();
             }

@@ -62,8 +62,14 @@ public class DetailTopPickGoodsView extends RelativeLayout {
         if (order != null) {
             String location_lat = (String) SpUtils.getParam(Const.CUR_LATITUTE, "0");
             String location_long = (String) SpUtils.getParam(Const.CUR_LONGITUDE, "0");
+            LatLng endLnt = null;
+            if (order.getOrderStatus() < 4) {
+                endLnt = order.getStartAddr().getLatLng();
+            } else {
+                endLnt = order.getEndAddr().getLatLng();
+            }
             if (!location_lat.equals("0") && !location_long.equals("0")) {
-                AmapUtils.caculateDistance(new LatLng(Double.valueOf(location_lat), Double.valueOf(location_long)), order.getStartAddr().getLatLng(), new RouteSearch.OnRouteSearchListener() {
+                AmapUtils.caculateDistance(new LatLng(Double.valueOf(location_lat), Double.valueOf(location_long)), endLnt, new RouteSearch.OnRouteSearchListener() {
                     @Override
                     public void onBusRouteSearched(BusRouteResult busRouteResult, int i) {
 

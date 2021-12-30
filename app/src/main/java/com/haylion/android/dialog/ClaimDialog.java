@@ -101,15 +101,14 @@ public class ClaimDialog extends Dialog {
             } else {
                 line2.setVisibility(View.GONE);
                 claimdate_gv.setVisibility(View.GONE);
-                String startTime = order.getStartTime();
                 String endTime = order.getEndTime();
-                if (startTime.equals(endTime)) {
-                    SpannableString takeSpan = StringUtil.setTextPartSizeColor("今日 ", order.getTakeTime(), " 取货", R.color.part_text_bg);
-                    taketime_tv.setText(takeSpan);
-                } else {
-                    SpannableString takeSpan = StringUtil.setTextPartSizeColor(startTime + " ", order.getTakeTime(), " 取货", R.color.part_text_bg);
-                    taketime_tv.setText(takeSpan);
+                String curTime = DateFormatUtil.getTime(System.currentTimeMillis(), DateStyle.YYYY_MM_DD.getValue());
+                String takeTimeStr = endTime;
+                if (curTime.equals(endTime)){
+                    takeTimeStr = "今日";
                 }
+                SpannableString takeSpan = StringUtil.setTextPartSizeColor(takeTimeStr+" ", order.getTakeTime(), " 取货", R.color.part_text_bg);
+                taketime_tv.setText(takeSpan);
             }
         }
         Window window = getWindow();
@@ -152,6 +151,10 @@ public class ClaimDialog extends Dialog {
     private int time = 10;
     private Handler mHandler = new Handler();
     private ClaimActionListener mActionListener;
+    public void setClaimListaner(ClaimActionListener listaner) {
+        mActionListener = listaner;
+    }
+
     private Runnable mRunnable = new Runnable() {
         @Override
         public void run() {
@@ -168,7 +171,4 @@ public class ClaimDialog extends Dialog {
         }
     };
 
-    public void setClaimListaner(ClaimActionListener listaner) {
-        mActionListener = listaner;
-    }
 }

@@ -354,7 +354,6 @@ public class ScannerCodeActivity extends BaseActivity<PreSignContract.Presenter>
         String result1 = result.getText();
         Log.v("二维码/条形码 扫描结果", result1);
         if (!TextUtils.isEmpty(result1) && isInteger(result1)){
-            toast(result1);
             if (mScanerListener != null){
                 mScanerListener.onSuccess("From to Camera", result);
                 finish();

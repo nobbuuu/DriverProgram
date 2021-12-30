@@ -66,6 +66,7 @@ import com.haylion.android.data.util.BusinessUtils;
 import com.haylion.android.data.util.DateUtils;
 import com.haylion.android.data.util.SpannableStringUtil;
 import com.haylion.android.data.widgt.SlideView;
+import com.haylion.android.dialog.TimeoutDialog;
 import com.haylion.android.main.MainActivity;
 import com.haylion.android.mvp.util.LogUtils;
 import com.haylion.android.mvp.util.SizeUtil;
@@ -82,6 +83,7 @@ import com.haylion.android.uploadPhoto.UploadChildImgActivity;
 import com.haylion.android.utils.AmapUtils;
 import com.haylion.android.utils.PhoneUtils;
 import com.haylion.android.utils.SpUtils;
+import com.haylion.android.utils.SynaTimeUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -93,6 +95,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
@@ -327,6 +331,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
 
     private boolean isView;
 
+
     /**
      * 拼车码
      */
@@ -486,6 +491,11 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
         });
         //悬浮窗异常情况处理
         handleFloatDialogException();
+
+        currentGps = FloatDialogService.getCurrentGps();
+        refreshOrderDetails();
+        refreshTopView();
+        MyApplication.setOrderIdRunning(orderId);
     }
 
     /**
@@ -957,6 +967,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
                             tvRealtimeContact.setText("收货电话：" + receivePhone);
                         }
                     }
+                    SynaTimeUtils.getInstance().post(order);
                     break;
             }
         }
@@ -1065,8 +1076,15 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
         LogUtils.d(TAG, "on event, gpsData:" + gpsData.getLatitude() + "," + gpsData.getLongitude());
         currentGps = gpsData;
         //更新线路规划
-        if (isOnResume) {
-//            showOrderInfoInMap(order);
+        if (isOnResume && order != null) {
+            showOrderInfoInMap(order);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(String tips) {
+        if (tips!= null && tips.equals("timeout") &&  order != null){
+            new TimeoutDialog(getContext(),order).show();
         }
     }
 
@@ -1280,17 +1298,16 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
             LogUtils.e(TAG, "订单状态异常,当前状态：" + status);
             return;
         }
-        if (order.getOrderStatus() == 2 || order.getOrderStatus() == 4) {
-            mStartPoint = new LatLonPoint(order.getStartAddr().getLatLng().latitude, order.getStartAddr().getLatLng().longitude);
-            mEndPoint = new LatLonPoint(endAddr.getLatLng().latitude, endAddr.getLatLng().longitude);
-        } else {
-            //当前车辆位置
-            if (currentGps == null) {
-                LogUtils.e(TAG, "current gps is null");
-                return;
-            }
-            mStartPoint = new LatLonPoint(currentGps.getLatitude(), currentGps.getLongitude());
+        //当前车辆位置
+        if (currentGps == null) {
+            LogUtils.e(TAG, "current gps is null");
+            return;
+        }
+        mStartPoint = new LatLonPoint(currentGps.getLatitude(), currentGps.getLongitude());
+        if (order.getOrderStatus() < 4) {
             mEndPoint = new LatLonPoint(order.getStartAddr().getLatLng().latitude, order.getStartAddr().getLatLng().longitude);
+        } else {
+            mEndPoint = new LatLonPoint(order.getEndAddr().getLatLng().latitude, order.getEndAddr().getLatLng().longitude);
         }
         if (order.getOrderType() == Order.ORDER_TYPE_SEND_CHILD &&
                 order.getOrderStatus() == Order.ORDER_STATUS_GET_OFF) {
@@ -1783,7 +1800,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
             @Override
             public void run() {
                 // Log.e(TAG, "zoomToSpan:llBottomView.height = " + llBottomView.getHeight() + ",height=" + SizeUtil.getScreenHeight(getContext()));
-                if (routeOverlay != null){
+                if (routeOverlay != null) {
                     routeOverlay.zoomToSpan(200, 200, 300, llBottomView.getHeight());
                 }
             }
@@ -1840,11 +1857,6 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
     protected void onResume() {
         super.onResume();
         isOnResume = true;
-        //先获取当前的位置
-        currentGps = FloatDialogService.getCurrentGps();
-        refreshOrderDetails();
-        refreshTopView();
-        MyApplication.setOrderIdRunning(orderId);
     }
 
     private void refreshOrderDetails() {

@@ -25,6 +25,7 @@ import com.google.zxing.Result;
 import com.haylion.android.R;
 import com.haylion.android.adapter.GoodsAdapter;
 import com.haylion.android.common.Const;
+import com.haylion.android.constract.ClaimActionListener;
 import com.haylion.android.constract.PreSignContract;
 import com.haylion.android.data.base.BaseActivity;
 import com.haylion.android.data.bean.OrderDetailBean;
@@ -35,6 +36,7 @@ import com.haylion.android.data.util.BusinessUtils;
 import com.haylion.android.data.util.OrderConvert;
 import com.haylion.android.data.widgt.SlideView;
 import com.haylion.android.dialog.ChoicePhoneDialog;
+import com.haylion.android.dialog.ScanEndDialog;
 import com.haylion.android.mvp.util.ToastUtils;
 import com.haylion.android.orderdetail.OrderDetailActivity;
 import com.haylion.android.orderdetail.map.ShowInMapNewActivity;
@@ -143,6 +145,12 @@ public class PreScanActivity extends BaseActivity<PreSignContract.Presenter> imp
                             mGoodsList.add(name);
                             mGoodsAdapter.notifyDataSetChanged();
                             goods_num.setText("货物列表（" + mGoodsList.size() + "）");
+                            new ScanEndDialog(getContext(), name, new ClaimActionListener() {
+                                @Override
+                                public void onClaim() {
+                                    startScanner();
+                                }
+                            }).show();
                         }
 
                         @Override
@@ -173,7 +181,6 @@ public class PreScanActivity extends BaseActivity<PreSignContract.Presenter> imp
             switch (requestCode) {
                 case 111:
                     String result = CameraScan.parseScanResult(data);
-                    ToastUtils.showLong(getContext(), result);
                     break;
             }
 

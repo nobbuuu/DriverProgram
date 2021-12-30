@@ -8,8 +8,8 @@
     app:cardElevation="4dp"
     android:background="@drawable/bg_white_r6"
     android:layout_marginLeft="@dimen/dp_10"
-    android:layout_marginRight="@dimen/dp_10"
     android:layout_marginTop="@dimen/dp_10"
+    android:layout_marginRight="@dimen/dp_10"
     android:elevation="@dimen/dp_5"
     app:cardUseCompatPadding="true">
 

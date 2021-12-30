@@ -11,6 +11,8 @@ import com.amap.api.maps.AMap;
 import com.haylion.android.R;
 import com.haylion.android.activity.OrderCompleteActivity;
 import com.haylion.android.activity.PreScanActivity;
+import com.haylion.android.calendar.DateFormatUtil;
+import com.haylion.android.calendar.DateStyle;
 import com.haylion.android.common.map.AMapUtil;
 import com.haylion.android.data.base.BaseItemView;
 import com.haylion.android.data.model.Order;
@@ -22,6 +24,7 @@ import com.haylion.android.orderdetail.OrderDetailActivity;
 import com.haylion.android.orderdetail.amapNavi.AMapNaviViewActivity;
 
 import java.text.ParseException;
+import java.util.Date;
 
 import butterknife.BindView;
 
@@ -102,7 +105,12 @@ public class OrderListItemView extends BaseItemView<Order> {
         String time = order.getDeliveryTime();
         String actualDeliveryTime = order.getActualDeliveryTime();
         if (actualDeliveryTime != null && !actualDeliveryTime.isEmpty()) {
-            orderTime.setText(time + "送达");
+            String curTime = DateFormatUtil.getTime(new Date(), DateStyle.YYYY_MM_DD.getValue());
+            String deliveryTimeStr = order.getEndTime() + " ";
+            if (order.getEndTime() != null && curTime.equals(order.getEndTime())) {
+                deliveryTimeStr = "今日";
+            }
+            orderTime.setText(deliveryTimeStr + time + "送达");
         } else {
             orderTime.setText("预约" + time + "送达");
         }

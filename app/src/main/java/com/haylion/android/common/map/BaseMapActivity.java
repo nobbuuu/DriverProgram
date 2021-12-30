@@ -107,6 +107,11 @@ public abstract class BaseMapActivity<P extends AbstractPresenter> extends BaseA
             routeOverlay.setEndMarkerTitle(markerTitle);
         }
     }
+    public void setStartMarkerTitle(String title){
+        if (routeOverlay != null){
+            routeOverlay.setStartMarkerTitle(title);
+        }
+    }
     /**
      * 子类必须在 onCreate() 中调用
      *

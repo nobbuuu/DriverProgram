@@ -137,7 +137,12 @@ public class OrderPreSignActivity extends BaseActivity<PreSignContract.Presenter
         String mobile = mOrder.getPickupContactMobile();
         String mobile1 = mOrder.getPickupContactMobile1();
         String mobile2 = mOrder.getPickupContactMobile2();
+
+        String mobile3 = mOrder.getDeliveryContactMobile();
+        String mobile4 = mOrder.getDeliveryContactMobile1();
+        String mobile5 = mOrder.getDeliveryContactMobile2();
         List<String> phoneList = new ArrayList<>();
+        List<String> deliveryPhoneList = new ArrayList<>();
         if (mobile != null && !mobile.isEmpty()) {
             phoneList.add(mobile);
         }
@@ -147,8 +152,23 @@ public class OrderPreSignActivity extends BaseActivity<PreSignContract.Presenter
         if (mobile2 != null && !mobile2.isEmpty()) {
             phoneList.add(mobile2);
         }
-        if (phoneList.size() > 0) {
-            phoneNumber1.setText("取货电话（" + phoneList.size() + "位联系人）");
+        if (mobile3 != null && !mobile3.isEmpty()) {
+            deliveryPhoneList.add(mobile3);
+        }
+        if (mobile4 != null && !mobile4.isEmpty()) {
+            deliveryPhoneList.add(mobile4);
+        }
+        if (mobile5 != null && !mobile5.isEmpty()) {
+            deliveryPhoneList.add(mobile5);
+        }
+        if (mOrder.getOrderStatus() < 4){
+            if (phoneList.size() > 0) {
+                phoneNumber1.setText("取货电话（" + phoneList.size() + "位联系人）");
+            }
+        }else {
+            if (deliveryPhoneList.size() > 0) {
+                phoneNumber1.setText("送货电话（" + deliveryPhoneList.size() + "位联系人）");
+            }
         }
     }
 
@@ -166,12 +186,22 @@ public class OrderPreSignActivity extends BaseActivity<PreSignContract.Presenter
                 break;
             case R.id.phone_take:
                 if (mOrder != null) {
-                    String mobile = mOrder.getPickupContactMobile();
-                    String mobile1 = mOrder.getPickupContactMobile1();
-                    String mobile2 = mOrder.getPickupContactMobile2();
-                    if (mobile.isEmpty() && mobile1.isEmpty() && mobile2.isEmpty()) {
-                        ToastUtils.showLong(getContext(), "暂无电话数据");
-                        return;
+                    if (mOrder.getOrderStatus() < 4){
+                        String mobile = mOrder.getPickupContactMobile();
+                        String mobile1 = mOrder.getPickupContactMobile1();
+                        String mobile2 = mOrder.getPickupContactMobile2();
+                        if (mobile.isEmpty() && mobile1.isEmpty() && mobile2.isEmpty()) {
+                            ToastUtils.showLong(getContext(), "暂无电话数据");
+                            return;
+                        }
+                    }else {
+                        String mobile = mOrder.getDeliveryContactMobile();
+                        String mobile1 = mOrder.getDeliveryContactMobile1();
+                        String mobile2 = mOrder.getDeliveryContactMobile2();
+                        if (mobile.isEmpty() && mobile1.isEmpty() && mobile2.isEmpty()) {
+                            ToastUtils.showLong(getContext(), "暂无电话数据");
+                            return;
+                        }
                     }
                     new ChoicePhoneDialog(getContext(), mOrder).show();
                 }

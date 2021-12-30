@@ -91,6 +91,12 @@ public class Order {
     private String pickupContactMobile;  //取货人手机号
     private String pickupContactMobile1;  //取货人手机号
     private String pickupContactMobile2;  //取货人手机号
+    private String deliveryContactName;   //送货人姓名 (司机去此人处送货)
+    private String deliveryContactName1;   //送货人姓名 (司机去此人处送货)
+    private String deliveryContactName2;   //送货人姓名 (司机去此人处送货)
+    private String deliveryContactMobile;  //送货人手机号
+    private String deliveryContactMobile1;  //送货人手机号
+    private String deliveryContactMobile2;  //送货人手机号
     private String pickupCode;  //取货码
     private String dropOffContactName;    //送货人姓名（司机把货物送到此人手上）
     private String dropOffContactMobile;  //送货人手机号
@@ -140,6 +146,54 @@ public class Order {
         return takeTime;
     }
 
+
+    public String getDeliveryContactName() {
+        return deliveryContactName;
+    }
+
+    public void setDeliveryContactName(String deliveryContactName) {
+        this.deliveryContactName = deliveryContactName;
+    }
+
+    public String getDeliveryContactName1() {
+        return deliveryContactName1;
+    }
+
+    public void setDeliveryContactName1(String deliveryContactName1) {
+        this.deliveryContactName1 = deliveryContactName1;
+    }
+
+    public String getDeliveryContactName2() {
+        return deliveryContactName2;
+    }
+
+    public void setDeliveryContactName2(String deliveryContactName2) {
+        this.deliveryContactName2 = deliveryContactName2;
+    }
+
+    public String getDeliveryContactMobile() {
+        return deliveryContactMobile;
+    }
+
+    public void setDeliveryContactMobile(String deliveryContactMobile) {
+        this.deliveryContactMobile = deliveryContactMobile;
+    }
+
+    public String getDeliveryContactMobile1() {
+        return deliveryContactMobile1;
+    }
+
+    public void setDeliveryContactMobile1(String deliveryContactMobile1) {
+        this.deliveryContactMobile1 = deliveryContactMobile1;
+    }
+
+    public String getDeliveryContactMobile2() {
+        return deliveryContactMobile2;
+    }
+
+    public void setDeliveryContactMobile2(String deliveryContactMobile2) {
+        this.deliveryContactMobile2 = deliveryContactMobile2;
+    }
 
     public String getActualDeliveryTime() {
         return actualDeliveryTime;

@@ -419,6 +419,13 @@ public class OrderConvert {
         order.setPickupContactName(orderDetail.getDepotStartConcat1());
         order.setPickupContactName1(orderDetail.getDepotStartConcat2());
         order.setPickupContactName2(orderDetail.getDepotStartConcat3());
+        order.setDeliveryContactMobile(orderDetail.getDepotEndPhone1());
+        order.setDeliveryContactMobile1(orderDetail.getDepotEndPhone2());
+        order.setDeliveryContactMobile2(orderDetail.getDepotEndPhone3());
+        order.setDeliveryContactName(orderDetail.getDepotEndConcat1());
+        order.setDeliveryContactName1(orderDetail.getDepotEndConcat2());
+        order.setDeliveryContactName2(orderDetail.getDepotEndConcat3());
+
 //        order.setGetOnPicUrl(orderDetail.getOnPic());
 //        order.setGetOffPicUrl(orderDetail.getOffPic());
 //        order.setOnPicTime(orderDetail.getOnPicTime());
@@ -823,6 +830,8 @@ public class OrderConvert {
 //        order.setTotalTime(orderHistory.get());
 
         order.setTotalMoney(orderHistory.getPrice());
+        order.setStartTime(orderHistory.getStartDate());
+        order.setEndTime(orderHistory.getEndDate());
 
         //取消原因
 //        order.setOrderCancellerType(orderHistory.getOrderCancellerType());
