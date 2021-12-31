@@ -128,12 +128,12 @@ public class OrderConvert {
         //起点和终点
         AddressInfo start = new AddressInfo();
         start.setLatLng(new LatLng(shunfengOrder.getDepotStartLatitude(), shunfengOrder.getDepotStartLongitude()));
-        start.setName(shunfengOrder.getDepotStartAddress());
+        start.setName(shunfengOrder.getDepotStartDetailAddress());
         start.setAddressDetail(shunfengOrder.getDepotStartAddress());
 
         AddressInfo end = new AddressInfo();
         end.setLatLng(new LatLng(shunfengOrder.getDepotEndLatitude(), shunfengOrder.getDepotEndLongitude()));
-        end.setName(shunfengOrder.getDepotEndAddress());
+        end.setName(shunfengOrder.getDepotEndDetailAddress());
         end.setAddressDetail(shunfengOrder.getDepotEndAddress());
         end.setLatLng(new LatLng(shunfengOrder.getDepotEndLatitude(),
                 shunfengOrder.getDepotEndLongitude()));
@@ -342,14 +342,14 @@ public class OrderConvert {
         //起点和终点
         AddressInfo start = new AddressInfo();
         start.setLatLng(new LatLng(orderDetail.getDepotStartLatitude(), orderDetail.getDepotStartLongitude()));
-        start.setName(orderDetail.getDepotStartAddress());
+        start.setName(orderDetail.getDepotStartDetailAddress());
 //        start.setAddressDetail(orderDetail.getOnLocationDescription());
 
 //        order.setDistance(orderDetail.getTotalDistance());
 
         AddressInfo end = new AddressInfo();
         end.setLatLng(new LatLng(orderDetail.getDepotEndLatitude(), orderDetail.getDepotEndLongitude()));
-        end.setName(orderDetail.getDepotEndAddress());
+        end.setName(orderDetail.getDepotEndDetailAddress());
 //        end.setAddressDetail(orderDetail.getOffLocationDescription());
 
         order.setStartAddr(start);
@@ -653,12 +653,12 @@ public class OrderConvert {
         //起点和终点
         AddressInfo start = new AddressInfo();
         start.setLatLng(new LatLng(newOrder.getDepotStartLatitude(), newOrder.getDepotStartLongitude()));
-        start.setName(newOrder.getDepotStartAddress());
+        start.setName(newOrder.getDepotStartDetailAddress());
 //        start.setAddressDetail(newOrder.getBoardingAddress());
 
         AddressInfo end = new AddressInfo();
         end.setLatLng(new LatLng(newOrder.getDepotEndLatitude(), newOrder.getDepotEndLongitude()));
-        end.setName(newOrder.getDepotEndAddress());
+        end.setName(newOrder.getDepotEndDetailAddress());
 //        end.setAddressDetail(newOrder.getArrivalAddress());
 
         order.setStartAddr(start);
@@ -795,11 +795,11 @@ public class OrderConvert {
 
         //起点和终点
         AddressInfo start = new AddressInfo();
-        start.setName(orderHistory.getDepotStartAddress());
+        start.setName(orderHistory.getDepotStartDetailAddress());
 //        start.setAddressDetail(orderHistory.getOnPlaceDescription());
 
         AddressInfo end = new AddressInfo();
-        end.setName(orderHistory.getDepotEndAddress());
+        end.setName(orderHistory.getDepotEndDetailAddress());
 //        end.setAddressDetail(orderHistory.getOffPlaceDescription());
 
         order.setStartAddr(start);

@@ -76,10 +76,12 @@ public class HistoryOrderBean {
         private int driverStatus;
         private int orderType;
         private String depotStartAddress;
+        private String depotStartDetailAddress;
         private String depotStartLongitude;
         private String depotStartLatitude;
         private String takeTime;
         private String depotEndAddress;
+        private String depotEndDetailAddress;
         private String depotEndLongitude;
         private String depotEndLatitude;
         private String deliveryTime;
@@ -88,6 +90,22 @@ public class HistoryOrderBean {
         private String endDate;
         private int price;
         private String createTime;
+
+        public String getDepotStartDetailAddress() {
+            return depotStartDetailAddress;
+        }
+
+        public void setDepotStartDetailAddress(String depotStartDetailAddress) {
+            this.depotStartDetailAddress = depotStartDetailAddress;
+        }
+
+        public String getDepotEndDetailAddress() {
+            return depotEndDetailAddress;
+        }
+
+        public void setDepotEndDetailAddress(String depotEndDetailAddress) {
+            this.depotEndDetailAddress = depotEndDetailAddress;
+        }
 
         public int getDriverStatus() {
             return driverStatus;

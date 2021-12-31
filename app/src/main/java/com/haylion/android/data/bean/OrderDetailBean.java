@@ -58,6 +58,7 @@ public class OrderDetailBean {
     private String lineName;
     private String depotStartName;
     private String depotStartAddress;
+    private String depotStartDetailAddress;
     private double depotStartLongitude;
     private double depotStartLatitude;
     private String depotStartConcat1;
@@ -70,6 +71,7 @@ public class OrderDetailBean {
     private String actualTakeTime;
     private String depotEndName;
     private String depotEndAddress;
+    private String depotEndDetailAddress;
     private double depotEndLongitude;
     private double depotEndLatitude;
     private String depotEndConcat1;
@@ -96,6 +98,23 @@ public class OrderDetailBean {
     private Object complainList;
     private List<String> cargoList;
     private Object detailList;
+
+
+    public String getDepotStartDetailAddress() {
+        return depotStartDetailAddress;
+    }
+
+    public void setDepotStartDetailAddress(String depotStartDetailAddress) {
+        this.depotStartDetailAddress = depotStartDetailAddress;
+    }
+
+    public String getDepotEndDetailAddress() {
+        return depotEndDetailAddress;
+    }
+
+    public void setDepotEndDetailAddress(String depotEndDetailAddress) {
+        this.depotEndDetailAddress = depotEndDetailAddress;
+    }
 
     public void setBeginTime(String beginTime) {
         this.beginTime = beginTime;

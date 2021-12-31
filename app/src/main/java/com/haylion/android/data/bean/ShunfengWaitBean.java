@@ -25,10 +25,12 @@ public class ShunfengWaitBean {
     private String orderNo;
     private int orderType;
     private String depotStartAddress;
+    private String depotStartDetailAddress;
     private double depotStartLongitude;
     private double depotStartLatitude;
     private String takeTime;
     private String depotEndAddress;
+    private String depotEndDetailAddress;
     private double depotEndLongitude;
     private double depotEndLatitude;
     private String deliveryTime;
@@ -37,6 +39,22 @@ public class ShunfengWaitBean {
     private String endDate;
     private int price;
     private String createTime;
+
+    public String getDepotStartDetailAddress() {
+        return depotStartDetailAddress;
+    }
+
+    public void setDepotStartDetailAddress(String depotStartDetailAddress) {
+        this.depotStartDetailAddress = depotStartDetailAddress;
+    }
+
+    public String getDepotEndDetailAddress() {
+        return depotEndDetailAddress;
+    }
+
+    public void setDepotEndDetailAddress(String depotEndDetailAddress) {
+        this.depotEndDetailAddress = depotEndDetailAddress;
+    }
 
     public int getId() {
         return id;

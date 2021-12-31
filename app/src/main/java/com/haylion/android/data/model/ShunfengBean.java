@@ -38,6 +38,7 @@ public class ShunfengBean {
     private int id;
     private int driverStatus;
     private String depotStartAddress;
+    private String depotStartDetailAddress;
     private double depotStartLongitude;
     private double depotStartLatitude;
     private String depotStartConcat1;
@@ -48,6 +49,7 @@ public class ShunfengBean {
     private String depotStartPhone3;
     private String takeTime;
     private String depotEndAddress;
+    private String depotEndDetailAddress;
     private double depotEndLongitude;
     private double depotEndLatitude;
     private String depotEndConcat1;
@@ -62,6 +64,22 @@ public class ShunfengBean {
     private int price;
     private int orderType = ORDER_TYPE_SHUNFENG;
     private List<GrabDateListBean> grabDateList;
+
+    public String getDepotEndDetailAddress() {
+        return depotEndDetailAddress;
+    }
+
+    public void setDepotEndDetailAddress(String depotEndDetailAddress) {
+        this.depotEndDetailAddress = depotEndDetailAddress;
+    }
+
+    public String getDepotStartDetailAddress() {
+        return depotStartDetailAddress;
+    }
+
+    public void setDepotStartDetailAddress(String depotStartDetailAddress) {
+        this.depotStartDetailAddress = depotStartDetailAddress;
+    }
 
     public int getDriverStatus() {
         return driverStatus;

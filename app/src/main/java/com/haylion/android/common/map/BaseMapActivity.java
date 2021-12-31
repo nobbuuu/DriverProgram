@@ -84,7 +84,7 @@ public abstract class BaseMapActivity<P extends AbstractPresenter> extends BaseA
     protected int resIdEnd = R.mipmap.get_off;
     protected int resIdCar = R.mipmap.driving_car;
     private String markerTitle = "送货地址";
-    private String markerStartTitle = "取货地址";
+    private String markerStartTitle = "出发地址";
 
 
     /**
