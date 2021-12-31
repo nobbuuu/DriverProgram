@@ -122,9 +122,13 @@ public class OrderPreSignActivity extends BaseActivity<PreSignContract.Presenter
             tvArriveTime.setText("送达时间：" + time);
         }
         arriveTime = tvArriveTime.getText().toString();
-        long tempTime = l - OrderDetailActivity.startTime;
-        String matchTime = AmapUtils.matchTime(tempTime / 1000);
-        ordertimeTv.setText("订单耗时：" + matchTime);
+        String actualDeliveryTimeSecond = data.getActualDeliveryTimeSecond();
+        String beginTimeSecond = data.getBeginTimeSecond();
+        if (actualDeliveryTimeSecond != null && beginTimeSecond != null) {
+            long costTime = Long.valueOf(actualDeliveryTimeSecond) - Long.valueOf(beginTimeSecond);
+            String matchTime = AmapUtils.matchTime(costTime / 1000);
+            ordertimeTv.setText("订单耗时：" + matchTime);
+        }
         totalTime = ordertimeTv.getText().toString();
         carGoList = data.getCargoList();
         Log.d("aaa", "carGoList = " + carGoList);
@@ -161,11 +165,11 @@ public class OrderPreSignActivity extends BaseActivity<PreSignContract.Presenter
         if (mobile5 != null && !mobile5.isEmpty()) {
             deliveryPhoneList.add(mobile5);
         }
-        if (mOrder.getOrderStatus() < 4){
+        if (mOrder.getOrderStatus() < 4) {
             if (phoneList.size() > 0) {
                 phoneNumber1.setText("取货电话（" + phoneList.size() + "位联系人）");
             }
-        }else {
+        } else {
             if (deliveryPhoneList.size() > 0) {
                 phoneNumber1.setText("送货电话（" + deliveryPhoneList.size() + "位联系人）");
             }
@@ -186,7 +190,7 @@ public class OrderPreSignActivity extends BaseActivity<PreSignContract.Presenter
                 break;
             case R.id.phone_take:
                 if (mOrder != null) {
-                    if (mOrder.getOrderStatus() < 4){
+                    if (mOrder.getOrderStatus() < 4) {
                         String mobile = mOrder.getPickupContactMobile();
                         String mobile1 = mOrder.getPickupContactMobile1();
                         String mobile2 = mOrder.getPickupContactMobile2();
@@ -194,7 +198,7 @@ public class OrderPreSignActivity extends BaseActivity<PreSignContract.Presenter
                             ToastUtils.showLong(getContext(), "暂无电话数据");
                             return;
                         }
-                    }else {
+                    } else {
                         String mobile = mOrder.getDeliveryContactMobile();
                         String mobile1 = mOrder.getDeliveryContactMobile1();
                         String mobile2 = mOrder.getDeliveryContactMobile2();

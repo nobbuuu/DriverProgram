@@ -114,7 +114,7 @@ class AppointMentAdapter : BaseQuickAdapter<Order, BaseViewHolder>(R.layout.book
             } else {
                 val endTimeArrary = endTime?.split("-")
                 if (!endTimeArrary.isNullOrEmpty() && endTimeArrary.size >= 3) {
-                    takeTimeStr = endTimeArrary[1] + "-" + endTimeArrary[2]
+                    takeTimeStr = endTimeArrary[1] + "月" + endTimeArrary[2] + "日"
                 }
             }
             val takeSpan = StringUtil.setTextPartSizeColor(

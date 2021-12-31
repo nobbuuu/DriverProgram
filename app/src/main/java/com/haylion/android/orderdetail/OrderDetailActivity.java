@@ -479,8 +479,7 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
                             presenter.changeOrderStatus(orderId, orderStatus + 1);
                             break;
                         case 4://送货中
-                            OrderPreSignActivity.go(getContext(), order.getOrderId());
-                            finish();
+                            presenter.changeOrderStatus(orderId, 5);
                             break;
                     }
 
@@ -969,6 +968,10 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
                     }
                     SynaTimeUtils.getInstance().post(order);
                     break;
+                case 5://订单验签
+                    OrderPreSignActivity.go(getContext(), order.getOrderId());
+                    finish();
+                    break;
             }
         }
     }
@@ -1083,8 +1086,8 @@ public class OrderDetailActivity extends BaseMapActivity<OrderDetailContract.Pre
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(String tips) {
-        if (tips!= null && tips.equals("timeout") &&  order != null){
-            new TimeoutDialog(getContext(),order).show();
+        if (tips != null && tips.equals("timeout") && order != null) {
+            new TimeoutDialog(getContext(), order).show();
         }
     }
 

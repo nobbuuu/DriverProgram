@@ -82,6 +82,7 @@ public class OrderDetailBean {
     private String depotEndPhone3;
     private String deliveryTime;
     private String actualDeliveryTime;
+    private String actualDeliveryTimeSecond;
     private String startDate;
     private String endDate;
     private double price;
@@ -91,6 +92,7 @@ public class OrderDetailBean {
     private String beginTime;
     private String actualBeginTime;
     private String beginDate;
+    private String beginTimeSecond;
     private int driverId;
     private String driverName;
     private String driverCarNumberStr;
@@ -99,6 +101,22 @@ public class OrderDetailBean {
     private List<String> cargoList;
     private Object detailList;
 
+
+    public String getActualDeliveryTimeSecond() {
+        return actualDeliveryTimeSecond;
+    }
+
+    public void setActualDeliveryTimeSecond(String actualDeliveryTimeSecond) {
+        this.actualDeliveryTimeSecond = actualDeliveryTimeSecond;
+    }
+
+    public String getBeginTimeSecond() {
+        return beginTimeSecond;
+    }
+
+    public void setBeginTimeSecond(String beginTimeSecond) {
+        this.beginTimeSecond = beginTimeSecond;
+    }
 
     public String getDepotStartDetailAddress() {
         return depotStartDetailAddress;

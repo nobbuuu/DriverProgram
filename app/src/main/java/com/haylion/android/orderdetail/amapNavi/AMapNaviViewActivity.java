@@ -212,8 +212,7 @@ public class AMapNaviViewActivity extends BaseMapNaviActivity<OrderDetailContrac
                     //实时订单 or 货拼客
                     handleRealTimeOrderSlide();
                 } else if (orderType == ORDER_TYPE_SHUNFENG) {
-                    OrderPreSignActivity.go(getContext(), orderId);
-                    finish();
+                    presenter.changeOrderStatus(orderId, 5);
                 } else {
                     presenter.changeOrderStatus(cargoOrderId, OrderDetailPresenter.OPERATAR_BY_AMAP_NAVI);
                 }
@@ -284,10 +283,11 @@ public class AMapNaviViewActivity extends BaseMapNaviActivity<OrderDetailContrac
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(String tips) {
-        if (tips!= null && tips.equals("timeout") &&  order != null){
-            new TimeoutDialog(getContext(),order).show();
+        if (tips != null && tips.equals("timeout") && order != null) {
+            new TimeoutDialog(getContext(), order).show();
         }
     }
+
     /**
      * 联系乘客
      */
@@ -640,12 +640,17 @@ public class AMapNaviViewActivity extends BaseMapNaviActivity<OrderDetailContrac
                 finish();
             }
         }
-        slideview.reset();
+        if (order.getOrderStatus() < 4){
+            slideview.setVisibility(View.GONE);
+        }else {
+            slideview.reset();
+        }
     }
 
     @Override
     public void changeShunFengOrderStatusSuccess(int status) {
-
+        OrderPreSignActivity.go(getContext(), orderId);
+        finish();
     }
 
     /**
@@ -706,15 +711,12 @@ public class AMapNaviViewActivity extends BaseMapNaviActivity<OrderDetailContrac
         BitmapDescriptor startBitmap = BitmapDescriptorFactory.fromView(AMapUtil.getView(this, R.mipmap.ic_transparent, ""));
         options.setStartPointBitmap(startBitmap.getBitmap());
         BitmapDescriptor endBitmap;
-        if (order.getOrderStatus() == Order.ORDER_STATUS_WAIT_CAR) {  //去接乘客
-            //终点图标 - 显示上车点图标和地址
-            endBitmap = BitmapDescriptorFactory.fromView(AMapUtil.getView(this, R.mipmap.get_on, order.getStartAddr().getName()));
-            options.setEndPointBitmap(endBitmap.getBitmap());
+        if (orderType == ORDER_TYPE_SHUNFENG && order.getOrderStatus() < 4) {
+            endBitmap = BitmapDescriptorFactory.fromView(AMapUtil.getView(this, R.mipmap.get_off, order.getStartAddr().getName()));
         } else {
-            //终点图标 - 显示下车点图标和地址
-            endBitmap = BitmapDescriptorFactory.fromView(AMapUtil.getView(this, R.mipmap.get_off, order.getEndAddr().getName()));
-            options.setEndPointBitmap(endBitmap.getBitmap());
+            endBitmap = BitmapDescriptorFactory.fromView(AMapUtil.getView(this, R.mipmap.get_on, order.getEndAddr().getName()));
         }
+        options.setEndPointBitmap(endBitmap.getBitmap());
         mAMapNaviView.setViewOptions(options);
     }
 

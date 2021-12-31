@@ -23,6 +23,7 @@ import com.haylion.android.data.model.Order;
 import com.haylion.android.data.util.BusinessUtils;
 import com.haylion.android.data.util.StringUtil;
 import com.haylion.android.main.OrderInfoAdapter;
+import com.haylion.android.orderdetail.amapNavi.AMapNaviViewActivity;
 import com.haylion.android.utils.AmapUtils;
 import com.haylion.android.utils.SpUtils;
 
@@ -72,6 +73,12 @@ public class MainShunfengAdapter extends RVBaseAdapter<Order> {
             @Override
             public void onRideRouteSearched(RideRouteResult rideRouteResult, int i) {
 
+            }
+        });
+        holder.setOnClickListener(R.id.tv_contact_passenger, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AMapNaviViewActivity.go(context,order.getOrderId(),order.getOrderType());
             }
         });
         String location_lat = (String) SpUtils.getParam(Const.CUR_LATITUTE, "0");

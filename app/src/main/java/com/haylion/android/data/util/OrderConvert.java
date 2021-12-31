@@ -674,7 +674,7 @@ public class OrderConvert {
 //        order.setPassengerNum(newOrder.getCarpoolNumber());
 
         //订单类型和时间
-        order.setOrderType(newOrder.getOrderType());
+        order.setOrderType(Order.ORDER_TYPE_SHUNFENG);
 //        order.setChannel(newOrder.getChannel());
         order.setTakeTime(newOrder.getTakeTime());
         order.setDeliveryTime(newOrder.getDeliveryTime());
