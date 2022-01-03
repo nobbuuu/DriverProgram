@@ -114,23 +114,19 @@ public class OrderCompleteActivity extends BaseActivity<PreSignContract.Presente
     @Override
     public void showOrderInfo(OrderDetailBean data) {
 
-        tvStartAddr.setText(data.getDepotStartAddress());
-        tvArriveAddr.setText(data.getDepotEndAddress());
+        tvStartAddr.setText(data.getDepotStartDetailAddress());
+        tvArriveAddr.setText(data.getDepotEndDetailAddress());
         String actualDeliveryTime = data.getActualDeliveryTime();
         if (TextUtils.isEmpty(actualDeliveryTime)) {
             actualDeliveryTime = data.getDeliveryTime();
         }
         tvArriveTime.setText("送达时间：" + actualDeliveryTime);
-
-        Date starTime = DateFormatUtil.getTime(data.getBeginTime(), "yyyy-MM-dd HH:mm:ss");
-        String endTimeReal = DateFormatUtil.getTime(new Date(), DateStyle.YYYY_MM_DD.getValue()) + " " + actualDeliveryTime;
-        Date endTime = DateFormatUtil.getTime(endTimeReal, "yyyy-MM-dd HH:mm");
-        if (starTime != null && endTime != null) {
-            long timeCost = endTime.getTime() - starTime.getTime();
-            if (timeCost > 0) {
-                String timeLenth = DateUtils.getTimeLenthStr(timeCost);
-                totalCost.setText("订单耗时：" + timeLenth);
-            }
+        String actualDeliveryTimeSecond = data.getActualDeliveryTimeSecond();
+        String beginTimeSecond = data.getBeginTimeSecond();
+        if (actualDeliveryTimeSecond != null && beginTimeSecond != null) {
+            long costTime = Long.valueOf(actualDeliveryTimeSecond) - Long.valueOf(beginTimeSecond);
+            String matchTime = DateUtils.getTimeLenthStr(costTime);
+            totalCost.setText("订单耗时：" + matchTime);
         }
         List<String> cargoList = data.getCargoList();
         if (cargoList != null && cargoList.size() > 0) {

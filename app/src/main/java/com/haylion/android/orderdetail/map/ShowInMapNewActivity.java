@@ -59,6 +59,7 @@ import com.amap.api.services.route.RideRouteResult;
 import com.amap.api.services.route.RouteSearch;
 import com.amap.api.services.route.WalkRouteResult;
 import com.haylion.android.R;
+import com.haylion.android.common.Const;
 import com.haylion.android.common.aibus_location.data.GpsData;
 import com.haylion.android.common.map.AMapUtil;
 import com.haylion.android.common.map.BaseMapActivity;
@@ -78,6 +79,7 @@ import com.haylion.android.mvp.util.LogUtils;
 import com.haylion.android.orderdetail.OrderDetailActivity;
 import com.haylion.android.service.FloatDialogService;
 import com.haylion.android.service.WsCommands;
+import com.haylion.android.utils.SpUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -152,7 +154,12 @@ public class ShowInMapNewActivity extends BaseMapActivity<ShowInMapContract.Pres
         setContentView(R.layout.show_in_map_act);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
-        setStartMarkerTitle("取货地址");
+        String startAddress = getIntent().getStringExtra("startAddress");
+        if (startAddress != null && !startAddress.isEmpty()) {
+            setStartMarkerTitle(startAddress);
+        } else {
+            setStartMarkerTitle("取货地址");
+        }
         setEndMarkerTitle("送货地址");
         initMap(savedInstanceState);
 

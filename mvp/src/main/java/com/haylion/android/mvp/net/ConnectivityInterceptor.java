@@ -48,15 +48,7 @@ public class ConnectivityInterceptor implements Interceptor {
      * log拦截器
      */
     public HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(message -> {
-
-
-        try {
-            String text = URLDecoder.decode(message, "utf-8");
-            Log.e("OKHttp-->", text);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            Log.e("OKHttp-->", message);
-        }
+        Log.e("OKHttp-->", message);
     });
 
 }

@@ -792,6 +792,7 @@ public class OrderConvert {
         Order order = new Order();
         order.setOrderId(orderHistory.getId());
         order.setOrderCode(orderHistory.getOrderNo());
+        order.setActualDeliveryTimeSecond(orderHistory.getDeliveryTimeSecond());
 
         //起点和终点
         AddressInfo start = new AddressInfo();

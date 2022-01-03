@@ -80,16 +80,44 @@ public class HistoryOrderBean {
         private String depotStartLongitude;
         private String depotStartLatitude;
         private String takeTime;
+        private String actualTakeTime;
+        private String actualTakeTimeSecond;
         private String depotEndAddress;
         private String depotEndDetailAddress;
         private String depotEndLongitude;
         private String depotEndLatitude;
         private String deliveryTime;
         private String actualDeliveryTime;
+        private String deliveryTimeSecond;
         private String startDate;
         private String endDate;
         private int price;
         private String createTime;
+
+
+        public String getActualTakeTime() {
+            return actualTakeTime;
+        }
+
+        public void setActualTakeTime(String actualTakeTime) {
+            this.actualTakeTime = actualTakeTime;
+        }
+
+        public String getActualTakeTimeSecond() {
+            return actualTakeTimeSecond;
+        }
+
+        public void setActualTakeTimeSecond(String actualTakeTimeSecond) {
+            this.actualTakeTimeSecond = actualTakeTimeSecond;
+        }
+
+        public String getDeliveryTimeSecond() {
+            return deliveryTimeSecond;
+        }
+
+        public void setDeliveryTimeSecond(String deliveryTimeSecond) {
+            this.deliveryTimeSecond = deliveryTimeSecond;
+        }
 
         public String getDepotStartDetailAddress() {
             return depotStartDetailAddress;

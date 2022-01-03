@@ -7,23 +7,14 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.amap.api.maps.AMap;
 import com.haylion.android.R;
-import com.haylion.android.activity.OrderCompleteActivity;
-import com.haylion.android.activity.PreScanActivity;
 import com.haylion.android.calendar.DateFormatUtil;
 import com.haylion.android.calendar.DateStyle;
-import com.haylion.android.common.map.AMapUtil;
 import com.haylion.android.data.base.BaseItemView;
 import com.haylion.android.data.model.Order;
 import com.haylion.android.data.model.OrderStatus;
 import com.haylion.android.data.model.OrderTypeInfo;
-import com.haylion.android.data.util.BusinessUtils;
-import com.haylion.android.data.util.ResourceUtil;
-import com.haylion.android.orderdetail.OrderDetailActivity;
-import com.haylion.android.orderdetail.amapNavi.AMapNaviViewActivity;
 
-import java.text.ParseException;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -102,15 +93,16 @@ public class OrderListItemView extends BaseItemView<Order> {
 
         //订单时间信息
         //时间展示日期和小时信息
-        String time = order.getDeliveryTime();
-        String actualDeliveryTime = order.getActualDeliveryTime();
+        String time = order.getActualDeliveryTime();
+        String actualDeliveryTime = order.getActualDeliveryTimeSecond();
         if (actualDeliveryTime != null && !actualDeliveryTime.isEmpty()) {
             String curTime = DateFormatUtil.getTime(new Date(), DateStyle.YYYY_MM_DD.getValue());
-            String deliveryTimeStr = order.getEndTime() + " ";
-            if (order.getEndTime() != null && curTime.equals(order.getEndTime())) {
-                deliveryTimeStr = "今日";
+            String endTime = DateFormatUtil.getTime(Long.valueOf(actualDeliveryTime), DateStyle.YYYY_MM_DD.getValue());
+            if (endTime != null && curTime.equals(endTime)) {
+                orderTime.setText("今日" + time + "送达");
+            } else {
+                orderTime.setText(endTime + " " + time + "送达");
             }
-            orderTime.setText(deliveryTimeStr + time + "送达");
         } else {
             orderTime.setText("预约" + time + "送达");
         }

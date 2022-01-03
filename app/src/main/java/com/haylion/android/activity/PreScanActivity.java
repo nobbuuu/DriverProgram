@@ -216,12 +216,13 @@ public class PreScanActivity extends BaseActivity<PreSignContract.Presenter> imp
             String latitute = (String) SpUtils.getParam(Const.CUR_LATITUTE, "0");
             String longTitute = (String) SpUtils.getParam(Const.CUR_LONGITUDE, "0");
             LatLng startLatLng = null;
-            if (latitute.equals("0") || longTitute.equals("0")){
+            if (latitute.equals("0") || longTitute.equals("0")) {
                 startLatLng = new LatLng(data.getDepotStartLatitude(), data.getDepotStartLongitude());
-            }else {
+            } else {
                 startLatLng = new LatLng(Double.valueOf(latitute), Double.valueOf(longTitute));
             }
             LatLng endLatLng = new LatLng(data.getDepotEndLatitude(), data.getDepotEndLongitude());
+
             AmapUtils.caculateDistance(startLatLng, endLatLng, new RouteSearch.OnRouteSearchListener() {
                 @Override
                 public void onBusRouteSearched(BusRouteResult busRouteResult, int i) {
@@ -244,7 +245,7 @@ public class PreScanActivity extends BaseActivity<PreSignContract.Presenter> imp
 
                 }
             });
-            tvArriveAddr.setText(data.getDepotEndAddress());
+            tvArriveAddr.setText(data.getDepotEndDetailAddress());
             List<String> cargoList = data.getCargoList();
             if (cargoList != null && cargoList.size() > 0) {
                 mGoodsList.addAll(cargoList);
@@ -291,9 +292,17 @@ public class PreScanActivity extends BaseActivity<PreSignContract.Presenter> imp
                     Intent intent = new Intent(getContext(), ShowInMapNewActivity.class);
                     intent.putExtra(ShowInMapNewActivity.EXTRA_GRAB_ENABLED, false);
                     AddressInfo start = mOrder.getStartAddr();
+                    String latitute = (String) SpUtils.getParam(Const.CUR_LATITUTE, "0");
+                    String longTitute = (String) SpUtils.getParam(Const.CUR_LONGITUDE, "0");
+                    if (!latitute.equals("0") && !longTitute.equals("0")) {
+                        start = new AddressInfo();
+                        start.setLatLng(new LatLng(Double.valueOf(latitute), Double.valueOf(longTitute)));
+                        start.setAddressDetail("出发地址");
+                    }
                     intent.putExtra(ShowInMapNewActivity.ORDER_START_ADDR, start);
                     AddressInfo end = mOrder.getEndAddr();
                     intent.putExtra(ShowInMapNewActivity.ORDER_END_ADDR, end);
+                    intent.putExtra("startAddress", "出发地址");
                     startActivity(intent);
                 }
                 break;

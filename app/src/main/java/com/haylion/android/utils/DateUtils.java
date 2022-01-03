@@ -23,10 +23,10 @@ public class DateUtils {
             long minute = second / 60;
             if (minute < 60) {
                 long sSecond = second % 60;
-                if (sSecond == 0){
+                if (sSecond == 0) {
                     bean.setTime(minute);
                     bean.setUnit("分钟");
-                }else {
+                } else {
                     bean.setTime(minute);
                     bean.setUnit("分钟");
                     bean.setTime1(sSecond);
@@ -80,15 +80,17 @@ public class DateUtils {
             buffer.append(second + "秒");
         } else {
             long minute = second / 60;
+            Log.d("aaa", "minute = " + minute);
             if (minute < 60) {
                 long sSecond = second % 60;
-                if (sSecond == 0){
+                if (sSecond == 0) {
                     buffer.append(minute + "分钟");
-                }else {
+                } else {
                     buffer.append(minute + "分钟" + sSecond + "秒");
                 }
             } else {
                 long hour = minute / 60;
+                Log.d("aaa", "hour = " + hour);
                 if (hour < 24) {
                     long sMinute = minute % 60;
                     long lSecond = sMinute % 60;
@@ -106,22 +108,26 @@ public class DateUtils {
                 } else {
                     long day = hour / 24;
                     long sHour = hour % 24;
+                    long minutt = sHour % 60;
+                    Log.d("aaa", "sHour = " + sHour);
                     if (sHour != 0) {
-                        long thour = sHour / 60;
-                        long sMinute = minute % 60;
-                        long lSecond = sMinute % 60;
-                        if (sMinute != 0) {
+                        long lSecond = minutt % 60;
+                        if (minutt != 0) {
                             if (lSecond != 0) {
-//                                buffer.append(thour + "小时" + sMinute + "分钟" + lSecond + "秒");
-                                buffer.append(thour + "小时" + sMinute + "分钟");
+//                            buffer.append(day + "天" + hour + "小时" + sMinute + "分钟" + lSecond + "秒");
+                                buffer.append(day + "天" + sHour + "小时" + minutt + "分钟");
                             } else {
-                                buffer.append(thour + "小时" + sMinute + "分钟");
+                                buffer.append(day + "天" + sHour + "小时" + minutt + "分钟");
                             }
                         } else {
-                            buffer.append(thour + "小时");
+                            buffer.append(day + "天" + sHour + "小时");
                         }
                     } else {
-                        buffer.append(day + "天");
+                        if (minutt != 0) {
+                            buffer.append(day + "天" + minutt + "分钟");
+                        } else {
+                            buffer.append(day + "天");
+                        }
                     }
                 }
             }

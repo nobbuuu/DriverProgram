@@ -29,6 +29,7 @@ import com.haylion.android.mvp.util.ToastUtils;
 import com.haylion.android.orderdetail.OrderDetailActivity;
 import com.haylion.android.presenter.PreSignPresenter;
 import com.haylion.android.utils.AmapUtils;
+import com.haylion.android.utils.DateUtils;
 import com.haylion.android.utils.PhoneUtils;
 
 import java.util.ArrayList;
@@ -126,7 +127,7 @@ public class OrderPreSignActivity extends BaseActivity<PreSignContract.Presenter
         String beginTimeSecond = data.getBeginTimeSecond();
         if (actualDeliveryTimeSecond != null && beginTimeSecond != null) {
             long costTime = Long.valueOf(actualDeliveryTimeSecond) - Long.valueOf(beginTimeSecond);
-            String matchTime = AmapUtils.matchTime(costTime / 1000);
+            String matchTime = DateUtils.getTimeLenthStr(costTime);
             ordertimeTv.setText("订单耗时：" + matchTime);
         }
         totalTime = ordertimeTv.getText().toString();
