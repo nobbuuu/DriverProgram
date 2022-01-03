@@ -74,6 +74,8 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
     @BindView(R.id.smartRefresh)
     SmartRefreshLayout smartRefresh;
 
+    private int mCurTabId = R.id.tab_children;
+
     private GrabAppointmentDialog mGrabDialog;
 
     public static void start(Context context) {
@@ -89,6 +91,7 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
         mAppointmentList.setAdapter(mApppointAdapter);
         //订单tab切换
         mTabIndicator.setOnCheckedChangeListener((radioGroup, checkedId) -> {
+            mCurTabId = checkedId;
             for (int i = 0; i < radioGroup.getChildCount(); i++) {
                 View childView = radioGroup.getChildAt(i);
                 if (childView instanceof RadioButton) {
@@ -97,24 +100,28 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
                 }
             }
 //            mAppointmentList.refreshComplete();
-            if (checkedId == R.id.tab_shunfeng) {
-                presenter.getShunfengOrder();
-            } else if (checkedId == R.id.tab_hall) {
-                presenter.appointmentHall();
-                mTabTips.setText(R.string.tips_appointment_hall);
-            } else if (checkedId == R.id.tab_children) {
-                presenter.childrenOrderCenter();
-                // 新迭代后，标签提示信息不再显示
-            } else if (checkedId == R.id.tab_accessibility) { // 女性专车订单
-                presenter.getAccessibilityOrder();
-
-            } else {
-                presenter.getAppointmentList();
-                mTabTips.setText(R.string.tips_appointment_unfinished);
-            }
+            loadData(checkedId);
         });
         onevent();
-        presenter.getShunfengOrder(); // 初始显示预约大厅
+//        presenter.getShunfengOrder(); // 初始显示预约大厅
+        presenter.childrenOrderCenter();
+    }
+
+    private void loadData(int checkedId) {
+        if (checkedId == R.id.tab_shunfeng) {
+            presenter.getShunfengOrder();
+        } else if (checkedId == R.id.tab_hall) {
+            presenter.appointmentHall();
+            mTabTips.setText(R.string.tips_appointment_hall);
+        } else if (checkedId == R.id.tab_children) {
+            presenter.childrenOrderCenter();
+            // 新迭代后，标签提示信息不再显示
+        } else if (checkedId == R.id.tab_accessibility) { // 女性专车订单
+            presenter.getAccessibilityOrder();
+        } else {
+            presenter.getAppointmentList();
+            mTabTips.setText(R.string.tips_appointment_unfinished);
+        }
     }
 
     private void onevent() {
@@ -179,7 +186,7 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
         smartRefresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                presenter.getShunfengOrder();
+                loadData(mCurTabId);
             }
         });
     }
@@ -222,6 +229,7 @@ public class AppointmentListActivity extends BaseActivity<AppointmentListContrac
 
     private void checkOrdersEmpty(List<Order> orders, int orderTab) {
         boolean noOrders = false;
+        smartRefresh.finishRefresh();
         if (orders == null || orders.isEmpty()) {
             if (orderTab == mTabIndicator.getCheckedRadioButtonId()) {
                 if (orderTab == R.id.tab_shunfeng) {
