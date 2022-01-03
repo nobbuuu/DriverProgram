@@ -52,12 +52,14 @@
             android:text="@string/tab_shunfeng_order"
             android:textColor="@color/tab_text"
             android:textSize="@dimen/sp_16"
+            android:visibility="gone"
             android:textStyle="bold" />
 
         <View
             android:layout_width="@dimen/dp_0_5"
             android:layout_height="@dimen/dp_14"
             android:layout_gravity="center"
+            android:visibility="gone"
             android:background="@color/c_cccccc" />
 
         <RadioButton

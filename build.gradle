@@ -51,8 +51,8 @@ ext {
             compileSdkVersion: 28, // 9.0
             buildToolsVersion: '28.0.3',
 
-            versionCode      : 298,
-            versionName      : '1.0.298',
+            versionCode      : 20220103,
+            versionName      : '1.1.0',
     ]
 
     signing = [
