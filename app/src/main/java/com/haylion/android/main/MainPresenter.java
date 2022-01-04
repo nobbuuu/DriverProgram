@@ -599,15 +599,15 @@ public class MainPresenter extends BasePresenter<MainContract.View, OrderReposit
             @Override
             public void onSuccess(List<ShunfengWaitBean> data) {
                 Log.d("aaa","456  data = " + data);
+                List<Order> orders = new ArrayList<>();
                 if (data != null && data.size() > 0) {
                     Log.d("aaa","000  data.size = " + data.size());
-                    List<Order> orders = new ArrayList<>();
                     for (ShunfengWaitBean bean : data) {
                         Order order = OrderConvert.shufengConvertToOrder(bean);
                         orders.add(order);
                     }
-                    view.onShunfengOrders(orders);
                 }
+                view.onShunfengOrders(orders);
             }
 
             @Override
