@@ -711,32 +711,33 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
     @Override
     public void onShunfengOrders(List<Order> list) {
         smartRefresh.finishRefresh();
+        RecyclerView mShunfengListview = findViewById(R.id.myListView_shunfeng_order);
+        MainShunfengAdapter adapter = new MainShunfengAdapter(this, list, R.layout.main_shunfeng_list_item);
+        mShunfengListview.setAdapter(adapter);
+        adapter.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onItemClick(Order order) {
+                switch (order.getOrderStatus()) {
+//                        待开始 = 0、待到店 = 1、待扫描=2、待取货签名=3、送货中=4、已完成=5
+                    case 0:
+                    case 1:
+                    case 4:
+                        OrderDetailActivity.go(getContext(), order.getOrderId(), ORDER_TYPE_SHUNFENG);
+                        break;
+                    case 2:
+                    case 3:
+                        PreScanActivity.go(getContext(), order.getOrderId());
+                        break;
+                    case 5:
+                        OrderCompleteActivity.go(getContext(), order.getOrderId(), 2);
+                        break;
+                }
+            }
+        });
         if (list != null && list.size() > 0) {
             llOrderListIsNull.setVisibility(View.GONE);
-
-            RecyclerView mShunfengListview = findViewById(R.id.myListView_shunfeng_order);
-            MainShunfengAdapter adapter = new MainShunfengAdapter(this, list, R.layout.main_shunfeng_list_item);
-            mShunfengListview.setAdapter(adapter);
-            adapter.setItemClickListener(new ItemClickListener() {
-                @Override
-                public void onItemClick(Order order) {
-                    switch (order.getOrderStatus()) {
-//                        待开始 = 0、待到店 = 1、待扫描=2、待取货签名=3、送货中=4、已完成=5
-                        case 0:
-                        case 1:
-                        case 4:
-                            OrderDetailActivity.go(getContext(), order.getOrderId(), ORDER_TYPE_SHUNFENG);
-                            break;
-                        case 2:
-                        case 3:
-                            PreScanActivity.go(getContext(), order.getOrderId());
-                            break;
-                        case 5:
-                            OrderCompleteActivity.go(getContext(), order.getOrderId(), 2);
-                            break;
-                    }
-                }
-            });
+        }else {
+            llOrderListIsNull.setVisibility(View.VISIBLE);
         }
     }
 

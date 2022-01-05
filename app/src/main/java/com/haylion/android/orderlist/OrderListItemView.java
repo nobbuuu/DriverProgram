@@ -93,18 +93,30 @@ public class OrderListItemView extends BaseItemView<Order> {
 
         //订单时间信息
         //时间展示日期和小时信息
-        String time = order.getActualDeliveryTime();
-        String actualDeliveryTime = order.getActualDeliveryTimeSecond();
-        if (actualDeliveryTime != null && !actualDeliveryTime.isEmpty()) {
-            String curTime = DateFormatUtil.getTime(new Date(), DateStyle.YYYY_MM_DD.getValue());
-            String endTime = DateFormatUtil.getTime(Long.valueOf(actualDeliveryTime), DateStyle.YYYY_MM_DD.getValue());
+        String deliveryTime = order.getDeliveryTime();
+        String actualDeliveryTime = order.getActualDeliveryTime();
+        String actualDeliveryTimeSecond = order.getActualDeliveryTimeSecond();
+        String yyEndTime = order.getEndTime();
+        String curTime = DateFormatUtil.getTime(new Date(), DateStyle.YYYY_MM_DD.getValue());
+        String endTime = DateFormatUtil.getTime(Long.valueOf(actualDeliveryTimeSecond), DateStyle.YYYY_MM_DD.getValue());
+        String realTime = DateFormatUtil.getTime(Long.valueOf(actualDeliveryTimeSecond), DateStyle.MM_DD_HH_MM.getValue());
+        if (order.getOrderStatus() == 5) {
             if (endTime != null && curTime.equals(endTime)) {
-                orderTime.setText("今日" + time + "送达");
+                orderTime.setText("今日" + actualDeliveryTime + "送达");
             } else {
-                orderTime.setText(endTime + " " + time + "送达");
+                orderTime.setText(realTime + "送达");
             }
         } else {
-            orderTime.setText("预约" + time + "送达");
+            if (endTime != null && curTime.equals(endTime)) {
+                orderTime.setText("预约今日" + deliveryTime + "送达");
+            } else {
+                String[] split = yyEndTime.split("-");
+                if (split.length >= 3) {
+                    orderTime.setText("预约" + split[1] + "-" + split[2] + " " + deliveryTime + "送达");
+                } else {
+                    orderTime.setText("预约" + deliveryTime + "送达");
+                }
+            }
         }
 
         //订单状态
