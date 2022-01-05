@@ -50,7 +50,7 @@ public class ConnectivityInterceptor implements Interceptor {
      * log拦截器
      */
     public HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(message -> {
-        Log.e("OKHttp-->", message);
+        Log.d("OKHttp-->", message);
     });
 
 }

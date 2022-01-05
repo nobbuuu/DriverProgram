@@ -71,8 +71,10 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled false
             pseudoLocalesEnabled true
+//            buildConfigField "String", "API_URL", '"https://www.pcdd-maas.com/"'
             buildConfigField "String", "API_URL", '"https://47.112.172.118:6663/"'
             buildConfigField "String", "API_WEBSOCKET_URL", '"wss://47.112.172.118:6663/ws/"'
+//            buildConfigField "String", "API_WEBSOCKET_URL", '"wss://https://www.pcdd-maas.com/ws/"'
             buildConfigField "String", "BUGLY_APP_ID", '"21c2f9d4b8"'
             //高德key
             manifestPlaceholders = [BAIDU_APPKEY_VALUE : '66b6cb4c82',
