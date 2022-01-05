@@ -33,13 +33,13 @@ public class ConnectivityInterceptor implements Interceptor {
         if (NetworkUtils.isConnected(context)) {
             Request request = chain.request();
             //测试环境登录接口需要切端口
-            /*HttpUrl url = request.url();
-            if (url.toString().contains("account")) {
+            HttpUrl url = request.url();
+            if (BuildConfig.BUILD_TYPE.equals("debug") && url.toString().contains("account")) {
                 Request.Builder newBuilder = request.newBuilder();
                 HttpUrl.Builder builder = url.newBuilder();
                 builder.port(6660);
                 return chain.proceed(newBuilder.url(builder.build()).build());
-            }*/
+            }
             return chain.proceed(request);
         } else {
             throw new NoConnectivityException();

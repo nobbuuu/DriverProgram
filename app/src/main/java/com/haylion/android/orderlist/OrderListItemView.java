@@ -99,12 +99,12 @@ public class OrderListItemView extends BaseItemView<Order> {
         String yyEndTime = order.getEndTime();
         String curTime = DateFormatUtil.getTime(new Date(), DateStyle.YYYY_MM_DD.getValue());
         String endTime = DateFormatUtil.getTime(Long.valueOf(actualDeliveryTimeSecond), DateStyle.YYYY_MM_DD.getValue());
-        String realTime = DateFormatUtil.getTime(Long.valueOf(actualDeliveryTimeSecond), DateStyle.MM_DD_HH_MM.getValue());
+        String realTime = DateFormatUtil.getTime(Long.valueOf(actualDeliveryTimeSecond), DateStyle.MM_DD.getValue());
         if (order.getOrderStatus() == 5) {
             if (endTime != null && curTime.equals(endTime)) {
                 orderTime.setText("今日" + actualDeliveryTime + "送达");
             } else {
-                orderTime.setText(realTime + "送达");
+                orderTime.setText(realTime + " " + actualDeliveryTime + "送达");
             }
         } else {
             if (endTime != null && curTime.equals(endTime)) {
