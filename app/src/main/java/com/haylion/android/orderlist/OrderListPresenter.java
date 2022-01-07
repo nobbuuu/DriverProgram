@@ -166,7 +166,7 @@ public class OrderListPresenter extends BasePresenter<OrderListContract.View, Or
         if (mOrderType == 3) {
             getShunfengOrderList();
         } else {
-            getOrderList();
+//            getOrderList();
         }
     }
 

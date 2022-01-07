@@ -244,7 +244,7 @@ public class OrderListActivity extends BaseActivity<OrderListContract.Presenter>
         mOrderList.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-                presenter.refreshOrderList(orderType);
+//                presenter.refreshOrderList(orderType);
             }
 
             @Override

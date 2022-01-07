@@ -69,84 +69,87 @@ public class OrderListItemView extends BaseItemView<Order> {
 
     @Override
     public void bind(Order order) {
+        if (order != null) {
+
 //        if (order.getOrderStatus() != Order.ORDER_STATUS_CANCELED) {
 //        orderStatus.setOnClickListener(v -> notifyItemAction(OrderClickArea.SHOW_IN_MAP));
-        rlOrderContent.setOnClickListener(v -> notifyItemAction(OrderClickArea.SHOW_IN_MAP));
+            rlOrderContent.setOnClickListener(v -> notifyItemAction(OrderClickArea.SHOW_IN_MAP));
 //        }
 
-        //是否展示listview的头部信息
-        if (order.getOrderType() != ORDER_TYPE_SHUNFENG && order.getHeaderNameDisplay() != null && !("").equals(order.getHeaderNameDisplay())) {
-            tvOrderStatusHeader.setText(order.getHeaderNameDisplay());
-            tvOrderStatusHeader.setVisibility(VISIBLE);
-        } else {
-            tvOrderStatusHeader.setVisibility(GONE);
-        }
+            //是否展示listview的头部信息
+            if (order.getOrderType() != ORDER_TYPE_SHUNFENG && order.getHeaderNameDisplay() != null && !("").equals(order.getHeaderNameDisplay())) {
+                tvOrderStatusHeader.setText(order.getHeaderNameDisplay());
+                tvOrderStatusHeader.setVisibility(VISIBLE);
+            } else {
+                tvOrderStatusHeader.setVisibility(GONE);
+            }
 
-        //订单编号
-        tvOrderNumber.setText(order.getOrderCode());
+            //订单编号
+            tvOrderNumber.setText(order.getOrderCode());
 
-        //地址信息
-        tvOrderGetOn.setText(order.getStartAddr().getName());
-        tvOrderGetOff.setText(order.getEndAddr().getName());
+            //地址信息
+            tvOrderGetOn.setText(order.getStartAddr().getName());
+            tvOrderGetOff.setText(order.getEndAddr().getName());
 //        tvGetOnDesc.setText(AMapUtil.getAddress(order.getStartAddr().getAddressDetail()));
 //        tvGetOffDesc.setText(AMapUtil.getAddress(order.getEndAddr().getAddressDetail()));
 
-        //订单时间信息
-        //时间展示日期和小时信息
-        String deliveryTime = order.getDeliveryTime();
-        String actualDeliveryTime = order.getActualDeliveryTime();
-        String actualDeliveryTimeSecond = order.getActualDeliveryTimeSecond();
-        String yyEndTime = order.getEndTime();
-        String curTime = DateFormatUtil.getTime(new Date(), DateStyle.YYYY_MM_DD.getValue());
-        String endTime = DateFormatUtil.getTime(Long.valueOf(actualDeliveryTimeSecond), DateStyle.YYYY_MM_DD.getValue());
-        String realTime = DateFormatUtil.getTime(Long.valueOf(actualDeliveryTimeSecond), DateStyle.MM_DD.getValue());
-        if (order.getOrderStatus() == 5) {
-            if (endTime != null && curTime.equals(endTime)) {
-                orderTime.setText("今日" + actualDeliveryTime + "送达");
-            } else {
-                orderTime.setText(realTime + " " + actualDeliveryTime + "送达");
-            }
-        } else {
-            if (endTime != null && curTime.equals(endTime)) {
-                orderTime.setText("预约今日" + deliveryTime + "送达");
-            } else {
-                String[] split = yyEndTime.split("-");
-                if (split.length >= 3) {
-                    orderTime.setText("预约" + split[1] + "-" + split[2] + " " + deliveryTime + "送达");
+            //订单时间信息
+            //时间展示日期和小时信息
+            String deliveryTime = order.getDeliveryTime();
+            String actualDeliveryTime = order.getActualDeliveryTime();
+            String actualDeliveryTimeSecond = order.getActualDeliveryTimeSecond();
+            String yyEndTime = order.getEndTime();
+            String curTime = DateFormatUtil.getTime(new Date(), DateStyle.YYYY_MM_DD.getValue());
+            if (order.getOrderStatus() == 5) {
+                String endTime = DateFormatUtil.getTime(Long.valueOf(actualDeliveryTimeSecond), DateStyle.YYYY_MM_DD.getValue());
+                String realTime = DateFormatUtil.getTime(Long.valueOf(actualDeliveryTimeSecond), DateStyle.MM_DD.getValue());
+                if (endTime != null && curTime.equals(endTime)) {
+                    orderTime.setText("今日" + actualDeliveryTime + "送达");
                 } else {
-                    orderTime.setText("预约" + deliveryTime + "送达");
+                    orderTime.setText(realTime + " " + actualDeliveryTime + "送达");
+                }
+            } else if (yyEndTime != null) {
+                if (curTime.equals(yyEndTime)) {
+                    orderTime.setText("预约今日" + deliveryTime + "送达");
+                } else {
+                    String[] split = yyEndTime.split("-");
+                    if (split.length >= 3) {
+                        orderTime.setText("预约" + split[1] + "-" + split[2] + " " + deliveryTime + "送达");
+                    } else {
+                        orderTime.setText("预约" + deliveryTime + "送达");
+                    }
                 }
             }
-        }
 
-        //订单状态
-        orderStatus.setText(OrderStatus.getOrderStatusText(order));
-        if (order.getOrderType() == ORDER_TYPE_SHUNFENG) {
-            switch (order.getOrderStatus()) {
+            //订单状态
+            orderStatus.setText(OrderStatus.getOrderStatusText(order));
+            if (order.getOrderType() == ORDER_TYPE_SHUNFENG) {
+                switch (order.getOrderStatus()) {
 //                        待开始 = 0、待到店 = 1、待扫描=2、待取货签名=3、送货中=4、已完成=5
-                case 0:
-                    orderStatus.setText("待开始");
-                    break;
-                case 1:
-                case 2:
-                case 3:
-                    orderStatus.setText("待取货");
-                    break;
-                case 4:
-                    orderStatus.setText("送货中");
-                    break;
-                case 5:
-                    orderStatus.setText("已完成");
-                    break;
+                    case 0:
+                        orderStatus.setText("待开始");
+                        break;
+                    case 1:
+                    case 2:
+                    case 3:
+                        orderStatus.setText("待取货");
+                        break;
+                    case 4:
+                        orderStatus.setText("送货中");
+                        break;
+                    case 5:
+                        orderStatus.setText("已完成");
+                        break;
+                }
             }
+            //订单类型展示
+            String orderTypeText;
+            int orderType = order.getOrderType();
+            Log.d("aaa", "orderType = " + orderType);
+            orderTypeText = OrderTypeInfo.getStatusText(order.getOrderType(), order.getChannel());
+            this.orderType.setText(orderTypeText);
+            this.orderType.setVisibility(VISIBLE);
         }
-        //订单类型展示
-        String orderTypeText;
-        int orderType = order.getOrderType();
-        Log.d("aaa", "orderType = " + orderType);
-        orderTypeText = OrderTypeInfo.getStatusText(order.getOrderType(), order.getChannel());
-        this.orderType.setText(orderTypeText);
-        this.orderType.setVisibility(VISIBLE);
     }
 
 }
