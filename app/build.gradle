@@ -95,8 +95,8 @@ android {
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //外网地址
-            buildConfigField "String", "API_URL", '"https://www.pcdd-maas.com/"'
-            buildConfigField "String", "API_WEBSOCKET_URL", '"wss://www.pcdd-maas.com/ws/"'
+            buildConfigField "String", "API_URL", '"https://pcdd-maas.ipubtrans.com/"'
+            buildConfigField "String", "API_WEBSOCKET_URL", '"wss://https://pcdd-maas.ipubtrans.com/ws/"'
             buildConfigField "String", "BUGLY_APP_ID", '"63d85b1dfe"'
             //友盟推送
             buildConfigField "String", "UMENG_PUSH_APP_KEY", '"5de77025570df3004e00044a"'
